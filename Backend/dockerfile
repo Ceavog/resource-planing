@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /app
+
+COPY *.sln .
+COPY Backend.DataAccessLibrary/*.csproj ./Backend.DataAccessLibrary/
+COPY Backend.Services/*.csproj ./Backend.Services/
+COPY Backend.webapi/*.csproj ./Backend.webapi/
+
+RUN dotnet restore
+
+COPY Backend.DataAccessLibrary/. ./Backend.DataAccessLibrary/
+COPY Backend.Services/. ./Backend.Services/
+COPY Backend.webapi/. ./Backend.webapi/
+
+WORKDIR /app
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 as runtime
+WORKDIR /app
+
+COPY --from=build /app/out ./
+ENTRYPOINT ["dotnet", "Backend.webapi.dll"]
