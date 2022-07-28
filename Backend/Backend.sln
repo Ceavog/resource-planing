@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.DataAccessLibrary",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Services", "Backend.Services\Backend.Services.csproj", "{FB10C01E-34BA-449B-8B6C-7F63CC11BC46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.TestProject", "Backend.TestProject\Backend.TestProject.csproj", "{C5BD510C-7169-4C78-8EFB-F873255F403E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{FB10C01E-34BA-449B-8B6C-7F63CC11BC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB10C01E-34BA-449B-8B6C-7F63CC11BC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB10C01E-34BA-449B-8B6C-7F63CC11BC46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5BD510C-7169-4C78-8EFB-F873255F403E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BD510C-7169-4C78-8EFB-F873255F403E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BD510C-7169-4C78-8EFB-F873255F403E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BD510C-7169-4C78-8EFB-F873255F403E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
