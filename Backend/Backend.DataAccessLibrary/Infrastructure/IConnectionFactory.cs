@@ -4,7 +4,6 @@ namespace Backend.DataAccessLibrary
 {
     public interface IConnectionFactory
     {
-        public string GetConnectionString(string connectionStringKey);
-        public IDbConnection Connection { get; }
+        public IDbConnection GetConnection { get; }
     }
 }
