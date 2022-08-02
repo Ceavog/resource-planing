@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Backend.DataAccessLibrary\Backend.DataAccessLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ServicesTests" />
+  </ItemGroup>
+
 </Project>
