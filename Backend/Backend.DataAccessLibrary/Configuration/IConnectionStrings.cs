@@ -2,8 +2,8 @@
 
 namespace Backend.DataAccessLibrary.Configuration
 {
-    public class ConfigManager : IConfigManager
+    public interface IConnectionStrings
     {
-        public string Sample_Database { get; set;}
+        string Sample_Database { get; set; }
     }
 }

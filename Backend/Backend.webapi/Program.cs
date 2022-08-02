@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IConfigManager>(configuration.GetSection("ConnectionStrings").Get<ConfigManager>());
+builder.Services.AddSingleton<IConnectionStrings>(configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>());
 
 var app = builder.Build();
 
