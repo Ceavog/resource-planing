@@ -1,6 +1,6 @@
 namespace Backend.DataAccessLibrary;
 
-public class OrderPositions
+public class OrderPosition
 {
     public int Id { get; set; }
     public int ManuPositionId { get; set; }

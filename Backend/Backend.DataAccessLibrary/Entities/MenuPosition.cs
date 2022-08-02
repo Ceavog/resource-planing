@@ -1,6 +1,6 @@
 namespace Backend.DataAccessLibrary;
 
-public class MenuPositions{
+public class MenuPosition{
     public int Id { get; set; }
     public int CategoryId { get; set; }
     public string Name { get; set; }
