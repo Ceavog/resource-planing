@@ -1,6 +1,6 @@
-namespace Backend.DataAccessLibrary;
-
-public interface IOrderTypesRepository
-{
-    Task AddTest();
-}
+// namespace Backend.DataAccessLibrary;
+//
+// public interface IOrderTypesRepository
+// {
+//     Task AddTest();
+// }

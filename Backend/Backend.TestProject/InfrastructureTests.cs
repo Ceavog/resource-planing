@@ -16,11 +16,11 @@ public class InfrastructureTests
     {
         
     }
-    [Test]
-    public void AddTest_test()
-    {
-
-        OrderTypesRepository otr = new OrderTypesRepository(_connectionFactory.Object);
-        otr.AddTest();
-    }
+    // [Test]
+    // public void AddTest_test()
+    // {
+    //
+    //     OrderTypesRepository otr = new OrderTypesRepository(_connectionFactory.Object);
+    //     otr.AddTest();
+    // }
 }
