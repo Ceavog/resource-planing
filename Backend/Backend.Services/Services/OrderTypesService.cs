@@ -5,13 +5,13 @@ namespace Backend.Services.Services;
 
 public class OrderTypesService : IOrderTypesService
 {
-    private readonly IGenericRepository<OrderTypes> _genericRepository;
-    public OrderTypesService(IGenericRepository<OrderTypes> genericRepository)
+    private readonly IGenericRepository<OrderType> _genericRepository;
+    public OrderTypesService(IGenericRepository<OrderType> genericRepository)
     {
         _genericRepository = genericRepository;
     }
 
-    public IEnumerable<OrderTypes> GetAllOrderTypes()
+    public IEnumerable<OrderType> GetAllOrderTypes()
     {
         return _genericRepository.GetAll();
     }
