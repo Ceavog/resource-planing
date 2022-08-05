@@ -1,18 +1,23 @@
 using Backend.DataAccessLibrary;
+using Backend.DataAccessLibrary.UnitOfWork;
 using Backend.Services.Interface;
 
 namespace Backend.Services.Services;
 
 public class OrderTypesService : IOrderTypesService
 {
-    private readonly IGenericRepository<OrderType> _genericRepository;
-    public OrderTypesService(IGenericRepository<OrderType> genericRepository)
+    private readonly IUnitOfWork<OrderType> _unitOfWork;
+    public OrderTypesService(IUnitOfWork<OrderType> unitOfWork)
     {
-        _genericRepository = genericRepository;
+        _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<OrderType> GetAllOrderTypes()
+    public void AddType(OrderType orderType)
     {
-        return _genericRepository.GetAll();
+        
+         _unitOfWork._GenericRepository.Add(orderType);
+         // _unitOfWork.Rollback();
+         // _unitOfWork.Commit();
+         // _unitOfWork.Dispose();
     }
 }
