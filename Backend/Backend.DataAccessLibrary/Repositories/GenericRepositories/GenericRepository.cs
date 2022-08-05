@@ -1,38 +1,38 @@
+using System.Data;
 using Dapper.Contrib.Extensions;
 
 namespace Backend.DataAccessLibrary;
 
-using Dapper;
 
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
-    private readonly IConnectionFactory _connectionFactory;
-    public GenericRepository(IConnectionFactory connectionFactory)
+    private readonly IDbTransaction _dbTransaction;
+    public GenericRepository(IDbTransaction dbTransaction)
     {
-        _connectionFactory = connectionFactory;
+        _dbTransaction = dbTransaction;
     }
     public void Add(TEntity entity)
     {
-        _connectionFactory.GetConnection.Insert<TEntity>(entity);
+        _dbTransaction.Connection.Insert<TEntity>(entity, _dbTransaction);
     }
 
     public void Delete(TEntity entity)
     {
-        _connectionFactory.GetConnection.Delete<TEntity>(entity);
+        _dbTransaction.Connection.Delete<TEntity>(entity);
     }
 
     public TEntity Get(int Id)
     {
-        return _connectionFactory.GetConnection.Get<TEntity>(Id);
+        return _dbTransaction.Connection.Get<TEntity>(Id);
     }
 
     public IEnumerable<TEntity> GetAll()
     {
-        return _connectionFactory.GetConnection.GetAll<TEntity>().ToList();
+        return _dbTransaction.Connection.GetAll<TEntity>().ToList();
     }
 
     public void Update(TEntity entity)
     {
-        _connectionFactory.GetConnection.Update<TEntity>(entity);
+        _dbTransaction.Connection.Update<TEntity>(entity);
     }
 }
