@@ -1,0 +1,8 @@
+.navbar-styles{
+    height: 5vh;
+    background-color: #cad5da;
+}
+
+.nav-link-hoover:hover {
+    background-color: aquamarine;
+}

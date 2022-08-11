@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d8b0a55-5b2f-411f-95df-f971e2434f62" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Components/Navbar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pages/Menu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pages/Orders.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pages/Settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Styles/Navbar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Backend/Backend.Services/Services/OrderTypesService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend/Backend.Services/Services/OrderTypesService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +22,7 @@
         <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -42,6 +44,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/ceavog/Desktop/engineer thesis/Praca-Inzynierska/frontend&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
@@ -49,6 +52,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Styles" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -61,7 +69,8 @@
       <workItem from="1659948280826" duration="1677000" />
       <workItem from="1660118029161" duration="6466000" />
       <workItem from="1660132304141" duration="4355000" />
-      <workItem from="1660201112323" duration="1121000" />
+      <workItem from="1660201112323" duration="2127000" />
+      <workItem from="1660203249983" duration="2784000" />
     </task>
     <servers />
   </component>
