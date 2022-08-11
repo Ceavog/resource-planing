@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Backend.DataAccessLibrary\Backend.DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\Backend.Shared\Backend.Shared.csproj" />
   </ItemGroup>
 
 </Project>
