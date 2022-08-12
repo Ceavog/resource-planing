@@ -6,4 +6,5 @@ public class Order
     public int EmployeeId { get; set; }
     public DateTime MyProperty { get; set; }
     public int OrderTypeId { get; set; }
+    public bool IsFinished { get; set; }
 }
