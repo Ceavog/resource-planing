@@ -6,8 +6,8 @@ namespace Backend.Services.Services;
 
 public class OrderTypesService : IOrderTypesService
 {
-    private readonly IUnitOfWork<OrderType> _unitOfWork;
-    public OrderTypesService(IUnitOfWork<OrderType> unitOfWork)
+    private readonly IUnitOfWork _unitOfWork;
+    public OrderTypesService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
@@ -15,7 +15,7 @@ public class OrderTypesService : IOrderTypesService
     public void AddType(OrderType orderType)
     {
         
-         _unitOfWork._GenericRepository.Add(orderType);
+         _unitOfWork._OrderTypeRepository.Add(orderType);
          // _unitOfWork.Rollback();
          // _unitOfWork.Commit();
          // _unitOfWork.Dispose();
