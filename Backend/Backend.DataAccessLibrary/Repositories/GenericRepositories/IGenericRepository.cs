@@ -5,5 +5,6 @@ public interface IGenericRepository < TEntity > where TEntity: class {
         IEnumerable<TEntity> GetAll();  
         void Add(TEntity entity);  
         void Delete(TEntity entity);  
-        void Update(TEntity entity); 
+        void Update(TEntity entity);
+        IEnumerable<TEntity> GetAllByCondition(string condition);
 }
