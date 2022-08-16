@@ -2,8 +2,9 @@
 
 namespace Backend.DataAccessLibrary.Configuration
 {
-    public class ConnectionStrings : IConnectionStrings
+    public class Configuration : IConfiguration
     {
         public string Sample_Database { get; set;}
+        public string DataAccessLibraryPath { get; set; }
     }
 }

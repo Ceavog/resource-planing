@@ -2,8 +2,9 @@
 
 namespace Backend.DataAccessLibrary.Configuration
 {
-    public interface IConnectionStrings
+    public interface IConfiguration
     {
         string Sample_Database { get; set; }
+        string DataAccessLibraryPath { get; set; }
     }
 }
