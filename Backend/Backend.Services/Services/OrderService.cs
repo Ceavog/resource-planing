@@ -16,4 +16,10 @@ public class OrderService : IOrderService
     {
         return _UnitOfWork._OrderRepository.GetAll();
     }
+
+    public IEnumerable<Order> GetAllOrdersWithOrderPositions()
+    {
+        var Orders = _UnitOfWork._CustomRepository.GetOrdersWithPositions("true");
+        return Orders;
+    }
 }
