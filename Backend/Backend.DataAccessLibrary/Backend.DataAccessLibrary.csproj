@@ -18,9 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CustomSqlQueries\GetAllPositions.sql">
+    <None Remove="CustomSqlQueries\GetAllPositions.sql" />
+    <EmbeddedResource Include="CustomSqlQueries\GetAllPositions.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
