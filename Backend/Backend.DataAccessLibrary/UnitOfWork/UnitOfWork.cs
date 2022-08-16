@@ -1,16 +1,17 @@
 using System.Data;
+using Backend.DataAccessLibrary.Configuration;
 using Backend.DataAccessLibrary.Repositories;
 
 namespace Backend.DataAccessLibrary.UnitOfWork;
 
 public class UnitOfWork: IUnitOfWork, IDisposable
 {
-    private readonly IConnectionFactory _connectionFactory;
     private readonly IDbTransaction _dbTransaction;
-    public UnitOfWork(IConnectionFactory connectionFactory)
+    private readonly IConfiguration _configuration;
+    public UnitOfWork(IConnectionFactory connectionFactory, IConfiguration configuration)
     {
-        _connectionFactory = connectionFactory;
-        _dbTransaction = _connectionFactory.GetConnection.BeginTransaction();
+        _dbTransaction = connectionFactory.GetConnection.BeginTransaction();
+        _configuration = configuration;
     }
 
     public IGenericRepository<Category> _CategoryRepository => new GenericRepository<Category>(_dbTransaction);
@@ -23,7 +24,7 @@ public class UnitOfWork: IUnitOfWork, IDisposable
     public IGenericRepository<OrderPosition> _OrderPositionRepository =>
         new GenericRepository<OrderPosition>(_dbTransaction);
     public IGenericRepository<OrderType> _OrderTypeRepository => new GenericRepository<OrderType>(_dbTransaction);
-    public ICustomRepository _CustomRepository => new CustomRepository(_dbTransaction);
+    public ICustomRepository _CustomRepository => new CustomRepository(_dbTransaction, _configuration);
 
     public void Rollback()
     {
