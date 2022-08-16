@@ -7,4 +7,5 @@ public class Order
     public DateTime MyProperty { get; set; }
     public int OrderTypeId { get; set; }
     public bool IsFinished { get; set; }
+    public List<MenuPosition> MenuPositions { get; set; }
 }
