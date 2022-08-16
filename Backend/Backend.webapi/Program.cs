@@ -4,6 +4,7 @@ using Backend.DataAccessLibrary.Configuration;
 using Backend.DataAccessLibrary.UnitOfWork;
 using Backend.Services.Interface;
 using Backend.Services.Services;
+using IConfiguration = Backend.DataAccessLibrary.Configuration.IConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -14,7 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //todo - in the future make separate folders for different di 
-builder.Services.AddSingleton<IConnectionStrings>(configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>());
+builder.Services.AddSingleton<IConfiguration>(configuration.GetSection("Configuration").Get<Configuration>());
 builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
