@@ -3,6 +3,7 @@ using System.Data.Common;
 using Backend.DataAccessLibrary;
 using Backend.DataAccessLibrary.UnitOfWork;
 using Backend.Services.Services;
+using FluentAssertions;
 using Moq;
 
 namespace Backend.TestProject;
@@ -10,13 +11,12 @@ namespace Backend.TestProject;
 public class GenericRepositoriesTests
 {
 
-    private Mock<UnitOfWork<OrderType>> _unitOfWork;
+    private Mock<UnitOfWork> _unitOfWork;
     [SetUp]
     public void Setup()
     {
-        var _connectionFactory = new Mock<ConnectionFactory>();
-        var _dbTransaction = _connectionFactory.Object.GetConnection.BeginTransaction();
-        _unitOfWork = new Mock<UnitOfWork<OrderType>>(_dbTransaction);
+        var _connectionFactory = new Mock<ConnectionFactory>().Object;
+        _unitOfWork = new Mock<UnitOfWork>(_connectionFactory);
     }
     [Test]
     public void GenericRepository_Add_AddsObjectToDB()
@@ -27,7 +27,16 @@ public class GenericRepositoriesTests
             TypeName = "test type name",
         };
 
-        var service = new OrderTypesService(_unitOfWork.Object);
-        service.AddType(orderType);
+        var service = new OrderPositionsService(_unitOfWork.Object);
+        var count = service.GetAllOrderPositionsByOrderId();
+        count.Should().HaveCount(15);
+    }
+
+    [Test]
+    public void CustomRepository_method_ReturnsCorrectValue()
+    {
+        var service = new OrderService(_unitOfWork.Object);
+        var count = service.GetAllOrdersWithOrderPositions();
+        count.Should().HaveCount(12);
     }
 }
