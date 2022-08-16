@@ -1,4 +1,5 @@
 using System.Data;
+using Backend.DataAccessLibrary.Repositories;
 
 namespace Backend.DataAccessLibrary.UnitOfWork;
 
@@ -22,6 +23,8 @@ public class UnitOfWork: IUnitOfWork, IDisposable
     public IGenericRepository<OrderPosition> _OrderPositionRepository =>
         new GenericRepository<OrderPosition>(_dbTransaction);
     public IGenericRepository<OrderType> _OrderTypeRepository => new GenericRepository<OrderType>(_dbTransaction);
+    public ICustomRepository _CustomRepository => new CustomRepository(_dbTransaction);
+
     public void Rollback()
     {
         _dbTransaction.Rollback();

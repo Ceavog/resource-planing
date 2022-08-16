@@ -1,4 +1,5 @@
 using System.Data;
+using Backend.DataAccessLibrary.Repositories;
 
 namespace Backend.DataAccessLibrary.UnitOfWork;
 
@@ -15,4 +16,5 @@ public interface IUnitOfWork
     IGenericRepository<Order> _OrderRepository { get; }
     IGenericRepository<OrderPosition> _OrderPositionRepository { get; }
     IGenericRepository<OrderType> _OrderTypeRepository { get; }
+    ICustomRepository _CustomRepository { get; }
 }
