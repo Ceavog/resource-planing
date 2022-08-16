@@ -1,3 +1,4 @@
+using Backend.DataAccessLibrary;
 using Backend.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
@@ -17,5 +18,11 @@ public class OrdersController : Controller
     public ActionResult<IEnumerable<OrderModel>> GetAllOrders()
     {
         return Json(_orderService.GetAllOrders());
+    }
+
+    [HttpGet("OrdersWithMenuPositions")]
+    public ActionResult<IEnumerable<Order>> OrdersWithMenuPositions()
+    {
+        return Json(_orderService.GetAllOrdersWithOrderPositions());
     }
 }
