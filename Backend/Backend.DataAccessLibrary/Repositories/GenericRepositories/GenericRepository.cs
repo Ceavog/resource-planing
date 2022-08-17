@@ -12,9 +12,9 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     {
         _dbTransaction = dbTransaction;
     }
-    public void Add(TEntity entity)
+    public long Add(TEntity entity)
     {
-        _dbTransaction.Connection.Insert<TEntity>(entity, _dbTransaction);
+        return _dbTransaction.Connection.Insert<TEntity>(entity, _dbTransaction);
     }
 
     public void Delete(TEntity entity)
