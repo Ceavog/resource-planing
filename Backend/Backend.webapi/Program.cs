@@ -20,6 +20,7 @@ builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

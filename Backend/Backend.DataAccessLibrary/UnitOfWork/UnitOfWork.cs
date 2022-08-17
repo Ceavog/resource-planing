@@ -24,6 +24,7 @@ public class UnitOfWork: IUnitOfWork, IDisposable
     public IGenericRepository<OrderPosition> _OrderPositionRepository =>
         new GenericRepository<OrderPosition>(_dbTransaction);
     public IGenericRepository<OrderType> _OrderTypeRepository => new GenericRepository<OrderType>(_dbTransaction);
+    public IGenericRepository<User> _UserRepository => new GenericRepository<User>(_dbTransaction);
     public ICustomRepository _CustomRepository => new CustomRepository(_dbTransaction, _configuration);
 
     public void Rollback()

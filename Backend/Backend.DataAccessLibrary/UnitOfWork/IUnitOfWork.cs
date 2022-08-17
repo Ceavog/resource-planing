@@ -16,5 +16,6 @@ public interface IUnitOfWork
     IGenericRepository<Order> _OrderRepository { get; }
     IGenericRepository<OrderPosition> _OrderPositionRepository { get; }
     IGenericRepository<OrderType> _OrderTypeRepository { get; }
+    IGenericRepository<User> _UserRepository { get; }
     ICustomRepository _CustomRepository { get; }
 }
