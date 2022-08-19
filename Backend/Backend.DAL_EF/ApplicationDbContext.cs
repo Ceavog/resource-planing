@@ -1,16 +1,18 @@
 using Backend.DataAccessLibrary;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Options;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace Backend.DAL_EF;
 
 public class ApplicationDbContext : DbContext
 {
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        : base(options)
     {
         
     }
-
     /// <summary>
     /// this OnConfiguring is here only for migrations 
     /// </summary>
@@ -18,7 +20,11 @@ public class ApplicationDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = "Server=localhost; Port=6603; Database=et_databaseEF; Uid=root; Pwd=pieczywo;";
-        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        optionsBuilder
+            .UseMySql(
+                connectionString, 
+                ServerVersion.AutoDetect(connectionString), 
+                x=>x.MigrationsAssembly("Backend.DAL_EF"));
     }
 
     public DbSet<Category> Categories { get; set; }
