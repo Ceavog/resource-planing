@@ -12,11 +12,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSingleton<IConfiguration>(configuration.GetSection("Configuration").Get<Configuration>());
 
-
-// var connectionString = builder.Configuration.GetConnectionString("Sample_Database");
-var connectionString = "Server=localhost; Port=6603; Database=et_databaseEF; Uid=root; Pwd=pieczywo;";
+var connectionString = builder.Configuration.GetSection("Configuration").GetSection("MySqlDatabase").Value;
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options
