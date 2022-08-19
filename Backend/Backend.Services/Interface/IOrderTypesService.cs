@@ -4,5 +4,5 @@ namespace Backend.Services.Interface;
 
 public interface IOrderTypesService
 {
-    void AddType(OrderType orderType);
+    void AddType();
 }

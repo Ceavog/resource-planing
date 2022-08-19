@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.TestProject", "Back
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Shared", "Backend.Shared\Backend.Shared.csproj", "{0111B1AE-D3D8-4DFC-AAA2-340FFE7FA5E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.DAL_EF", "Backend.DAL_EF\Backend.DAL_EF.csproj", "{208AA34F-B4C6-46D3-ABB9-0EC43EA7C246}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0111B1AE-D3D8-4DFC-AAA2-340FFE7FA5E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0111B1AE-D3D8-4DFC-AAA2-340FFE7FA5E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0111B1AE-D3D8-4DFC-AAA2-340FFE7FA5E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{208AA34F-B4C6-46D3-ABB9-0EC43EA7C246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{208AA34F-B4C6-46D3-ABB9-0EC43EA7C246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{208AA34F-B4C6-46D3-ABB9-0EC43EA7C246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{208AA34F-B4C6-46D3-ABB9-0EC43EA7C246}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

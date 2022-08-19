@@ -1,23 +1,23 @@
 using Backend.DataAccessLibrary;
-using Backend.DataAccessLibrary.UnitOfWork;
+using Backend.DataAccessLibraryEF.DbContext;
 using Backend.Services.Interface;
 
 namespace Backend.Services.Services;
 
 public class OrderTypesService : IOrderTypesService
 {
-    private readonly IUnitOfWork _unitOfWork;
-    public OrderTypesService(IUnitOfWork unitOfWork)
+    private readonly ApplicationDbContext _applicationDbContext;
+    public OrderTypesService(ApplicationDbContext applicationDbContext)
     {
-        _unitOfWork = unitOfWork;
+        _applicationDbContext = applicationDbContext;
     }
-
-    public void AddType(OrderType orderType)
+    public void AddType()
     {
-        
-         _unitOfWork._OrderTypeRepository.Add(orderType);
-         // _unitOfWork.Rollback();
-         // _unitOfWork.Commit();
-         // _unitOfWork.Dispose();
+        var type = new OrderType()
+        {
+            TypeName = "lalalala"
+        };
+        _applicationDbContext.OrderTypes.Add(type);
+        _applicationDbContext.SaveChanges();
     }
 }

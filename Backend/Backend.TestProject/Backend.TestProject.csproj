@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Backend.DataAccessLibrary\Backend.DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\Backend.DataAccessLibraryEF\Backend.DataAccessLibraryEF.csproj" />
     <ProjectReference Include="..\Backend.Services\Backend.Services.csproj" />
   </ItemGroup>
 

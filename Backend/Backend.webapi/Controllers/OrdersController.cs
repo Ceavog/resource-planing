@@ -9,9 +9,11 @@ namespace Backend.webapi;
 public class OrdersController : Controller
 {
     private readonly IOrderService _orderService;
-    public OrdersController(IOrderService orderService)
+    private readonly IOrderTypesService _orderTypesService;
+    public OrdersController(IOrderService orderService, IOrderTypesService orderTypesService)
     {
         _orderService = orderService;
+        _orderTypesService = orderTypesService;
     }
 
     [HttpGet("GetAllOrders")]
@@ -20,9 +22,12 @@ public class OrdersController : Controller
         return Json(_orderService.GetAllOrders());
     }
 
-    [HttpGet("OrdersWithMenuPositions")]
-    public ActionResult<IEnumerable<Order>> OrdersWithMenuPositions()
+    [HttpPost("addOrderType")]
+    public ActionResult AddType()
     {
-        return Json(_orderService.GetAllOrdersWithOrderPositions());
+        _orderTypesService.AddType();
+        return new StatusCodeResult(200);
     }
+
+ 
 }
