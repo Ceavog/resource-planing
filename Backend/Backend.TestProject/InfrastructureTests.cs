@@ -2,7 +2,6 @@ using Backend.DataAccessLibrary;
 using NUnit.Framework;
 using FluentAssertions;
 using System.Data;
-using Backend.DataAccessLibrary.Configuration;
 using Backend.Services.Interface;
 using Moq;
 

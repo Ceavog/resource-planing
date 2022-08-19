@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Backend.DAL_EF\Backend.DAL_EF.csproj" />
     <ProjectReference Include="..\Backend.DataAccessLibraryEF\Backend.DataAccessLibraryEF.csproj" />
     <ProjectReference Include="..\Backend.Services\Backend.Services.csproj" />
     <ProjectReference Include="..\Backend.Shared\Backend.Shared.csproj" />
