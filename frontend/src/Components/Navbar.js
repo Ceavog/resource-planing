@@ -14,6 +14,9 @@ function Navbar() {
                     <Link className="nav-link mx-4 nav-link-hoover" to='/Orders'>
                         Orders
                     </Link>
+                    <Link className="nav-link mx-4 nav-link-hoover" to='/SignInUp'>
+                        Logging
+                    </Link>
                 </nav>
         </>
     );
