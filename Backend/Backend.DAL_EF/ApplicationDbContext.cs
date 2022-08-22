@@ -13,20 +13,6 @@ public class ApplicationDbContext : DbContext
     {
         
     }
-    /// <summary>
-    /// this OnConfiguring is here only for migrations 
-    /// </summary>
-    /// <param name="optionsBuilder"></param>
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     var connectionString = "Server=localhost; Port=6603; Database=et_databaseEF; Uid=root; Pwd=pieczywo;";
-    //     optionsBuilder
-    //         .UseMySql(
-    //             connectionString, 
-    //             ServerVersion.AutoDetect(connectionString), 
-    //             x=>x.MigrationsAssembly("Backend.DAL_EF"));
-    // }
-
     public DbSet<Category> Categories { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Delivery> Deliveries { get; set; }
