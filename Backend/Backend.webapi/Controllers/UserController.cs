@@ -1,4 +1,5 @@
 using Backend.Services.Interface;
+using Backend.Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.webapi;
@@ -23,5 +24,20 @@ public class UserController : Controller
         {
             return BadRequest(e.Message);
         }
+    }
+
+    [HttpPost("Login")]
+    public IActionResult Login([FromBody] UserDto user)
+    {
+        IActionResult response = Unauthorized();
+        var userDto = _userService.AuthenticateUser(user);
+
+        if (userDto != null)
+        {
+            var tokenString = _userService.GenerateJsonWebToken(user);
+            response = Ok(new { token = tokenString });
+        }
+
+        return response;
     }
 }
