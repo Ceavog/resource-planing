@@ -1,8 +1,12 @@
+using System.Reflection;
+using System.Text;
 using Backend.DAL_EF;
 using Backend.Services.Interface;
 using Backend.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -21,16 +25,28 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             connectionString, 
             ServerVersion.AutoDetect(connectionString));
 });
-
-
-// builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrderTypesService, OrderTypesService>();
-var app = builder.Build();
 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = configuration["Jwt:Issuer"],
+            ValidAudience = configuration["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+        };
+    });
+
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -40,7 +56,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization(); 
 
 app.MapControllers();
 
