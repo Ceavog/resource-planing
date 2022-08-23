@@ -5,9 +5,7 @@ using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
-using BCrypt.Net;
 using Mapster;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Services.Services;
