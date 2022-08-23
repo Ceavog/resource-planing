@@ -1,6 +1,5 @@
 using Backend.DataAccessLibrary;
 using Backend.Services.Interface;
-using Shared.Models;
 
 namespace Backend.Services.Services;
 
