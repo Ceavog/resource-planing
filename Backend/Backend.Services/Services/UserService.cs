@@ -16,7 +16,7 @@ public class UserService : IUserService
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly IJwtConfiguration _jwtConfiguration;
-    public UserService(ApplicationDbContext applicationDbContext, JwtConfiguration jwtConfiguration)
+    public UserService(ApplicationDbContext applicationDbContext, IJwtConfiguration jwtConfiguration)
     {
         _jwtConfiguration = jwtConfiguration;
         _applicationDbContext = applicationDbContext;
