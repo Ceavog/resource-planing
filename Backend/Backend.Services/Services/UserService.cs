@@ -15,8 +15,10 @@ namespace Backend.Services.Services;
 public class UserService : IUserService
 {
     private readonly ApplicationDbContext _applicationDbContext;
-    public UserService(ApplicationDbContext applicationDbContext)
+    private readonly IJwtConfiguration _jwtConfiguration;
+    public UserService(ApplicationDbContext applicationDbContext, JwtConfiguration jwtConfiguration)
     {
+        _jwtConfiguration = jwtConfiguration;
         _applicationDbContext = applicationDbContext;
     }
     /// <summary>
@@ -38,10 +40,6 @@ public class UserService : IUserService
         _applicationDbContext.SaveChanges();
         return addedUser;
     }
-    public void Login(string login, string password)
-    {
-        throw new NotImplementedException();
-    }
 
     public UserDto AuthenticateUser(UserDto userDto)
     {
@@ -52,8 +50,7 @@ public class UserService : IUserService
     
     public string GenerateJsonWebToken(UserDto userDto)
     {
-        var key = "ThisismySecretKey";
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         //here i can add any claims
@@ -62,11 +59,11 @@ public class UserService : IUserService
             new Claim("userLogin", userDto.Login),
         };
 
-        
-        var isuer = "https://localhost:7161/";
+
+        var issuer = _jwtConfiguration.Issuer;
         var token = new JwtSecurityToken(
-            isuer,
-            isuer,
+            issuer,
+            issuer,
             claims,
             expires: DateTime.Now.AddMinutes(2),
             signingCredentials: credentials);
