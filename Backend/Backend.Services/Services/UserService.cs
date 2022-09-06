@@ -42,7 +42,14 @@ public class UserService : IUserService
     public UserDto AuthenticateUser(UserDto userDto)
     {
         var user = _applicationDbContext.Users.FirstOrDefault(x => x.login.Equals(userDto.Login));
-        return BCrypt.Net.BCrypt.Verify(userDto.Password,user.Password) ? user.Adapt<UserDto>() : null;
+        if (user != null)
+        {
+            return BCrypt.Net.BCrypt.Verify(userDto.Password,user.Password) ? user.Adapt<UserDto>() : null;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     

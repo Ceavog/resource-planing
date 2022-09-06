@@ -14,11 +14,11 @@ public class UserController : Controller
         _userService = userService;
     }
     [HttpPost("RegisterUser")]
-    public IActionResult RegisterUser(string login, string password)
+    public IActionResult RegisterUser([FromBody]UserDto user)
     {
         try
         {
-            return Ok(_userService.RegisterUser(login, password));
+            return Ok(_userService.RegisterUser(user.Login, user.Password));
         }
         catch (Exception e)
         {
