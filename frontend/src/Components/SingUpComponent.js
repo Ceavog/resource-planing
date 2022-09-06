@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import RegisterUser from '../Services/UserService.js'
+
 
 function SignInComponent(){
 
@@ -7,7 +9,6 @@ const [password, setPassword] = useState('');
 const [confirmPassword, setConfirmPassword] = useState('');
 
 const [loginMessage, setLoginMessage] = useState('');
-const [passwordMessage, setPasswordMessage] = useState('');
 const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
 
 const [isValidForSubmit, setIsValidForSubmit] = useState(true)
@@ -33,7 +34,7 @@ function validateField(){
          isLoginValid = true
      }
 
-     if(isLoginValid && isLoginValid){
+     if(isLoginValid && isPasswordValid){
          setIsValidForSubmit(true)
      }
      else{
@@ -43,9 +44,13 @@ function validateField(){
 
 }
 
+    const HandleSubmit = (e) => {
+       e.preventDefault();
+       RegisterUser(login, password);
+    }
     return(
         <div>
-            <form className={"mt-5"}>
+            <form className={"mt-5"} onSubmit={HandleSubmit}>
                 <div className={"form-outline mb-4"}>
                     <input
                         placeholder='Login'
