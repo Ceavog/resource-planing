@@ -30,7 +30,7 @@ public class UserService : IUserService
         password = BCrypt.Net.BCrypt.HashPassword(password);
         var user = new User()
         {
-            login = login,
+            Login = login,
             Password = password,
             ServicePointId = 1
         };
@@ -57,7 +57,7 @@ public class UserService : IUserService
     
     private UserDto AuthenticateUser(UserDto userDto)
     {
-        var user = _applicationDbContext.Users.FirstOrDefault(x => x.login.Equals(userDto.Login));
+        var user = _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(userDto.Login));
         if (user != null)
         {
             return BCrypt.Net.BCrypt.Verify(userDto.Password,user.Password) ? user.Adapt<UserDto>() : null;
