@@ -16,7 +16,7 @@ namespace Backend.DAL_EF.Migrations
             migrationBuilder.RenameColumn(
                 name: "Name",
                 table: "Users",
-                newName: "login");
+                newName: "Login");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -27,7 +27,7 @@ namespace Backend.DAL_EF.Migrations
                 newName: "SecondName");
 
             migrationBuilder.RenameColumn(
-                name: "login",
+                name: "Login",
                 table: "Users",
                 newName: "Name");
         }

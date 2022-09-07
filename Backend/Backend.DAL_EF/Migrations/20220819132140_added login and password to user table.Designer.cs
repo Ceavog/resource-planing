@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.DAL_EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220819132140_added login and password to user table")]
+    [Migration("20220819132140_added Login and password to user table")]
     partial class addedloginandpasswordtousertable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -241,7 +241,7 @@ namespace Backend.DAL_EF.Migrations
                     b.Property<int>("ServicePointId")
                         .HasColumnType("int");
 
-                    b.Property<string>("login")
+                    b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("longtext");
 

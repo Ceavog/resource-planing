@@ -237,7 +237,7 @@ namespace Backend.DAL_EF.Migrations
                     b.Property<int>("ServicePointId")
                         .HasColumnType("int");
 
-                    b.Property<string>("login")
+                    b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("longtext");
 
