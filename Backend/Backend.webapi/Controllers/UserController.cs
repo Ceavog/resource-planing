@@ -26,18 +26,27 @@ public class UserController : Controller
         }
     }
 
-    [HttpPost("Login")]
+    [HttpPost("LoginUser")]
     public IActionResult Login([FromBody] UserDto user)
     {
-        IActionResult response = Unauthorized();
-        var userDto = _userService.AuthenticateUser(user);
-
-        if (userDto != null)
+        var tokenString = _userService.LoginUser(user);
+        if (tokenString != "unauthorized")
         {
-            var tokenString = _userService.GenerateJsonWebToken(user);
-            response = Ok(new { token = tokenString });
+            return Ok(new { token = tokenString });
         }
-
-        return response;
+        else
+        {
+            return Unauthorized();
+        }
+        // IActionResult response = Unauthorized();
+        // var userDto = _userService.AuthenticateUser(user);
+        //
+        // if (userDto != null)
+        // {
+        //     var tokenString = _userService.GenerateJsonWebToken(user);
+        //     response = Ok(new { token = tokenString });
+        // }
+        //
+        // return Json(response);
     }
 }

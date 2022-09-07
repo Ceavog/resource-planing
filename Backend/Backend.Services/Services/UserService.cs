@@ -39,7 +39,23 @@ public class UserService : IUserService
         return addedUser;
     }
 
-    public UserDto AuthenticateUser(UserDto userDto)
+    
+
+    public string LoginUser(UserDto user)
+    {
+        var authenticatedUser = AuthenticateUser(user);
+        if (authenticatedUser != null)
+        {
+             return GenerateJsonWebToken(authenticatedUser);
+        }
+        else
+        {
+            return "unauthorized";
+        }
+    }
+    
+    
+    private UserDto AuthenticateUser(UserDto userDto)
     {
         var user = _applicationDbContext.Users.FirstOrDefault(x => x.login.Equals(userDto.Login));
         if (user != null)
@@ -53,7 +69,7 @@ public class UserService : IUserService
     }
 
     
-    public string GenerateJsonWebToken(UserDto userDto)
+    private string GenerateJsonWebToken(UserDto userDto)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
