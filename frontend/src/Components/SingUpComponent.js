@@ -1,5 +1,7 @@
 import React, {useState} from "react";
-import RegisterUser from '../Services/UserService.js'
+import {RegisterUser} from '../Services/UserService.js'
+import {useNavigate} from "react-router";
+import {useCookies} from "react-cookie";
 
 
 function SignInComponent(){
@@ -13,7 +15,9 @@ const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
 
 const [isValidForSubmit, setIsValidForSubmit] = useState(true)
 
-function validateField(){
+const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
+
+    function validateField(){
     let isPasswordValid = false;
     let isLoginValid = false;
      if (password !== confirmPassword){
@@ -41,12 +45,16 @@ function validateField(){
          setIsValidForSubmit(false)
      }
 
-
 }
 
+    const navigate = useNavigate();
     const HandleSubmit = (e) => {
-       e.preventDefault();
-       RegisterUser(login, password);
+        e.preventDefault();
+        RegisterUser(login, password).then((x)=>{
+            setJwtCookies('jwt', x, {secure: true, sameSite: 'none'})
+            console.log('from component: ' + x)
+        });
+        navigate('/LandingPage')
     }
     return(
         <div>

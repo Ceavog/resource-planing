@@ -1,15 +1,17 @@
 import React, {useState} from "react";
-import Button from "bootstrap/js/src/button";
+import {LoginUser} from "../Services/UserService";
+import {useCookies} from "react-cookie";
 
 function SignInComponent(){
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
 
     const [loginMessage, setLoginMessage] = useState('');
     const [PasswordMessage, setPasswordMessage] = useState('');
 
     const [isValidForSubmit, setIsValidForSubmit] = useState(true)
+
+    const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
 
     function validateField(){
         let isPasswordValid = false;
@@ -41,10 +43,17 @@ function SignInComponent(){
 
 
     }
-
+const HandleSubmit = (e) => {
+        e.preventDefault();
+        LoginUser(login, password).then((x)=>{
+            setJwtCookies('jwt', x, {secure: true, sameSite: 'none'})
+            console.log("from login: ", x)
+        });
+        
+    }
     return(
         <div>
-            <form className={"mt-5"}>
+            <form className={"mt-5"} onSubmit={HandleSubmit}>
                 <div className={"form-outline mb-4"}>
                     <input
                         placeholder='Login'
