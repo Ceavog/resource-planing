@@ -18,7 +18,8 @@ public class UserController : Controller
     {
         try
         {
-            return Ok(_userService.RegisterUser(user.Login, user.Password));
+            var tokenString = _userService.RegisterUser(user.Login, user.Password);
+            return Ok(tokenString);
         }
         catch (Exception e)
         {
@@ -32,21 +33,11 @@ public class UserController : Controller
         var tokenString = _userService.LoginUser(user);
         if (tokenString != "unauthorized")
         {
-            return Ok(new { token = tokenString });
+            return Ok(tokenString);
         }
         else
         {
             return Unauthorized();
         }
-        // IActionResult response = Unauthorized();
-        // var userDto = _userService.AuthenticateUser(user);
-        //
-        // if (userDto != null)
-        // {
-        //     var tokenString = _userService.GenerateJsonWebToken(user);
-        //     response = Ok(new { token = tokenString });
-        // }
-        //
-        // return Json(response);
     }
 }

@@ -5,6 +5,6 @@ namespace Backend.Services.Interface;
 
 public interface IUserService
 {
-    User RegisterUser(string login, string password);
+    string RegisterUser(string login, string password);
     string LoginUser(UserDto user);
 }

@@ -20,27 +20,39 @@ public class UserService : IUserService
         _applicationDbContext = applicationDbContext;
     }
     /// <summary>
-    /// this method adds User with default service point 
+    /// this method adds User with default service point
+    /// also login user and returns json web token
     /// </summary>
     /// <param name="login"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public User RegisterUser(string login, string password)
+    public string RegisterUser(string login, string password)
     {
-        password = BCrypt.Net.BCrypt.HashPassword(password);
         var user = new User()
         {
             Login = login,
-            Password = password,
+            Password =  BCrypt.Net.BCrypt.HashPassword(password),
             ServicePointId = 1
         };
-        var addedUser =_applicationDbContext.Users.Add(user).Entity;
+        
+        _applicationDbContext.Users.Add(user);
         _applicationDbContext.SaveChanges();
-        return addedUser;
+
+        var userToLogin = new User()
+        {
+            Login = login,
+            Password = password
+        };
+        var token = LoginUser(userToLogin.Adapt<UserDto>());
+        return token;
     }
 
     
-
+    /// <summary>
+    /// authenticate user and returns json web token if authentication pass
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     public string LoginUser(UserDto user)
     {
         var authenticatedUser = AuthenticateUser(user);
@@ -53,8 +65,8 @@ public class UserService : IUserService
             return "unauthorized";
         }
     }
-    
-    
+
+    #region Private functions
     private UserDto AuthenticateUser(UserDto userDto)
     {
         var user = _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(userDto.Login));
@@ -91,4 +103,6 @@ public class UserService : IUserService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    #endregion
+
 }
