@@ -6,18 +6,23 @@ import Menu from "./Pages/Menu";
 import React from "react";
 import Orders from "./Pages/Orders";
 import SignInUp from "./Pages/SignInUp";
+import LandingPage from "./Pages/LandingPage";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
   return (
-      <BrowserRouter>
-          <Navbar/>
-          <Routes>
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/menu" element={<Menu /> } />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/SignInUp" element={<SignInUp/>}/>
-          </Routes>
-      </BrowserRouter>
+      <CookiesProvider>
+          <BrowserRouter>
+              <Navbar/>
+              <Routes>
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/menu" element={<Menu /> } />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/SignInUp" element={<SignInUp/>}/>
+                  <Route path="/LandingPage" element={<LandingPage/>}/>
+              </Routes>
+          </BrowserRouter>
+      </CookiesProvider>
   );
 }
 
