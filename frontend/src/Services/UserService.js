@@ -1,34 +1,39 @@
+import data from "bootstrap/js/src/dom/data";
+
 const axios = require('axios').default;
+
 
 const AxiosInstance = axios.create({
     baseURL: 'https://localhost:7161'
 })
 
-function RegisterUser(login, password){
+//registerUser saves user in db with hashed password
+//and login user with provided credentials
 
-    AxiosInstance.post('/RegisterUser',{
+function RegisterUser(login, password){
+    return AxiosInstance.post('/RegisterUser', {
         login: login,
         password: password,
-    }).then(response=>{
-        console.log(response)
-    })
+    }).then(response =>{
+            console.log('from register  ' + response.data)
+            return response.data;
+        })
+        .catch(error => {throw error});
 
-    // fetch("https://localhost:7161/RegisterUser",
-    // {
-    //     method: `POST`,
-    //         body: {
-    //         login: `${login}`,
-    //             password: `${password}`,
-    //     }
-    // }}).then(res => {
-    //     console.log(res.data)
-    // }).catch(error => {
-    //     throw error
-    // });
-
-    console.log("im in register user")
-    console.log(`${login}`)
-    console.log(`${password}`)
 }
 
-export default  RegisterUser ;
+//login user returns json web token (jwt) with all required data
+
+function LoginUser(login, password) {
+   return AxiosInstance.post('/LoginUser', {
+        login: login,
+        password: password,
+    }).then(respose => {
+        console.log('from loggin ' + respose.data);
+        return respose.data;
+    }).catch(error => {
+        throw error
+    })
+}
+
+export {RegisterUser, LoginUser};
