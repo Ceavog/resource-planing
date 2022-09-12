@@ -15,7 +15,6 @@ function RegisterUser(login, password){
         login: login,
         password: password,
     }).then(response =>{
-            console.log('from register  ' + response.data)
             return response.data;
         })
         .catch(error => {throw error});
@@ -29,7 +28,6 @@ function LoginUser(login, password) {
         login: login,
         password: password,
     }).then(respose => {
-        console.log('from loggin ' + respose.data);
         return respose.data;
     }).catch(error => {
         throw error
