@@ -34,4 +34,17 @@ function LoginUser(login, password) {
     })
 }
 
-export {RegisterUser, LoginUser};
+function GetLogin(jwt){
+    return AxiosInstance.get('/GetLogin',
+        {
+            params:
+                {
+                    jwt:jwt
+                }
+    }).then(respose => {
+        return respose.data;
+    }).catch(error => {
+        throw error
+    })
+}
+export {RegisterUser, LoginUser, GetLogin};
