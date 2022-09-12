@@ -1,89 +1,64 @@
 import React, {useState} from "react";
-import {LoginUser} from "../Services/UserService";
+import {LoginUser, RegisterUser} from "../Services/UserService";
 import {useCookies} from "react-cookie";
+import {useNavigate} from "react-router";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
 
 function SignInComponent(){
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-
-    const [loginMessage, setLoginMessage] = useState('');
-    const [PasswordMessage, setPasswordMessage] = useState('');
-
-    const [isValidForSubmit, setIsValidForSubmit] = useState(true)
-
     const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
-
-    function validateField(){
-        let isPasswordValid = false;
-        let isLoginValid = false;
-        if (password.length < 1){
-            setPasswordMessage('password is too short')
-            isPasswordValid = false
-        }
-        else{
-            setPasswordMessage('');
-            isPasswordValid = true
-        }
-
-        if(login.length < 1){
-            setLoginMessage("login is too short")
-            isLoginValid = false
-        }
-        else{
-            setLoginMessage('');
-            isLoginValid = true
-        }
-
-        if(isLoginValid && isLoginValid){
-            setIsValidForSubmit(true)
-        }
-        else{
-            setIsValidForSubmit(false)
-        }
+    const { register, formState: { errors }, handleSubmit } = useForm();
 
 
-    }
-const HandleSubmit = (e) => {
+    const navigate = useNavigate();
+    const onSubmit = (data, e) => {
         e.preventDefault();
-        LoginUser(login, password).then((x)=>{
+        LoginUser(data.login, data.password).then((x)=>{
             setJwtCookies('jwt', x, {secure: true, sameSite: 'none'})
-            console.log("from login: ", x)
         });
-        
+        navigate('/LandingPage')
     }
+
+
     return(
-        <div>
-            <form className={"mt-5"} onSubmit={HandleSubmit}>
-                <div className={"form-outline mb-4"}>
-                    <input
-                        placeholder='Login'
-                        className={"form-control"}
-                        type={"text"}
-                        name={"Name"}
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
-                        onBlur={(e) => validateField()}
-                    />
-                </div>
+        <div className={"mt-2"}>
+            <form onSubmit={handleSubmit(onSubmit)}>
 
-                <div className={"form-outline mb-4"}>
-                    <input
+                <div className={"d-flex flex-column"}>
+                    <div className={"row mt-2"}>
+                        <input
+                            placeholder={"login"}
+                            type={"text"}
+                            {...register(
+                                'login',
+                                {required: "login is required"})}
+                        />
+                    </div>
+                    <div className={"row mt-2"}>
+                        <input
+                            placeholder={"password"}
+                            type={"password"}
+                            {...register(
+                                "password",
+                                { required: "password is required" })}
+                        />
+                    </div>
 
-                        placeholder="Password"
-                        className={"form-control"}
-                        type={"password"}
-                        name={"Name"}
-                        value={password}
-                        onChange={(e)=> setPassword(e.target.value)}
-                        onBlur={(e) => validateField()}
-
-                    />
-                </div>
-
-                <h6 className={"text-danger"}>{PasswordMessage}</h6>
-                <h6 className={"text-danger"} >{loginMessage}</h6>
-                <div className={"d-flex justify-content-center mb-3"}>
-                    <input className={"btn btn-primary"} type={"submit"} value={"Sign Up"} disabled={!isValidForSubmit}/>
+                    <div className={"row text-danger"}>
+                        <ErrorMessage
+                            errors={errors}
+                            name="password"
+                        />
+                    </div>
+                    <div className={"row text-danger"}>
+                        <ErrorMessage
+                            errors={errors}
+                            name="login"
+                        />
+                    </div>
+                    <div className={"mt-4 text-center"}>
+                        <input className={"btn btn-primary"} type="submit" value={"submit"}  />
+                    </div>
                 </div>
             </form>
         </div>

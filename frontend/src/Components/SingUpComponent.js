@@ -2,108 +2,81 @@ import React, {useState} from "react";
 import {RegisterUser} from '../Services/UserService.js'
 import {useNavigate} from "react-router";
 import {useCookies} from "react-cookie";
-
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
 
 function SignInComponent(){
-
-const [login, setLogin] = useState('');
-const [password, setPassword] = useState('');
-const [confirmPassword, setConfirmPassword] = useState('');
-
-const [loginMessage, setLoginMessage] = useState('');
-const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
-
-const [isValidForSubmit, setIsValidForSubmit] = useState(true)
-
-const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
-
-    function validateField(){
-    let isPasswordValid = false;
-    let isLoginValid = false;
-     if (password !== confirmPassword){
-         setConfirmPasswordMessage('passwords are not the same')
-         isPasswordValid = false
-     }
-     else{
-         setConfirmPasswordMessage('');
-         isPasswordValid = true
-     }
-
-     if(login.length < 1){
-         setLoginMessage("login is too short")
-         isLoginValid = false
-     }
-     else{
-         setLoginMessage('');
-         isLoginValid = true
-     }
-
-     if(isLoginValid && isPasswordValid){
-         setIsValidForSubmit(true)
-     }
-     else{
-         setIsValidForSubmit(false)
-     }
-
-}
-
+    const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
+    const { register, formState: { errors }, handleSubmit, watch } = useForm();
+    const watchPassword = watch("password");
     const navigate = useNavigate();
-    const HandleSubmit = (e) => {
+
+    const onSubmit = (data, e) => {
         e.preventDefault();
-        RegisterUser(login, password).then((x)=>{
+        RegisterUser(data.login, data.password).then((x)=>{
             setJwtCookies('jwt', x, {secure: true, sameSite: 'none'})
-            console.log('from component: ' + x)
         });
         navigate('/LandingPage')
     }
-    return(
-        <div>
-            <form className={"mt-5"} onSubmit={HandleSubmit}>
-                <div className={"form-outline mb-4"}>
-                    <input
-                        placeholder='Login'
-                        className={"form-control"}
-                        type={"text"}
-                        name={"Name"}
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
-                        onBlur={(e) => validateField()}
-                    />
-                </div>
 
-                <div className={"form-outline mb-4"}>
-                    <input
+    return (
+        <div className={"mt-2"}>
+            <form onSubmit={handleSubmit(onSubmit)}>
 
-                        placeholder="Password"
-                        className={"form-control"}
-                        type={"password"}
-                        name={"Name"}
-                        value={password}
-                        onChange={(e)=> setPassword(e.target.value)}
-                        onBlur={(e) => validateField()}
+                <div className={"d-flex flex-column"}>
+                    <div className={"row mt-2"}>
+                        <input
+                            placeholder={"login"}
+                            type={"text"}
+                            {...register(
+                                'login',
+                                {required: "login is required"})}
+                        />
+                    </div>
+                    <div className={"row mt-2"}>
+                        <input
+                            placeholder={"password"}
+                            type={"password"}
+                            {...register(
+                                "password",
+                                { required: "password is required" })}
+                        />
+                    </div>
+                    <div className={"row mt-2"}>
+                        <input
 
-                    />
-                </div>
+                            placeholder={"confirmPassword"}
+                            type={"password"}
+                            {...register(
+                                "confirmPassword",
+                                { validate: value => value === watchPassword || "password is not 123" })}
+                        />
+                    </div>
 
-                <div className={"form-outline mb-4"}>
-                    <input
-                        placeholder="Confirm Password"
-                        className={"form-control"}
-                        type={"password"}
-                        name={"Name"}
-                        value={confirmPassword}
-                        onChange={(e)=>setConfirmPassword(e.target.value)}
-                        onBlur={(e) => validateField()}
-
-                    />
-                </div>
-                <h6 className={"text-danger"}>{confirmPasswordMessage}</h6>
-                <h6 className={"text-danger"} >{loginMessage}</h6>
-                <div className={"d-flex justify-content-center mb-3"}>
-                    <input className={"btn btn-primary"} type={"submit"} value={"Sign Up"} disabled={!isValidForSubmit}/>
+                    <div className={"row text-danger"}>
+                        <ErrorMessage
+                            errors={errors}
+                            name="password"
+                        />
+                    </div>
+                    <div className={"row text-danger"}>
+                        <ErrorMessage
+                            errors={errors}
+                            name="login"
+                        />
+                    </div>
+                    <div className={"row text-danger"}>
+                        <ErrorMessage
+                            errors={errors}
+                            name="confirmPassword"
+                        />
+                    </div>
+                    <div className={"mt-4 text-center"}>
+                        <input className={"btn btn-primary"} type="submit" value={"submit"}  />
+                    </div>
                 </div>
             </form>
-</div>
+        </div>
     );
 }
 
