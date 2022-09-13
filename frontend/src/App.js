@@ -8,6 +8,7 @@ import Orders from "./Pages/Orders";
 import SignInUp from "./Pages/SignInUp";
 import Home from "./Pages/Home";
 import { CookiesProvider } from "react-cookie";
+import PrivateRoutes from "./PrivateRoutes";
 
 function App() {
   return (
@@ -15,9 +16,11 @@ function App() {
           <BrowserRouter>
               <Navbar/>
               <Routes>
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/menu" element={<Menu /> } />
-                  <Route path="/orders" element={<Orders />} />
+                  <Route element={<PrivateRoutes/>}>
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/menu" element={<Menu /> } />
+                      <Route path="/orders" element={<Orders />} />
+                  </Route>
                   <Route path="/SignInUp" element={<SignInUp/>}/>
                   <Route path="/Home" element={<Home/>}/>
               </Routes>

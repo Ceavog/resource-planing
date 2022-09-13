@@ -30,10 +30,6 @@ function Navbar() {
         navigate('/SignInUp')
     }
 
-    const  logIn = () =>{
-        navigate('/SignInUp')
-    }
-
     return (
         <>
                 <nav className="navbar navbar-expand-lg navbar-styles d-flex">
@@ -62,9 +58,9 @@ function Navbar() {
                                              <FontAwesomeIcon icon={faUser} />
                                          </Dropdown.Toggle>
                                          <Dropdown.Menu>
-                                             {cookies.jwt === undefined && <Dropdown.Item onClick={logIn}>Login</Dropdown.Item>}
+                                             {cookies.jwt === undefined && <Dropdown.Item onClick={() => navigate('/SignInUp')}>Login</Dropdown.Item>}
                                              {cookies.jwt !== undefined && <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>}
-                                             {cookies.jwt !== undefined && <Dropdown.Item href={"/Settings"} >Settings</Dropdown.Item>}
+                                             {cookies.jwt !== undefined && <Dropdown.Item onClick={() => navigate('/Settings')} >Settings</Dropdown.Item>}
                                          </Dropdown.Menu>
                                      </Dropdown>
                              </div>
