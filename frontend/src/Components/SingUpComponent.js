@@ -4,6 +4,7 @@ import {useNavigate} from "react-router";
 import {useCookies} from "react-cookie";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
+import {toast} from "react-toastify";
 
 function SignInComponent(){
     const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
@@ -15,8 +16,8 @@ function SignInComponent(){
         e.preventDefault();
         RegisterUser(data.login, data.password).then((x)=>{
             setJwtCookies('jwt', x, {secure: true, sameSite: 'none'})
-        });
-        navigate('/LandingPage')
+            navigate('/Home')
+        })
     }
 
     return (

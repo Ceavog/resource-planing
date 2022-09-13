@@ -6,7 +6,7 @@ import Menu from "./Pages/Menu";
 import React from "react";
 import Orders from "./Pages/Orders";
 import SignInUp from "./Pages/SignInUp";
-import LandingPage from "./Pages/LandingPage";
+import Home from "./Pages/Home";
 import { CookiesProvider } from "react-cookie";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
                   <Route path="/menu" element={<Menu /> } />
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/SignInUp" element={<SignInUp/>}/>
-                  <Route path="/LandingPage" element={<LandingPage/>}/>
+                  <Route path="/Home" element={<Home/>}/>
               </Routes>
           </BrowserRouter>
       </CookiesProvider>

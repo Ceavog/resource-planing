@@ -5,8 +5,11 @@ import '../Styles/Navbar.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faUser, faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import {useCookies} from "react-cookie";
-import {Dropdown} from "react-bootstrap";
+import {Dropdown, NavItem} from "react-bootstrap";
 import {GetLogin} from '../Services/UserService.js'
+
+
+
 function Navbar() {
 
     const [cookies, setCookies, removeCookies] = useCookies();
@@ -27,16 +30,18 @@ function Navbar() {
         navigate('/SignInUp')
     }
 
-
+    const  logIn = () =>{
+        navigate('/SignInUp')
+    }
 
     return (
         <>
                 <nav className="navbar navbar-expand-lg navbar-styles d-flex">
+                    <Link className="nav-link mx-4 nav-link-hoover" to={'/Home'}>
+                        Home
+                    </Link>
                         {cookies.jwt !== undefined &&
                             <>
-                                <Link className="nav-link mx-4 nav-link-hoover" to='/Settings'>
-                                    Settings
-                                </Link>
                                 <Link className="nav-link mx-4 nav-link-hoover" to='/Menu'>
                                     Menu
                                 </Link>
@@ -45,20 +50,27 @@ function Navbar() {
                                 </Link>
                             </>
                         }
-                    <Link className="nav-link mx-4 nav-link-hoover ms-auto " to='/SignInUp'>
+                        <NavItem className="ms-auto">
+                        </NavItem>
+                    <NavItem className="nav-link mx-4 ms-auto d-flex">
                         <>
-                            <Dropdown>
-                                <Dropdown.Toggle>
-                                    {`hi ${login} `}
-                                    <FontAwesomeIcon icon={faUser} />
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
-                                    <Dropdown.Item >Settings</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                             <div className="d-flex flex-row">
+                                    <p className="m-2">Hello {login}!</p>
+                                     <Dropdown>
+                                         <Dropdown.Toggle>
+
+                                             <FontAwesomeIcon icon={faUser} />
+                                         </Dropdown.Toggle>
+                                         <Dropdown.Menu>
+                                             {cookies.jwt === undefined && <Dropdown.Item onClick={logIn}>Login</Dropdown.Item>}
+                                             {cookies.jwt !== undefined && <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>}
+                                             {cookies.jwt !== undefined && <Dropdown.Item href={"/Settings"} >Settings</Dropdown.Item>}
+                                         </Dropdown.Menu>
+                                     </Dropdown>
+                             </div>
+
                         </>
-                    </Link>
+                    </NavItem>
                 </nav>
         </>
     );

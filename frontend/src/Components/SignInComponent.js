@@ -4,19 +4,33 @@ import {useCookies} from "react-cookie";
 import {useNavigate} from "react-router";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function SignInComponent(){
     const [jwtCookies, setJwtCookies, removeJwtCookie] = useCookies(['jwt'])
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm({
+        defaultValues:{
+            login: "",
+            password: ""
+        }
+    });
 
-
+    const notify = () => toast("Login or password are incorrect :(");
     const navigate = useNavigate();
     const onSubmit = (data, e) => {
         e.preventDefault();
         LoginUser(data.login, data.password).then((x)=>{
             setJwtCookies('jwt', x, {secure: true, sameSite: 'none'})
-        });
-        navigate('/LandingPage')
+            navigate('/Home')
+
+        }).catch(error => {
+            console.log(error)
+        }).finally(
+            notify,
+            reset()
+        );
+
     }
 
 
@@ -27,6 +41,7 @@ function SignInComponent(){
                 <div className={"d-flex flex-column"}>
                     <div className={"row mt-2"}>
                         <input
+                            id={"loginInput"}
                             placeholder={"login"}
                             type={"text"}
                             {...register(
@@ -36,6 +51,7 @@ function SignInComponent(){
                     </div>
                     <div className={"row mt-2"}>
                         <input
+                            id={"passwordInput"}
                             placeholder={"password"}
                             type={"password"}
                             {...register(
@@ -61,6 +77,7 @@ function SignInComponent(){
                     </div>
                 </div>
             </form>
+            <ToastContainer/>
         </div>
     );
 
