@@ -23,4 +23,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<OrderType> OrderTypes { get; set; }
     public DbSet<ServicePoint> ServicePoints { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<CategoryPositions> CategoryPositions { get; set; }
 }
