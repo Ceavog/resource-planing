@@ -8,4 +8,7 @@ public class CategoryPositions
 
     public int MenuPositionId { get; set; }
     public MenuPosition MenuPosition { get; set; }
+    
+    public int ServicePointId { get; set; }
+    public ServicePoint ServicePoint { get; set; }
 }
