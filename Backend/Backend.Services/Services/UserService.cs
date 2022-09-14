@@ -65,7 +65,8 @@ public class UserService : IUserService
             return "unauthorized";
         }
     }
-
+ 
+    
     #region Private functions
     private UserDto AuthenticateUser(UserDto userDto)
     {

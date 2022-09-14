@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using Backend.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,13 @@ public class OrdersController : Controller
         _orderTypesService = orderTypesService;
     }
 
-    // [HttpGet("GetAllOrders")]
-    // public ActionResult<IEnumerable<OrderModel>> GetAllOrders()
-    // {
-    //     return Json(_orderService.GetAllOrders());
-    // }
+
+    
 
     [HttpPost("addOrderType")]
     public ActionResult AddType()
     {
+        var id = Helpers.GetUserIdFromJwt(HttpContext.Request.Headers["Authorization"].ToString());    
         _orderTypesService.AddType();
         return new StatusCodeResult(200);
     }
