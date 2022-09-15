@@ -7,6 +7,7 @@ import { faUser, faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import {useCookies} from "react-cookie";
 import {Dropdown, NavItem} from "react-bootstrap";
 import {GetLogin} from '../Services/UserService.js'
+import jwt_decode, {JwtPayload} from "jwt-decode";
 
 
 
@@ -14,11 +15,13 @@ function Navbar() {
 
     const [cookies, setCookies, removeCookies] = useCookies();
     const [login, setLogin] = useState()
+
     useEffect(()=>{
         if(cookies.jwt !== undefined){
-            GetLogin(cookies.jwt).then((x)=>{
-                setLogin(x)
-            })
+            const decodedHeader = jwt_decode(cookies.jwt);
+            setLogin(decodedHeader.userLogin);
+            console.log("useeffec fires")
+
         }else {
             setLogin(" user")
         }
@@ -54,7 +57,6 @@ function Navbar() {
                                     <p className="m-2">Hello {login}!</p>
                                      <Dropdown>
                                          <Dropdown.Toggle>
-
                                              <FontAwesomeIcon icon={faUser} />
                                          </Dropdown.Toggle>
                                          <Dropdown.Menu>

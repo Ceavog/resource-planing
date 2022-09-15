@@ -1,8 +1,4 @@
-import data from "bootstrap/js/src/dom/data";
-
 const axios = require('axios').default;
-
-
 const AxiosInstance = axios.create({
     baseURL: 'https://localhost:7161'
 })
@@ -34,17 +30,4 @@ function LoginUser(login, password) {
     })
 }
 
-function GetLogin(jwt){
-    return AxiosInstance.get('/GetLogin',
-        {
-            params:
-                {
-                    jwt:jwt
-                }
-    }).then(respose => {
-        return respose.data;
-    }).catch(error => {
-        throw error
-    })
-}
-export {RegisterUser, LoginUser, GetLogin};
+export {RegisterUser, LoginUser};
