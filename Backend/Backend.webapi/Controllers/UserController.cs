@@ -41,16 +41,4 @@ public class UserController : Controller
         }
     }
 
-    [HttpGet("GetLogin")]
-    public IActionResult GetLogin(string jwt)
-    {
-        try
-        {
-            return Ok(Helpers.GetUserLoginFromJwt(jwt));
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
 }
