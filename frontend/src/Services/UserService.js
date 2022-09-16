@@ -7,7 +7,7 @@ const AxiosInstance = axios.create({
 //and login user with provided credentials
 
 function RegisterUser(login, password){
-    return AxiosInstance.post('/RegisterUser', {
+    return AxiosInstance.post('/RegisterUser',{
         login: login,
         password: password,
     }).then(response =>{
