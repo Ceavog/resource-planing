@@ -45,55 +45,41 @@ function CategoryListComponent(){
     }
 
     return(
-        <Container>
-            <Row>
-                <Col>
-                    <Accordion defaultActiveKey="0">
-                        <>
-                            {categoryList.map((x, index)=>
-                                <Card>
-                                    <Card.Header>
-                                        <ContextAwareToggle eventKey={index}>{x.category.name}</ContextAwareToggle>
-                                    </Card.Header>
-                                    <Accordion.Collapse eventKey={index}>
-                                        <Card.Body>
-                                            <Container>
-                                                <Row>
-                                                    <Col>
-                                                        {x.menuPosition.map((y,index)=>
-                                                            <Button>
-                                                                {y.name}
-                                                            </Button>
-                                                        )}
-                                                    </Col>
-                                                    <Col>
-                                                        <Button>
-                                                            Add Position
-                                                        </Button>
-                                                    </Col>
-                                                </Row>
-                                            </Container>
-                                        </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>)
-                            }
-                            <Card>
-                                <Card.Header>
-                                    <Button>Add Category</Button>
-                                </Card.Header>
-                            </Card>
-                        </>
-                    </Accordion>
-                </Col>
-                <Col>
-                    <ListGroup as="ul">
-                        <ListGroup.Item>
-                            ASASAS
-                        </ListGroup.Item>
-                    </ListGroup>
-                </Col>
-            </Row>
-        </Container>
+            <Accordion defaultActiveKey="0">
+                    {categoryList.map((x, index)=>
+                        <Card>
+                            <Card.Header>
+                                <ContextAwareToggle eventKey={index}>{x.category.name}</ContextAwareToggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey={index}>
+                                <Card.Body>
+                                    <Container>
+                                        <Row>
+                                            <Col>
+                                                {x.menuPosition.map((y,index)=>
+                                                    <Button>
+                                                        {y.name}
+                                                    </Button>
+                                                )}
+                                            </Col>
+                                            <Col>
+                                                <Button>
+                                                    Add Position
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>)
+                    }
+                    <Card>
+                        <Card.Header>
+                            <Button>Add Category</Button>
+                        </Card.Header>
+                    </Card>
+            </Accordion>
+
     )
 }
 

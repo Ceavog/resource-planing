@@ -1,8 +1,19 @@
 import React from 'react';
-
+import CategoryListComponent from "../Components/MenuComponents/CategoryListComponent"
+import {Col, Container, Row} from "react-bootstrap";
 function Menu() {
+
     return (
-        <div>Menu</div>
+        <Container>
+            <Row>
+                <Col>
+                    <CategoryListComponent/>
+                </Col>
+                <Col>
+
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
