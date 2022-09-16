@@ -3,10 +3,9 @@ import {Link} from "react-router-dom"
 import {useNavigate} from "react-router";
 import '../Styles/Navbar.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faUser, faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 import {useCookies} from "react-cookie";
 import {Dropdown, NavItem} from "react-bootstrap";
-import {GetLogin} from '../Services/UserService.js'
 import jwt_decode, {JwtPayload} from "jwt-decode";
 
 
@@ -20,8 +19,6 @@ function Navbar() {
         if(cookies.jwt !== undefined){
             const decodedHeader = jwt_decode(cookies.jwt);
             setLogin(decodedHeader.userLogin);
-            console.log("useeffec fires")
-
         }else {
             setLogin(" user")
         }
