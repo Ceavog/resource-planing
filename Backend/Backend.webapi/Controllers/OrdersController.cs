@@ -28,10 +28,5 @@ public class OrdersController : Controller
         return new StatusCodeResult(200);
     }
 
-    [HttpGet("example")]
-    public IActionResult GetSampleString()
-    {
-        return Ok("example string");
-    }
  
 }
