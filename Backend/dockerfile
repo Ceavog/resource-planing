@@ -2,15 +2,20 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 
 COPY *.sln .
-COPY Backend.DataAccessLibrary/*.csproj ./Backend.DataAccessLibrary/
+COPY Backend.DAL_EF/*.csproj ./Backend.DAL_EF/
 COPY Backend.Services/*.csproj ./Backend.Services/
 COPY Backend.webapi/*.csproj ./Backend.webapi/
+COPY Backend.TestProject/*.csproj ./Backend.TestProject/
+COPY Backend.Shared/*.csproj ./Backend.Shared/
 
 RUN dotnet restore
 
-COPY Backend.DataAccessLibrary/. ./Backend.DataAccessLibrary/
+COPY Backend.DAL_EF/. ./Backend.DAL_EF/
 COPY Backend.Services/. ./Backend.Services/
 COPY Backend.webapi/. ./Backend.webapi/
+COPY Backend.TestProject/. ./Backend.TestProject/
+COPY Backend.Shared/. ./Backend.Shared/
+
 
 WORKDIR /app
 RUN dotnet publish -c Release -o out

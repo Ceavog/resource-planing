@@ -15,16 +15,44 @@ public class CategoryController : Controller
     }
 
     [HttpGet("CategoryWithMenuPositions")]
-    public IActionResult GetCategoryWithMenuPositions(int servicePointId)
+    public IActionResult GetCategoryWithMenuPositions(int userId)
     {
         try
         {
-            return Ok(_categoryService.GetCategoryWithMenuPositionsByServicePointId(servicePointId));
+            return Ok(_categoryService.GetCategoryWithMenuPositionsByServicePointId(userId));
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
+    }
+
+    [HttpPost("AddCategory")]
+    public IActionResult AddCategory(int userId, string categoryName)
+    {
+        try
+        {
+            _categoryService.AddCategory(userId, categoryName);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPost("UpdateCategoryById")]
+    public IActionResult UpdateCategoryById(int categoryId, string newCategoryName)
+    {
+        try
+        {
+            _categoryService.EditCategory(categoryId, newCategoryName);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }  
     }
 
 }

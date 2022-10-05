@@ -4,5 +4,9 @@ namespace Backend.Services.Interface;
 
 public interface ICategoryService
 {
-    IEnumerable<CategoryWithMenuPositionsDto> GetCategoryWithMenuPositionsByServicePointId(int servicePointId);
+    IEnumerable<CategoryWithMenuPositionsDto> GetCategoryWithMenuPositionsByServicePointId(int userId);
+    void AddCategory(int userId, string categoryName);
+    void EditCategory(int categoryId, string newCategoryName);
+    
+
 }

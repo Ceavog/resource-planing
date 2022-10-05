@@ -25,14 +25,23 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="login"></param>
     /// <param name="password"></param>
+    /// <param name="servicePointAddress"></param>
     /// <returns></returns>
-    public string RegisterUser(string login, string password)
+    public string RegisterUser(string login, string password, string servicePointAddress)
     {
+        var servicePoint = new ServicePoint()
+        {
+            Address = servicePointAddress
+        };
+
+        _applicationDbContext.ServicePoints.Add(servicePoint);
+        _applicationDbContext.SaveChanges();
+        
         var user = new User()
         {
             Login = login,
             Password =  BCrypt.Net.BCrypt.HashPassword(password),
-            ServicePointId = 1
+            ServicePointId = servicePoint.Id
         };
         
         _applicationDbContext.Users.Add(user);
@@ -43,7 +52,7 @@ public class UserService : IUserService
             Login = login,
             Password = password
         };
-        var token = LoginUser(userToLogin.Adapt<UserDto>());
+        var token = LoginUser(userToLogin.Adapt<LoginUserDto>());
         return token;
     }
 
@@ -53,7 +62,7 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public string LoginUser(UserDto user)
+    public string LoginUser(LoginUserDto user)
     {
         var authenticatedUser = AuthenticateUser(user);
         if (authenticatedUser != null)
@@ -68,12 +77,12 @@ public class UserService : IUserService
  
     
     #region Private functions
-    private UserDto AuthenticateUser(UserDto userDto)
+    private LoginUserDto AuthenticateUser(LoginUserDto userDto)
     {
         var user = _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(userDto.Login));
         if (user != null)
         {
-            return BCrypt.Net.BCrypt.Verify(userDto.Password,user.Password) ? user.Adapt<UserDto>() : null;
+            return BCrypt.Net.BCrypt.Verify(userDto.Password,user.Password) ? user.Adapt<LoginUserDto>() : null;
         }
         else
         {
@@ -82,7 +91,7 @@ public class UserService : IUserService
     }
 
     
-    private string GenerateJsonWebToken(UserDto userDto)
+    private string GenerateJsonWebToken(LoginUserDto userDto)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -99,7 +108,7 @@ public class UserService : IUserService
             issuer,
             issuer,
             claims,
-            expires: DateTime.Now.AddMinutes(2),
+            expires: DateTime.Now.AddMinutes(30),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

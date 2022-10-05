@@ -14,11 +14,11 @@ public class UserController : Controller
         _userService = userService;
     }
     [HttpPost("RegisterUser")]
-    public IActionResult RegisterUser([FromBody]UserDto user)
+    public IActionResult RegisterUser([FromBody]RegisterUserDto user)
     {
         try
         {
-            var tokenString = _userService.RegisterUser(user.Login, user.Password);
+            var tokenString = _userService.RegisterUser(user.Login, user.Password, user.ServicePointAddress);
             return Ok(tokenString);
         }
         catch (Exception e)
@@ -28,7 +28,7 @@ public class UserController : Controller
     }
 
     [HttpPost("LoginUser")]
-    public IActionResult Login([FromBody] UserDto user)
+    public IActionResult Login([FromBody] LoginUserDto user)
     {
         var tokenString = _userService.LoginUser(user);
         if (tokenString != "unauthorized")

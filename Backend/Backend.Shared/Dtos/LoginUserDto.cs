@@ -1,9 +1,8 @@
 namespace Backend.Shared.Dtos;
 
-public class UserDto
+public class LoginUserDto
 {
     public int Id { get; set; }
     public string Login { get; set; }
     public string Password { get; set; }
-    public string ServicePointAddress { get; set; }
 }

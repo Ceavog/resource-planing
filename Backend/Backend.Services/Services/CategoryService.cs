@@ -1,4 +1,5 @@
 using Backend.DAL_EF;
+using Backend.DataAccessLibrary;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
 using Mapster;
@@ -13,8 +14,10 @@ public class CategoryService : ICategoryService
     {
         _applicationDbContext = applicationDbContext;
     }
-    public IEnumerable<CategoryWithMenuPositionsDto> GetCategoryWithMenuPositionsByServicePointId(int servicePointId)
+    public IEnumerable<CategoryWithMenuPositionsDto> GetCategoryWithMenuPositionsByServicePointId(int userId)
     {
+        var servicePointId = _applicationDbContext.Users.Where(x => x.Id.Equals(userId)).Select(x => x.ServicePointId)
+            .First();
         var categoryPositions =
             _applicationDbContext.CategoryPositions
                 .Where(x=>x.ServicePointId.Equals(servicePointId))
@@ -37,5 +40,35 @@ public class CategoryService : ICategoryService
         }
 
         return CaTegoryWithMenuPositionsList;
+    }
+
+    public void AddCategory(int userId, string categoryName)
+    {
+        var servicePointId = _applicationDbContext.Users.Where(x => x.Id.Equals(userId)).Select(x => x.ServicePointId)
+            .First();
+        var newCategory = new Category()
+        {
+            Name = categoryName,
+            ServicePointId = servicePointId
+        };
+        if (!_applicationDbContext.Categories.Any(x =>
+                x.Name.Equals(categoryName) && x.ServicePointId.Equals(servicePointId)))
+        {
+            _applicationDbContext.Categories.Add(newCategory);
+            _applicationDbContext.SaveChanges();    
+        }
+        else
+        {
+            throw new Exception("category with that name already exists");
+        }
+        
+    }
+
+    public void EditCategory(int categoryId, string newCategoryName)
+    {
+        var category = _applicationDbContext.Categories.First(x => x.Id.Equals(categoryId));
+        category.Name = newCategoryName;
+        _applicationDbContext.Categories.Update(category);
+        _applicationDbContext.SaveChanges();
     }
 }

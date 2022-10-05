@@ -1,6 +1,6 @@
 namespace Backend.Shared.Dtos;
 
-public class UserDto
+public class RegisterUserDto
 {
     public int Id { get; set; }
     public string Login { get; set; }
