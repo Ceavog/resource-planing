@@ -19,7 +19,7 @@ namespace CloudSql
                 // secure - consider a more secure solution such as
                 // Cloud Secret Manager (https://cloud.google.com/secret-manager) to help
                 // keep secrets safe.
-                Server = "pos-364415:europe-central2:possql", 
+                Server = "/cloudsql/pos-364415:europe-central2:possql", 
                 UserID = "pieczywo",   
                 //Password = Environment.GetEnvironmentVariable("DB_PASS"), 
                 Database = "pieczywoDB", 

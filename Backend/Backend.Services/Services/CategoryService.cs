@@ -72,9 +72,8 @@ public class CategoryService : ICategoryService
         _applicationDbContext.SaveChanges();
     }
 
-    public string GetTypeName(int id)
+    public string GetTypeName_(int id)
     {
         return _applicationDbContext.OrderTypes.FirstOrDefault(x => x.Id.Equals(id)).TypeName;
-        
     }
 }
