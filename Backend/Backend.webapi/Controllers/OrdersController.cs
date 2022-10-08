@@ -20,13 +20,13 @@ public class OrdersController : Controller
 
     
 
-    [HttpPost("addOrderType")]
-    public ActionResult AddType()
-    {
-        var id = Helpers.GetUserIdFromJwt(HttpContext.Request.Headers["Authorization"].ToString());    
-        _orderTypesService.AddType();
-        return new StatusCodeResult(200);
-    }
+    // [HttpPost("addOrderType")]
+    // public ActionResult AddType()
+    // {
+    //     var id = Helpers.GetUserIdFromJwt(HttpContext.Request.Headers["Authorization"].ToString());    
+    //     _orderTypesService.AddType();
+    //     return new StatusCodeResult(200);
+    // }
 
  
 }
