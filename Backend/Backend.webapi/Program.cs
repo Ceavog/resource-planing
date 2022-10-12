@@ -19,7 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IJwtConfiguration>(configuration.GetSection("JwtConfiguration").Get<JwtConfiguration>());
 
 // var connectionString = builder.Configuration.GetSection("Configuration").GetSection("MySqlDatabase").Value;
-var connectionString = MySqlUnix.NewMysqlUnixSocketConnectionString().ToString();
+// var connectionString = MySqlUnix.NewMysqlUnixSocketConnectionString().ToString();
+//var connectionString = MySqlUnix.LocalConnectionString();
+var connectionString = "Server=praca-inz_mysql_1; Port=3306; Database=pieczywoDB; Uid=root;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options
@@ -27,6 +29,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             connectionString, 
             ServerVersion.AutoDetect(connectionString));
 });
+
+
+
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrderTypesService, OrderTypesService>();

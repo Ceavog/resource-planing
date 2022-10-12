@@ -18,4 +18,10 @@ public class ExampleController : Controller
     {
         return Ok(_categoryService.GetTypeName_(1));
     }
+    
+    [HttpGet("example1")]
+    public IActionResult GetSampleString1()
+    {
+        return Ok("example");
+    }
 }
