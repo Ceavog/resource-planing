@@ -30,3 +30,4 @@ services:
       dockerfile: dockerfile
     ports:
       - '8000:80'
+    

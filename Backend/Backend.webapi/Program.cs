@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IJwtConfiguration>(configuration.GetSection("JwtCo
 // var connectionString = builder.Configuration.GetSection("Configuration").GetSection("MySqlDatabase").Value;
 // var connectionString = MySqlUnix.NewMysqlUnixSocketConnectionString().ToString();
 //var connectionString = MySqlUnix.LocalConnectionString();
-var connectionString = "Server=praca-inz_mysql_1; Port=3306; Database=pieczywoDB; Uid=root;";
+var connectionString = "Server=praca-inzynierska_mysql_1; Port=3306; Database=pieczywoDB; Uid=root;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options
