@@ -13,15 +13,15 @@ public class ApplicationDbContext : DbContext
     {
         
     }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Client> Clients { get; set; }
-    public DbSet<Delivery> Deliveries { get; set; }
-    public DbSet<Employee> Employees { get; set; }
-    public DbSet<MenuPosition> MenuPositions { get; set; }
+//    public DbSet<Category> Categories { get; set; }
+//    public DbSet<Client> Clients { get; set; }
+//    public DbSet<Delivery> Deliveries { get; set; }
+//    public DbSet<Employee> Employees { get; set; }
+//    public DbSet<MenuPosition> MenuPositions { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderPosition> OrderPositions { get; set; }
     public DbSet<OrderType> OrderTypes { get; set; }
-    public DbSet<ServicePoint> ServicePoints { get; set; }
-    public DbSet<User> Users { get; set; }
-    public DbSet<CategoryPositions> CategoryPositions { get; set; }
+//    public DbSet<ServicePoint> ServicePoints { get; set; }
+    public DbSet<User> Users { get; set; } 
+//    public DbSet<CategoryPositions> CategoryPositions { get; set; }
 }
