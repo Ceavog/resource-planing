@@ -17,7 +17,7 @@ public class ApplicationDbContext : DbContext
 //    public DbSet<Client> Clients { get; set; }
 //    public DbSet<Delivery> Deliveries { get; set; }
 //    public DbSet<Employee> Employees { get; set; }
-//    public DbSet<MenuPosition> MenuPositions { get; set; }
+    public DbSet<MenuPosition> MenuPosition { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderPosition> OrderPositions { get; set; }
     public DbSet<OrderType> OrderTypes { get; set; }
