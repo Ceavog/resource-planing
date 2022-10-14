@@ -9,6 +9,8 @@ public class MenuPosition {
     
     // public int ServicePointId { get; set; }
     // public ServicePoint ServicePoint { get; set; }
+    public int UserId { get; set; }
+    public User User { get; set; }
     
     private ICollection<OrderPosition> OrderPositions { get; set; }
 

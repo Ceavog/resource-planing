@@ -6,10 +6,8 @@ public class Order
     // public int EmployeeId { get; set; }
     // public Employee Employee { get; set; }
     
-    public DateTime MyProperty { get; set; }
+    public DateTime OrderTime { get; set; }
     
-    public bool IsFinished { get; set; }
-
     private ICollection<OrderPosition> OrderPositions { get; set; }
 
     
