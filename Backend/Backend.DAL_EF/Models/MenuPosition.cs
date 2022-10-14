@@ -7,8 +7,8 @@ public class MenuPosition {
     public double Price { get; set; }
     public string Section { get; set; }
     
-    public int ServicePointId { get; set; }
-    public ServicePoint ServicePoint { get; set; }
+    // public int ServicePointId { get; set; }
+    // public ServicePoint ServicePoint { get; set; }
     
     private ICollection<OrderPosition> OrderPositions { get; set; }
 
