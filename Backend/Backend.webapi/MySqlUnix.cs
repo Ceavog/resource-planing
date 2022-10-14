@@ -4,6 +4,9 @@ using MySqlConnector;
 
 namespace CloudSql
 {
+    /// <summary>
+    /// this class is here in case of hosting on google cloud
+    /// </summary>
     public class MySqlUnix
     {
         public static MySqlConnectionStringBuilder NewMysqlUnixSocketConnectionString()
@@ -28,17 +31,6 @@ namespace CloudSql
             };
             // Specify additional properties here.
             return connectionString;
-        }
-
-        public static string LocalConnectionString()
-        {
-            var connectionString = new MySqlConnectionStringBuilder()
-            {
-                Server = "localhost",
-                Port = 3306,
-                UserID = "root",
-            };
-            return connectionString.ToString();
         }
     }
 }
