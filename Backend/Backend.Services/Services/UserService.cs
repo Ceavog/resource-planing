@@ -29,19 +29,10 @@ public class UserService : IUserService
     /// <returns></returns>
     public string RegisterUser(string login, string password, string servicePointAddress)
     {
-        var servicePoint = new ServicePoint()
-        {
-            Address = servicePointAddress
-        };
-
-        _applicationDbContext.ServicePoints.Add(servicePoint);
-        _applicationDbContext.SaveChanges();
-        
         var user = new User()
         {
             Login = login,
             Password =  BCrypt.Net.BCrypt.HashPassword(password),
-            ServicePointId = servicePoint.Id
         };
         
         _applicationDbContext.Users.Add(user);
