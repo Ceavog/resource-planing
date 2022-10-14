@@ -3,6 +3,7 @@ using System;
 using Backend.DAL_EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.DAL_EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221014121846_changed MenuPositions Table name to Products")]
+    partial class changedMenuPositionsTablenametoProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,20 +46,20 @@ namespace Backend.DAL_EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("ManuPositionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuPositionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("MenuPositionId");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderPositions");
                 });
@@ -136,21 +138,21 @@ namespace Backend.DAL_EF.Migrations
 
             modelBuilder.Entity("Backend.DataAccessLibrary.OrderPosition", b =>
                 {
+                    b.HasOne("Backend.DataAccessLibrary.Products", "MenuPosition")
+                        .WithMany()
+                        .HasForeignKey("MenuPositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Backend.DataAccessLibrary.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.DataAccessLibrary.Products", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("MenuPosition");
 
                     b.Navigation("Order");
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Products", b =>
