@@ -68,7 +68,7 @@
 //     {
 //         var category = _applicationDbContext.Categories.First(x => x.Id.Equals(categoryId));
 //         category.Name = newCategoryName;
-//         _applicationDbContext.Categories.Update(category);
+//         _applicationDbContext.Orders.Update()
 //         _applicationDbContext.SaveChanges();
 //     }
 //
