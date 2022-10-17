@@ -12,7 +12,7 @@ public class ProductsController : Controller
     {
         _productService = productService;
     }
-    [HttpGet]
+    [HttpGet("AllProductsByUserId")]
     public ActionResult<IEnumerable<ProductDto>> GetAllByUserId(int userId)
     {
         try
@@ -25,7 +25,7 @@ public class ProductsController : Controller
         }
     }
     
-    [HttpGet]
+    [HttpGet("ProductsByUserId")]
     public ActionResult<ProductDto> GetById(int id)
     {
         try
@@ -38,7 +38,7 @@ public class ProductsController : Controller
         }
     }
 
-    [HttpPost]
+    [HttpPost("AddProduct")]
     public ActionResult<ProductDto> Add(ProductDto productDto)
     {
         try
@@ -51,7 +51,7 @@ public class ProductsController : Controller
         }
     }
 
-    [HttpPut]
+    [HttpPut("UpdateProduct")]
     public ActionResult<ProductDto> Update(ProductDto productDto)
     {
         try
@@ -64,7 +64,7 @@ public class ProductsController : Controller
         }
     }
 
-    [HttpDelete]
+    [HttpDelete("DeleteProduct")]
     public IActionResult Delete(int id)
     {
         try
@@ -78,7 +78,7 @@ public class ProductsController : Controller
         }
     }
 
-    [HttpPost]
+    [HttpPost("AddManyProducts")]
     public IActionResult AddRange(ICollection<ProductDto> productsDto)
     {
         throw new NotImplementedException();
