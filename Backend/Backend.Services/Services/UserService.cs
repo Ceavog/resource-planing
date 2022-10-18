@@ -1,10 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
+using Backend.Shared.Dtos.UserDtos;
 using Mapster;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,9 +16,11 @@ public class UserService : IUserService
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly IJwtConfiguration _jwtConfiguration;
-    public UserService(ApplicationDbContext applicationDbContext, IJwtConfiguration jwtConfiguration)
+    private readonly TokenValidationParameters _tokenValidationParameters;
+    public UserService(ApplicationDbContext applicationDbContext, IJwtConfiguration jwtConfiguration, TokenValidationParameters tokenValidationParameters)
     {
         _jwtConfiguration = jwtConfiguration;
+        _tokenValidationParameters = tokenValidationParameters;
         _applicationDbContext = applicationDbContext;
     }
     /// <summary>
@@ -25,9 +29,8 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="login"></param>
     /// <param name="password"></param>
-    /// <param name="servicePointAddress"></param>
     /// <returns></returns>
-    public string RegisterUser(string login, string password, string servicePointAddress)
+    public void RegisterUser(string login, string password)
     {
         var user = new User()
         {
@@ -35,16 +38,19 @@ public class UserService : IUserService
             Password =  BCrypt.Net.BCrypt.HashPassword(password),
         };
         
-        _applicationDbContext.Users.Add(user);
-        _applicationDbContext.SaveChanges();
+        var addedUser = _applicationDbContext.Users.Add(user);
 
-        var userToLogin = new User()
+        _applicationDbContext.SaveChanges();
+        
+        var refreshToken = new RefreshToken
         {
-            Login = login,
-            Password = password
+            Token = GenerateRefreshToken(),
+            ExpirationTime = DateTime.Now.AddMonths(1),
+            UserId = addedUser.Entity.Id
         };
-        var token = LoginUser(userToLogin.Adapt<LoginUserDto>());
-        return token;
+
+        _applicationDbContext.RefreshTokens.Add(refreshToken);
+        _applicationDbContext.SaveChanges();
     }
 
     
@@ -53,35 +59,58 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    public string LoginUser(LoginUserDto user)
+    public AuthenticatedUserResposeDto LoginUser(LoginUserDto user)
     {
-        var authenticatedUser = AuthenticateUser(user);
-        if (authenticatedUser != null)
+        var authenticatedUser =
+                _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(user.Login));
+        if (authenticatedUser == default)
         {
-             return GenerateJsonWebToken(authenticatedUser);
+            return null;
         }
-        else
+
+        if (!BCrypt.Net.BCrypt.Verify(user.Password, authenticatedUser.Password))
         {
-            return "unauthorized";
+            return null;
         }
+
+        var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(x =>
+            x.UserId.Equals(authenticatedUser.Id) && x.ExpirationTime > DateTime.Now);
+        if (refreshToken == default)
+        {
+            return null;
+        }
+
+        var token = GenerateJsonWebToken(user);
+        return new AuthenticatedUserResposeDto { RefreshToken = refreshToken.Token, Token = token };
     }
- 
-    
-    #region Private functions
-    private LoginUserDto AuthenticateUser(LoginUserDto userDto)
+
+    public AuthenticatedUserResposeDto RefreshToken(string refreshToken, string accessToken)
     {
-        var user = _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(userDto.Login));
-        if (user != null)
+        //validate accessToken
+        var tokenHandler = new JwtSecurityTokenHandler();
+        SecurityToken securityToken;
+        var principal = tokenHandler.ValidateToken(accessToken, _tokenValidationParameters, out securityToken);
+        var jwtSecurityToken = securityToken as JwtSecurityToken;
+        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            throw new SecurityTokenException("Invalid token");
+        var userLogin = principal.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
+        var user = _applicationDbContext.Users.FirstOrDefault(x=>x.Login.Equals(userLogin));
+        if (_applicationDbContext.RefreshTokens.Any(x => x.UserId.Equals(user.Id) && x.Token.Equals(refreshToken) && x.ExpirationTime > DateTime.Now))
         {
-            return BCrypt.Net.BCrypt.Verify(userDto.Password,user.Password) ? user.Adapt<LoginUserDto>() : null;
+            return new AuthenticatedUserResposeDto
+            {
+                RefreshToken = refreshToken,
+                Token = GenerateJsonWebToken(user.Adapt<LoginUserDto>())
+            };
         }
         else
         {
             return null;
         }
     }
-
     
+    #region Private functions
+   
     private string GenerateJsonWebToken(LoginUserDto userDto)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
@@ -89,7 +118,6 @@ public class UserService : IUserService
 
         //here i can add any claims
         var claims = new[] {    
-            new Claim("userId", userDto.Id.ToString()),
             new Claim("userLogin", userDto.Login),
         };
 
@@ -103,6 +131,14 @@ public class UserService : IUserService
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    private string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
     }
     #endregion
 

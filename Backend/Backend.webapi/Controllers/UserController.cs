@@ -14,12 +14,12 @@ public class UserController : Controller
         _userService = userService;
     }
     [HttpPost("RegisterUser")]
-    public IActionResult RegisterUser([FromBody]RegisterUserDto user)
+    public IActionResult RegidefaultsterUser(string login, string password)
     {
         try
         {
-            var tokenString = _userService.RegisterUser(user.Login, user.Password, user.ServicePointAddress);
-            return Ok(tokenString);
+            _userService.RegisterUser(login, password);
+            return Ok();
         }
         catch (Exception e)
         {
@@ -28,17 +28,32 @@ public class UserController : Controller
     }
 
     [HttpPost("LoginUser")]
-    public IActionResult Login([FromBody] LoginUserDto user)
+    public IActionResult Login(string login, string password)
     {
-        var tokenString = _userService.LoginUser(user);
-        if (tokenString != "unauthorized")
+        var authenticatedUserRespose = _userService.LoginUser(new LoginUserDto{Login = login, Password = password});
+        if (authenticatedUserRespose != null)
         {
-            return Ok(tokenString);
+            return Ok(authenticatedUserRespose);
         }
         else
         {
             return Unauthorized();
         }
     }
+
+    [HttpPost("RefreshToken")]
+    public IActionResult RefreshToken(string expiredToken, string refreshToken)
+    {
+        var refreshedTokenResponse = _userService.RefreshToken(refreshToken, expiredToken);
+        if (refreshedTokenResponse != null)
+        {
+            return Ok(refreshedTokenResponse);
+        }
+        else
+        {
+            return Unauthorized();
+        }
+    }
+    
 
 }
