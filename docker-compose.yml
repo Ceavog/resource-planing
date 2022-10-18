@@ -21,8 +21,7 @@ services:
     expose:
       - '3306'
     environment:
-      - MYSQL_USER=root
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
   backend:
     container_name: et_backend
     build: 
