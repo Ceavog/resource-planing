@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Backend.Services;
-using CloudSql;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -19,10 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IJwtConfiguration>(configuration.GetSection("JwtConfiguration").Get<JwtConfiguration>());
 
 var connectionString = builder.Configuration.GetSection("Configuration").GetSection("MySqlDatabase").Value;
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-});
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), ServiceLifetime.Singleton);
 
 
 builder.Services.AddScoped<IProductService, ProductService>();
