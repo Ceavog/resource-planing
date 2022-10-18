@@ -31,7 +31,7 @@ public class ProductService : IProductService
         var dbProduct = productDto.Adapt<Products>();
         var productEntity =_applicationDbContext.Products.Add(dbProduct);
         _applicationDbContext.SaveChanges();
-        return productEntity.Adapt<ProductDto>();
+        return productEntity.Entity.Adapt<ProductDto>();
     }
 
     public ProductDto AddRangeProduct(IEnumerable<ProductDto> productsDto)
