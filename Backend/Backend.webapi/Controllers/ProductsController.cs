@@ -1,10 +1,12 @@
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.ProductDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.webapi;
 
 [ApiController]
+//[Authorize]
 public class ProductsController : Controller
 {
     private readonly IProductService _productService;
