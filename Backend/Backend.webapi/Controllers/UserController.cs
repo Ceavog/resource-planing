@@ -27,7 +27,7 @@ public class UserController : Controller
         }
     }
 
-    [HttpPost("LoginUser")]
+    [HttpGet("LoginUser")]
     public IActionResult Login(string login, string password)
     {
         var authenticatedUserRespose = _userService.LoginUser(new LoginUserDto{Login = login, Password = password});
@@ -41,7 +41,7 @@ public class UserController : Controller
         }
     }
 
-    [HttpPost("RefreshToken")]
+    [HttpGet("RefreshToken")]
     public IActionResult RefreshToken(string expiredToken, string refreshToken)
     {
         var refreshedTokenResponse = _userService.RefreshToken(refreshToken, expiredToken);
