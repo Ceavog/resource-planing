@@ -10,10 +10,12 @@ namespace Backend.webapi;
 public class ProductsController : Controller
 {
     private readonly IProductService _productService;
+
     public ProductsController(IProductService productService)
     {
         _productService = productService;
     }
+
     [HttpGet("AllProductsByUserId")]
     public ActionResult<IEnumerable<ProductDto>> GetAllByUserId(int userId)
     {
@@ -26,7 +28,7 @@ public class ProductsController : Controller
             return BadRequest(e.Message);
         }
     }
-    
+
     [HttpGet("ProductsByUserId")]
     public ActionResult<ProductDto> GetById(int id)
     {

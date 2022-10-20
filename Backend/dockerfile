@@ -3,6 +3,7 @@ WORKDIR /app
 
 COPY *.sln .
 COPY Backend.DAL_EF/*.csproj ./Backend.DAL_EF/
+COPY Backend.Repository/*.csproj ./Backend.Repository/
 COPY Backend.Services/*.csproj ./Backend.Services/
 COPY Backend.webapi/*.csproj ./Backend.webapi/
 COPY Backend.TestProject/*.csproj ./Backend.TestProject/
@@ -15,6 +16,8 @@ COPY Backend.Services/. ./Backend.Services/
 COPY Backend.webapi/. ./Backend.webapi/
 COPY Backend.TestProject/. ./Backend.TestProject/
 COPY Backend.Shared/. ./Backend.Shared/
+COPY Backend.Repository/. ./Backend.Repository/
+
 
 
 WORKDIR /app

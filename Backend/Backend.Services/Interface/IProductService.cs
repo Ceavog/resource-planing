@@ -8,10 +8,9 @@ public interface IProductService
     IEnumerable<ProductDto> GetAllProductsByUserId(int id);
     ProductDto GetProductById(int id);
     ProductDto AddProduct(ProductDto productDto);
-    ProductDto AddRangeProduct(IEnumerable<ProductDto> productsDto);
     ProductDto UpdateProduct(ProductDto productDto);
-    void DeleteProduct(int id);
-    
+    ProductDto DeleteProduct(int id);
+
 
 
 
