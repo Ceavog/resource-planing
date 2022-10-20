@@ -26,7 +26,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
 //register services
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IOrderTypesService, OrderTypesService>();
 
 
 //register repositories 
