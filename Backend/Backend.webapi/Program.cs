@@ -1,5 +1,7 @@
 using System.Text;
 using Backend.DAL_EF;
+using Backend.Repository;
+using Backend.Repository.Interfaces;
 using Backend.Services.Interface;
 using Backend.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,9 +23,15 @@ var connectionString = builder.Configuration.GetSection("Configuration").GetSect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)), ServiceLifetime.Singleton);
 
 
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IOrderTypesService, OrderTypesService>();
+//register services
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IOrderTypesService, OrderTypesService>();
+
+
+//register repositories 
+builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
+
 var tokenValidationParameters = new TokenValidationParameters()
 {
     ValidateIssuer = true,

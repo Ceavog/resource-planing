@@ -58,6 +58,6 @@ public class ProductService : IProductService
 
     public void Test()
     {
-        _productsRepository.
+        _productsRepository.Test();
     }
 }
