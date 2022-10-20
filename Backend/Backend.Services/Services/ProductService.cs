@@ -19,45 +19,24 @@ public class ProductService : IProductService
 
     public IEnumerable<ProductDto> GetAllProductsByUserId(int userId)
     {
-        var productsEntities = _applicationDbContext.Products.Where(x=>x.UserId.Equals(userId));
-        return productsEntities.Adapt<IEnumerable<ProductDto>>();
+        return _productsRepository.GetAllProductsByUserId(userId).Adapt<IEnumerable<ProductDto>>();
     }
 
     public ProductDto GetProductById(int id)
     {
-        var productEntity = _applicationDbContext.Products.Find(id);
-        return productEntity.Adapt<ProductDto>();
+        return _productsRepository.Get(id)!.Adapt<ProductDto>();
     }
 
     public ProductDto AddProduct(ProductDto productDto)
     {
-        var dbProduct = productDto.Adapt<Products>();
-        var productEntity =_applicationDbContext.Products.Add(dbProduct);
-        _applicationDbContext.SaveChanges();
-        return productEntity.Entity.Adapt<ProductDto>();
+        return _productsRepository.Add(productDto.Adapt<Products>()).Adapt<ProductDto>();
     }
-
-    public ProductDto AddRangeProduct(IEnumerable<ProductDto> productsDto)
-    {
-        throw new NotImplementedException();
-    }
-
     public ProductDto UpdateProduct(ProductDto productDto)
     {
-        var dbProduct = productDto.Adapt<Products>();
-        var updatedProduct = _applicationDbContext.Products.Update(dbProduct);
-        _applicationDbContext.SaveChanges();
-        return updatedProduct.Adapt<ProductDto>(); 
-
+        return _productsRepository.Update(productDto.Adapt<Products>()).Adapt<ProductDto>();
     }
-    public void DeleteProduct(int id)
+    public ProductDto DeleteProduct(int id)
     {
-        _applicationDbContext.Products.Remove(_applicationDbContext.Products.Find(id) ?? throw new InvalidOperationException());
-        _applicationDbContext.SaveChanges();
-    }
-
-    public void Test()
-    {
-        _productsRepository.Test();
+        return _productsRepository.Delete(id).Adapt<ProductDto>();
     }
 }
