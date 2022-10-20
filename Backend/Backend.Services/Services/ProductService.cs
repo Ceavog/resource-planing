@@ -1,5 +1,7 @@
 using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
+using Backend.Repository;
+using Backend.Repository.Interfaces;
 using Backend.Shared.Dtos.ProductDtos;
 using Mapster;
 
@@ -8,10 +10,11 @@ namespace Backend.Services.Interface;
 public class ProductService : IProductService
 {
     private readonly ApplicationDbContext _applicationDbContext;
-
-    public ProductService(ApplicationDbContext applicationDbContext)
+    private readonly IProductsRepository _productsRepository;
+    public ProductService(ApplicationDbContext applicationDbContext, IProductsRepository productsRepository)
     {
         _applicationDbContext = applicationDbContext;
+        _productsRepository = productsRepository;
     }
 
     public IEnumerable<ProductDto> GetAllProductsByUserId(int userId)
@@ -49,7 +52,12 @@ public class ProductService : IProductService
     }
     public void DeleteProduct(int id)
     {
-        _applicationDbContext.Products.Remove(_applicationDbContext.Products.Find(id));
+        _applicationDbContext.Products.Remove(_applicationDbContext.Products.Find(id) ?? throw new InvalidOperationException());
         _applicationDbContext.SaveChanges();
+    }
+
+    public void Test()
+    {
+        _productsRepository.
     }
 }

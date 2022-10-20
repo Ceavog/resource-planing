@@ -11,7 +11,8 @@ public interface IProductService
     ProductDto AddRangeProduct(IEnumerable<ProductDto> productsDto);
     ProductDto UpdateProduct(ProductDto productDto);
     void DeleteProduct(int id);
-    
+    void Test();
+
 
 
 
