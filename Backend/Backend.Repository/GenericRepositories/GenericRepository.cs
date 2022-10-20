@@ -11,12 +11,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     }
     public IEnumerable<T> GetAll()
     {
-        throw new NotImplementedException();
+        return _applicationDbContext.Set<T>().ToList();
     }
 
-    public T Get(int id)
+    public T? Get(int id)
     {
-        throw new NotImplementedException();
+        return _applicationDbContext.Set<T>().Find(id);
     }
 
     public T Add(T entity)
@@ -28,11 +28,20 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public T Update(T entity)
     {
-        throw new NotImplementedException();
+        var updatedEntity = _applicationDbContext.Set<T>().Update(entity);
+        _applicationDbContext.SaveChanges();
+        return updatedEntity.Entity;
     }
 
     public T Delete(int id)
     {
-        throw new NotImplementedException();
+        var entityToDelete = _applicationDbContext.Set<T>().Find(id);
+        
+        if (entityToDelete == null) return null;
+        
+        var deletedEntity = _applicationDbContext.Set<T>().Remove(entityToDelete);
+        _applicationDbContext.SaveChanges();
+        return deletedEntity.Entity;
+
     }
 }
