@@ -13,8 +13,8 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
         _applicationDbContext = applicationDbContext;
     }
 
-    public void Test()
+    public IEnumerable<Products> GetAllProductsByUserId(int id)
     {
-        throw new NotImplementedException();
+        return _applicationDbContext.Products.Where(x => x.UserId.Equals(id));
     }
 }

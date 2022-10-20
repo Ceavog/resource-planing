@@ -5,5 +5,5 @@ namespace Backend.Repository.Interfaces;
 
 public interface IProductsRepository : IGenericRepository<Products>
 {
-    void Test();
+    IEnumerable<Products> GetAllProductsByUserId(int id);
 }
