@@ -4,6 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
+using Backend.Repository;
+using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
@@ -35,6 +37,10 @@ public class UserService : IUserService
     /// <returns></returns>
     public void RegisterUser(string login, string password)
     {
+        if (_userRepository.CheckIfLoginExists(login))
+        {
+            throw new ArgumentException("This login already exists");
+        }   
         var user = new User()
         {
             Login = login,
@@ -42,14 +48,8 @@ public class UserService : IUserService
         };
         
         var addedUser = _userRepository.Add(user);
-        
-        var refreshToken = new RefreshToken
-        {
-            Token = GenerateRefreshToken(),
-            ExpirationTime = DateTime.Now.AddMonths(1),
-            UserId = addedUser.Id
-        };
 
+        var refreshToken = GenerateRefreshToken(addedUser.Id);
         _refreshTokenRepository.Add(refreshToken);
         // _applicationDbContext.RefreshTokens.Add(refreshToken);
         // _applicationDbContext.SaveChanges();
@@ -66,12 +66,13 @@ public class UserService : IUserService
         var authenticatedUser = _userRepository.GetUserByLogin(user.Login);
         if (authenticatedUser == null)
         {
-            return null;
+            throw new ArgumentException("Login does not exists");
         }
 
         if (!BCrypt.Net.BCrypt.Verify(user.Password, authenticatedUser.Password))
         {
-            return null;
+            throw new ArgumentException();
+
         }
 
         // var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(x =>
@@ -79,7 +80,8 @@ public class UserService : IUserService
         var refreshToken = _refreshTokenRepository.GetRefreshTokenByUserId(authenticatedUser.Id);
         if (refreshToken == null)
         {
-            return null;
+            refreshToken = GenerateRefreshToken(authenticatedUser.Id);
+            _refreshTokenRepository.Add(refreshToken);
         }
 
         var token = GenerateJsonWebToken(user);
@@ -135,12 +137,19 @@ public class UserService : IUserService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    private string GenerateRefreshToken()
+    private RefreshToken GenerateRefreshToken(int addedUserId)
     {
         var randomNumber = new byte[32];
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
+        
+        var refreshToken = new RefreshToken
+        {
+            Token = Convert.ToBase64String(randomNumber),
+            ExpirationTime = DateTime.Now.AddMonths(1),
+            UserId = addedUserId
+        };
+        return refreshToken;
     }
     #endregion
 

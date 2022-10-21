@@ -18,4 +18,9 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         var user = _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(login));
         return user;
     }
+
+    public bool CheckIfLoginExists(string login)
+    {
+        return _applicationDbContext.Users.Any(x => x.Login.Equals(login));
+    }
 }

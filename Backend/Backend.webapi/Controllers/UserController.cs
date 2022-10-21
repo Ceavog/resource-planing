@@ -14,7 +14,7 @@ public class UserController : Controller
         _userService = userService;
     }
     [HttpPost("RegisterUser")]
-    public IActionResult RegidefaultsterUser(string login, string password)
+    public IActionResult RegisterUser(string login, string password)
     {
         try
         {
@@ -30,12 +30,11 @@ public class UserController : Controller
     [HttpGet("LoginUser")]
     public IActionResult Login(string login, string password)
     {
-        var authenticatedUserRespose = _userService.LoginUser(new LoginUserDto{Login = login, Password = password});
-        if (authenticatedUserRespose != null)
+        try
         {
-            return Ok(authenticatedUserRespose);
+            return Ok(_userService.LoginUser(new LoginUserDto{Login = login, Password = password}));
         }
-        else
+        catch (Exception e)
         {
             return Unauthorized();
         }
@@ -44,12 +43,11 @@ public class UserController : Controller
     [HttpGet("RefreshToken")]
     public IActionResult RefreshToken(string expiredToken, string refreshToken)
     {
-        var refreshedTokenResponse = _userService.RefreshToken(refreshToken, expiredToken);
-        if (refreshedTokenResponse != null)
+        try
         {
-            return Ok(refreshedTokenResponse);
+            return Ok(_userService.RefreshToken(refreshToken, expiredToken));
         }
-        else
+        catch (Exception e)
         {
             return Unauthorized();
         }
