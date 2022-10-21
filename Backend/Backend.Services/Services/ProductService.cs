@@ -9,11 +9,9 @@ namespace Backend.Services.Interface;
 
 public class ProductService : IProductService
 {
-    private readonly ApplicationDbContext _applicationDbContext;
     private readonly IProductsRepository _productsRepository;
-    public ProductService(ApplicationDbContext applicationDbContext, IProductsRepository productsRepository)
+    public ProductService(IProductsRepository productsRepository)
     {
-        _applicationDbContext = applicationDbContext;
         _productsRepository = productsRepository;
     }
 

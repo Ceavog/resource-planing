@@ -15,18 +15,16 @@ namespace Backend.Services.Services;
 
 public class UserService : IUserService
 {
-    private readonly ApplicationDbContext _applicationDbContext;
     private readonly IJwtConfiguration _jwtConfiguration;
     private readonly TokenValidationParameters _tokenValidationParameters;
     private readonly IUserRepository _userRepository;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
-    public UserService(ApplicationDbContext applicationDbContext, IJwtConfiguration jwtConfiguration, TokenValidationParameters tokenValidationParameters, IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository)
+    public UserService(IJwtConfiguration jwtConfiguration, TokenValidationParameters tokenValidationParameters, IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository)
     {
         _jwtConfiguration = jwtConfiguration;
         _tokenValidationParameters = tokenValidationParameters;
         _userRepository = userRepository;
         _refreshTokenRepository = refreshTokenRepository;
-        _applicationDbContext = applicationDbContext;
     }
     /// <summary>
     /// this method adds User with default service point
