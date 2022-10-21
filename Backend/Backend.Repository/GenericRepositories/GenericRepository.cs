@@ -16,7 +16,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public T? Get(int id)
     {
-        return _applicationDbContext.Set<T>().Find(id);
+        var item =_applicationDbContext.Set<T>().Find(id);
+        if (item == null)
+        {
+            throw new Exception("Cant find entity with that id");
+        }
+
+        return item;
     }
 
     public T Add(T entity)
