@@ -107,7 +107,6 @@ public class UserServiceTests
             
         refreshTokenExists.Should().BeTrue();
         
-        
         _applicationDbContext.Users.Remove(user);
         _applicationDbContext.RefreshTokens.Remove(
             _applicationDbContext.RefreshTokens.First(x => x.UserId.Equals(user.Id)));
