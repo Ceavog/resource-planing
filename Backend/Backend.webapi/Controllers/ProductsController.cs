@@ -73,8 +73,8 @@ public class ProductsController : Controller
     {
         try
         {
-            _productService.DeleteProduct(id);
-            return Ok();
+            
+            return Ok(Json(_productService.DeleteProduct(id)));
         }
         catch (Exception e)
         {
