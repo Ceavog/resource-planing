@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
+using Backend.Repository.Interfaces;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
 using Backend.Shared.Dtos.UserDtos;
@@ -17,10 +18,14 @@ public class UserService : IUserService
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly IJwtConfiguration _jwtConfiguration;
     private readonly TokenValidationParameters _tokenValidationParameters;
-    public UserService(ApplicationDbContext applicationDbContext, IJwtConfiguration jwtConfiguration, TokenValidationParameters tokenValidationParameters)
+    private readonly IUserRepository _userRepository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
+    public UserService(ApplicationDbContext applicationDbContext, IJwtConfiguration jwtConfiguration, TokenValidationParameters tokenValidationParameters, IUserRepository userRepository, IRefreshTokenRepository refreshTokenRepository)
     {
         _jwtConfiguration = jwtConfiguration;
         _tokenValidationParameters = tokenValidationParameters;
+        _userRepository = userRepository;
+        _refreshTokenRepository = refreshTokenRepository;
         _applicationDbContext = applicationDbContext;
     }
     /// <summary>
@@ -38,19 +43,18 @@ public class UserService : IUserService
             Password =  BCrypt.Net.BCrypt.HashPassword(password),
         };
         
-        var addedUser = _applicationDbContext.Users.Add(user);
-
-        _applicationDbContext.SaveChanges();
+        var addedUser = _userRepository.Add(user);
         
         var refreshToken = new RefreshToken
         {
             Token = GenerateRefreshToken(),
             ExpirationTime = DateTime.Now.AddMonths(1),
-            UserId = addedUser.Entity.Id
+            UserId = addedUser.Id
         };
 
-        _applicationDbContext.RefreshTokens.Add(refreshToken);
-        _applicationDbContext.SaveChanges();
+        _refreshTokenRepository.Add(refreshToken);
+        // _applicationDbContext.RefreshTokens.Add(refreshToken);
+        // _applicationDbContext.SaveChanges();
     }
 
     
@@ -61,9 +65,8 @@ public class UserService : IUserService
     /// <returns></returns>
     public AuthenticatedUserResposeDto LoginUser(LoginUserDto user)
     {
-        var authenticatedUser =
-                _applicationDbContext.Users.FirstOrDefault(x => x.Login.Equals(user.Login));
-        if (authenticatedUser == default)
+        var authenticatedUser = _userRepository.GetUserByLogin(user.Login);
+        if (authenticatedUser == null)
         {
             return null;
         }
@@ -73,9 +76,10 @@ public class UserService : IUserService
             return null;
         }
 
-        var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(x =>
-            x.UserId.Equals(authenticatedUser.Id) && x.ExpirationTime > DateTime.Now);
-        if (refreshToken == default)
+        // var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(x =>
+        //     x.UserId.Equals(authenticatedUser.Id) && x.ExpirationTime > DateTime.Now);
+        var refreshToken = _refreshTokenRepository.GetRefreshTokenByUserId(authenticatedUser.Id);
+        if (refreshToken == null)
         {
             return null;
         }
@@ -88,14 +92,14 @@ public class UserService : IUserService
     {
         //validate accessToken
         var tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken securityToken;
-        var principal = tokenHandler.ValidateToken(accessToken, _tokenValidationParameters, out securityToken);
+        var principal = tokenHandler.ValidateToken(accessToken, _tokenValidationParameters, out var securityToken);
         var jwtSecurityToken = securityToken as JwtSecurityToken;
         if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             throw new SecurityTokenException("Invalid token");
         var userLogin = principal.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
-        var user = _applicationDbContext.Users.FirstOrDefault(x=>x.Login.Equals(userLogin));
-        if (_applicationDbContext.RefreshTokens.Any(x => x.UserId.Equals(user.Id) && x.Token.Equals(refreshToken) && x.ExpirationTime > DateTime.Now))
+        // var user = _applicationDbContext.Users.FirstOrDefault(x=>x.Login.Equals(userLogin));
+        var user = _userRepository.GetUserByLogin(userLogin);
+        if (_refreshTokenRepository.CheckIfUserWithGivenRefreshTokenExists(user.Id, refreshToken))
         {
             return new AuthenticatedUserResposeDto
             {
