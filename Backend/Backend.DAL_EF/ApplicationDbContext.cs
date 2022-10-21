@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = "Server=praca-inzynierska_mysql_1; Port=3306; Database=pieczywoDB; Uid=root;";
+        //var connectionString = "Server=localhost; Port=3306; Database=pieczywoDB; Uid=root;";
         optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
     }
 //    public DbSet<Category> Categories { get; set; }
