@@ -15,6 +15,9 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
 
     public IEnumerable<Products> GetAllProductsByUserId(int id)
     {
-        return _applicationDbContext.Products.Where(x => x.UserId.Equals(id));
+        if (_applicationDbContext.Users.Any(x => x.Id.Equals(id))) {
+            return _applicationDbContext.Products.Where(x => x.UserId.Equals(id));
+        }
+        throw new ArgumentException("User With This Id Does not exists");
     }
 }

@@ -6,4 +6,5 @@ namespace Backend.Repository.Interfaces;
 public interface IUserRepository : IGenericRepository<User>
 {
     User? GetUserByLogin(string login);
+    bool CheckIfLoginExists(string login);
 }

@@ -29,7 +29,7 @@ public class ProductsController : Controller
         }
     }
 
-    [HttpGet("ProductsByUserId")]
+    [HttpGet("GetProductId")]
     public ActionResult<ProductDto> GetById(int id)
     {
         try
@@ -87,4 +87,6 @@ public class ProductsController : Controller
     {
         throw new NotImplementedException();
     }
+    
+    
 }
