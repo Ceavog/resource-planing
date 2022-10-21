@@ -30,6 +30,9 @@ builder.Services.AddTransient<IUserService, UserService>();
 
 //register repositories 
 builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+
 
 var tokenValidationParameters = new TokenValidationParameters()
 {
