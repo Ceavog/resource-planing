@@ -15,6 +15,7 @@ services:
 #      - CHOKIDAR_USEPOLLING=true
      
   mysql:
+    container_name: db
     image: mysql
     ports:
       - '3306:3306'
