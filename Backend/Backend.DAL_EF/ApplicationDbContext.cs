@@ -19,9 +19,17 @@ public class ApplicationDbContext : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connectionString = "Server=praca-inz_mysql_1; Port=3306; Database=pieczywoDB; Uid=root;";
-        //var connectionString = "Server=localhost; Port=3306; Database=pieczywoDB; Uid=root;";
-        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        try
+        {
+            var connectionString = "Server=db; Port=3306; Database=pieczywoDB; Uid=root;";
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        }
+        catch (Exception e)
+        {
+            var connectionString = "Server=localhost; Port=3306; Database=pieczywoDB; Uid=root;";
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        }
+
     }
 //    public DbSet<Category> Categories { get; set; }
 //    public DbSet<Client> Clients { get; set; }
