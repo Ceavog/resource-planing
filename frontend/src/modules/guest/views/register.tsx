@@ -33,7 +33,7 @@ const RegisterView = () => {
     const testUser = { login: "admin@test.pl", password: "test123" };
 
     axios
-      .post("http://localhost:8000/RegisterUser", testUser)
+      .post(`http://localhost:8000/RegisterUser?login=${testUser.login}&password=${testUser.password}`)
       .then((res) => {
         console.log(res);
       })
