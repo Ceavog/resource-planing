@@ -1,5 +1,6 @@
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.webapi;
@@ -14,6 +15,7 @@ public class UserController : Controller
         _userService = userService;
     }
     [HttpPost("RegisterUser")]
+    [EnableCors("_myAllowSpecificOrigins")]
     public IActionResult RegisterUser(string login, string password)
     {
         try
@@ -23,8 +25,9 @@ public class UserController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return Ok("sdasadasdas");
         }
+
     }
 
     [HttpGet("LoginUser")]
