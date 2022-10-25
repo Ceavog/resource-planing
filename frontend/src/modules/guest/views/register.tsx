@@ -11,33 +11,44 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useMutation } from "react-query";
 import axios from "axios";
-import { backendEndpoints } from "config/routes";
 
-const addUser = (data: { email: any; password: any }) => {
-  return axios.post(backendEndpoints.register, data);
-};
+// const addUser = (data: { email: any; password: any }) => {
+//   return axios.post(backendEndpoints.register, data);
+// };
 
-const useRegister = () => {
-  return useMutation(addUser);
-};
+// const useRegister = () => {
+//   return useMutation(addUser);
+// };
 
 const RegisterView = () => {
-  const { mutate } = useRegister();
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const newUser = {
-      email: data.get("email"),
-      password: data.get("password"),
-    };
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    mutate(newUser);
+    // const data = new FormData(event.currentTarget);
+    // const newUser = {
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // };
+
+    const testUser = { login: "admin@test.pl", password: "test123" };
+
+    axios
+      .post("http://localhost:8000/RegisterUser", testUser)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+
+    axios
+      .get("http://localhost:8000/example1")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
   };
 
   return (
