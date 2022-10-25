@@ -52,16 +52,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = tokenValidationParameters;
     });
 
-// const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-//
-// builder.Services.AddCors(o=>
-//     o.AddPolicy(name: MyAllowSpecificOrigins,
-//         policy =>
-//         {
-//             policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
-//         }));
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+});
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -70,11 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options => options
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    );
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 
