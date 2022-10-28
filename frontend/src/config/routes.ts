@@ -4,7 +4,7 @@
 export const backendEndpoints = {
   login: "/LoginUser",
   refreshToken: "/RefreshToken",
-  register: "http://localhost:8000/RegisterUser",
+  registerUser: "http://localhost:8000/RegisterUser?login=:login&password=:password",
 };
 
 const routes = {

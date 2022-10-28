@@ -1,4 +1,4 @@
-import AppBarNavi from "components/AppBar/app-bar";
+import AppBarNavi from "components/app-bar/app-bar";
 import GuestRouter from "modules/guest/guest-router";
 import MarketRouter from "modules/market/market-router";
 import { QueryClient, QueryClientProvider } from "react-query";
