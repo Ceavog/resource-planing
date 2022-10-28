@@ -9,4 +9,7 @@ public interface IUserService
     void RegisterUser(string login, string password);
     AuthenticatedUserResposeDto LoginUser(LoginUserDto user);
     AuthenticatedUserResposeDto RefreshToken(string refreshToken, string token);
+
+    UserDto GetAllDataAboutUser(string token);
+
 }

@@ -112,7 +112,17 @@ public class UserService : IUserService
             return null;
         }
     }
-    
+
+    public UserDto GetAllDataAboutUser(string token)
+    {
+        var jwt = token.Replace("bearer ", "");
+        var handler = new JwtSecurityTokenHandler();
+        var parsedToken = handler.ReadJwtToken(jwt);
+        var userLogin = parsedToken.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
+        return _userRepository.GetUserByLogin(userLogin).Adapt<UserDto>();
+    }
+
+
     #region Private functions
    
     private string GenerateJsonWebToken(LoginUserDto userDto)

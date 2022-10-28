@@ -1,5 +1,6 @@
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,6 +64,25 @@ public class UserController : Controller
             return Unauthorized();
         }
     }
+
+    [HttpGet("Identity")]
+    [Authorize]
+    public IActionResult GetIdentity()
+    {
+        try
+        {
+            var jwtToken = Request.Headers["Authorization"].ToString();
+            return Ok(_userService.GetAllDataAboutUser(jwtToken));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+        
+        
+    }
+
+
     
 
 }
