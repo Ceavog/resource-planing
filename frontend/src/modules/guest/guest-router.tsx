@@ -2,8 +2,8 @@ import { routes } from "config";
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 
-const RegisterView = lazy(() => import("./views/login"));
-const LoginView = lazy(() => import("./views/register"));
+const RegisterView = lazy(() => import("./views/register"));
+const LoginView = lazy(() => import("./views/login"));
 
 const GuestRouter = [
   {

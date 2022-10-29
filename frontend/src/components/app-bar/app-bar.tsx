@@ -16,8 +16,7 @@ import { Link } from "react-router-dom";
 
 const pages = [
   { page: "Market", url: "/market" },
-  { page: "Login", url: "/login" },
-  { page: "Register", url: "/register" },
+  { page: "Products Settings", url: "/settings/products" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 

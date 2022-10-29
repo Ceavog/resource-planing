@@ -13,6 +13,13 @@ const routes = {
       basePath: "/login",
     },
   },
+  settings: {
+    configurations: "/settings",
+    products: "/settings/products",
+    meta: {
+      basePath: "/settings",
+    },
+  },
   market: {
     menu: "/market",
     meta: {
