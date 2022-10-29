@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthAPI, useAuthClient, LoginArgsType } from "../auth-client";
+import { AuthAPI, useAuthClient, LoginArgsType, UserType } from "../auth-client";
 
 type AuthContextType = {
   isInitialized: boolean;
@@ -7,6 +7,7 @@ type AuthContextType = {
   init: () => Promise<void>;
   login: ({ login, password }: LoginArgsType) => Promise<void>;
   logout: () => Promise<void>;
+  user: UserType | null;
 };
 
 type Props = {

@@ -51,7 +51,7 @@ export const AuthAPI: AuthAPIType = {
 
       const response = await API.post(backendEndpoints.refreshToken.replace(":token", refreshToken));
 
-      API.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+      API.defaults.headers.Authorization = `bearer ${response.data.token}`;
       return {
         data: response.data,
       };
@@ -63,11 +63,11 @@ export const AuthAPI: AuthAPIType = {
     try {
       const response = await API.get(backendEndpoints.identity, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `bearer ${token}`,
         },
       });
 
-      API.defaults.headers.Authorization = `Bearer ${token}`;
+      API.defaults.headers.Authorization = `bearer ${token}`;
       return { data: response.data };
     } catch (err) {
       throw { data: null, error: err };
@@ -75,7 +75,7 @@ export const AuthAPI: AuthAPIType = {
   },
 };
 
-type UserType = {
+export type UserType = {
   id: string;
   login: string;
 };
@@ -143,7 +143,7 @@ export const useAuthClient = ({ storage, authAPI }: { storage: Storage; authAPI:
     //Not sure about these
     setTokens(data?.token || "", data?.refreshToken || "");
 
-    // identity();
+    identity();
     startCheckingTokens();
   };
 
@@ -168,7 +168,6 @@ export const useAuthClient = ({ storage, authAPI }: { storage: Storage; authAPI:
 
       if (error) {
         if (error.isExpired) {
-          //ask backend for this case
           logout();
         }
         throw error;
@@ -197,11 +196,16 @@ export const useAuthClient = ({ storage, authAPI }: { storage: Storage; authAPI:
   };
 
   const identity = async () => {
-    // const { data, error } = await AuthAPI.identity(token());
+    const { data, error } = await AuthAPI.identity(token());
+
+    if (error) {
+      throw error;
+    }
+    //handle
 
     setIsAuthenticated(true);
-    setUser(null);
+    setUser(data);
   };
 
-  return { init, login, logout, isAuthenticated, isInitialized };
+  return { init, login, logout, isAuthenticated, isInitialized, user };
 };
