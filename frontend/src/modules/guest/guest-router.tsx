@@ -1,9 +1,20 @@
-import LoginView from "./views/login";
-import RegisterView from "./views/register";
+import { routes } from "config";
+import { lazy } from "react";
+import { Navigate } from "react-router-dom";
+
+const RegisterView = lazy(() => import("./views/login"));
+const LoginView = lazy(() => import("./views/register"));
 
 const GuestRouter = [
-  { path: "/login", element: <LoginView /> },
-  { path: "/register", element: <RegisterView /> },
+  {
+    path: routes.auth.register,
+    element: <RegisterView />,
+  },
+  {
+    path: routes.auth.login,
+    element: <LoginView />,
+  },
+  { path: "*", element: <Navigate to={routes.auth.meta.basePath} replace /> },
 ];
 
 export default GuestRouter;
