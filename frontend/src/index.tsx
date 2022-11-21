@@ -10,14 +10,17 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import theme from "config/theme";
 import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "services/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
+        <AuthProvider>
+          <CssBaseline />
+          <App />
+        </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,

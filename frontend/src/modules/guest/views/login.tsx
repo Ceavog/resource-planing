@@ -6,32 +6,24 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
-import { backendEndpoints } from "config/routes";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { Alert } from "@mui/material";
+import { useAuthContext } from "services/auth";
 
 type FormData = {
-  email: string;
+  login: string;
   password: string;
 };
 
 const LoginView = () => {
   const methods = useForm<FormData>();
+  const auth = useAuthContext();
 
   const onSubmitHandler: SubmitHandler<FormData> = (values: FormData) => {
-    const { email, password } = values;
+    const { login, password } = values;
 
-    if (email && password) {
-      axios
-        .get(backendEndpoints.login.replace(":login", email).replace(":password", password))
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if (login && password) {
+      auth?.login({ login, password });
     }
   };
 
@@ -53,7 +45,7 @@ const LoginView = () => {
         </Typography>
         <FormProvider {...methods}>
           <Box sx={{ mt: 1 }} component="form" noValidate autoComplete="off" onSubmit={methods.handleSubmit(onSubmitHandler)}>
-            <FormInput label="Email Address" type="email" name="email" focused required fullWidth margin="normal" />
+            <FormInput label="Email Address" type="email" name="login" focused required fullWidth margin="normal" />
             <FormInput type="password" label="Password" name="password" required focused fullWidth margin="normal" />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In

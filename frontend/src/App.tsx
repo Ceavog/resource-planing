@@ -1,18 +1,37 @@
 import AppBarNavi from "components/app-bar/app-bar";
 import GuestRouter from "modules/guest/guest-router";
 import MarketRouter from "modules/market/market-router";
-import { QueryClient, QueryClientProvider } from "react-query";
+import SettingsRouter from "modules/settings/settings-router";
+import { Suspense, useEffect } from "react";
 import { useRoutes } from "react-router-dom";
+import { useAuthContext } from "services/auth";
 
 const App = () => {
-  const routes = useRoutes([MarketRouter, ...GuestRouter]);
-  const queryClient = new QueryClient();
+  const guestRoutes = useRoutes(GuestRouter);
+  const authorizedRoutes = useRoutes([...MarketRouter, ...SettingsRouter]);
+  const auth = useAuthContext();
+
+  useEffect(() => {
+    if (!auth?.isInitialized) {
+      auth?.init();
+    } else if (!auth.isAuthenticated) {
+      auth?.logout();
+    }
+  }, [auth]);
+
+  if (!auth?.isInitialized) {
+    return <div>Loading...</div>;
+  }
+
+  if (!auth?.isAuthenticated) {
+    return <Suspense>{guestRoutes}</Suspense>;
+  }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <Suspense>
       <AppBarNavi />
-      {routes}
-    </QueryClientProvider>
+      {authorizedRoutes}
+    </Suspense>
   );
 };
 

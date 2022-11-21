@@ -6,11 +6,11 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import axios from "axios";
+
 import { backendEndpoints } from "config/routes";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { Alert } from "@mui/material";
+import { API } from "services/api";
 
 type FormData = {
   email: string;
@@ -24,13 +24,12 @@ const RegisterView = () => {
     const { email, password } = values;
 
     if (email && password) {
-      axios
-        .post(backendEndpoints.registerUser.replace(":login", email).replace(":password", password))
+      API.post(backendEndpoints.registerUser.replace(":login", email).replace(":password", password))
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
-          <Alert severity="error">{err}</Alert>;
+          console.log(err);
         });
     }
   };
