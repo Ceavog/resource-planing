@@ -12,6 +12,6 @@ public class Products {
     public int UserId { get; set; }
     public User User { get; set; }
     
-    private ICollection<OrderPosition> OrderPositions { get; set; }
+    //private ICollection<OrderPosition> OrderPositions { get; set; }
 
 }
