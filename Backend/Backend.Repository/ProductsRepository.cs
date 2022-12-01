@@ -20,4 +20,13 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
         }
         throw new ArgumentException("User With This Id Does not exists");
     }
+
+    public Products UpdateProduct(Products product)
+    {
+        //todo - custom exception
+        var updatedProduct = _applicationDbContext.Products.Update(product).Entity;
+        _applicationDbContext.Entry(product).Property(x => x.UserId).IsModified = false;
+        _applicationDbContext.SaveChanges();
+        return updatedProduct;
+    }
 }

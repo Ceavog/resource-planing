@@ -31,7 +31,7 @@ public class ProductService : IProductService
     }
     public UpdateProductDto UpdateProduct(UpdateProductDto productDto)
     {
-        return _productsRepository.Update(productDto.Adapt<Products>()).Adapt<UpdateProductDto>();
+        return _productsRepository.UpdateProduct(productDto.Adapt<Products>()).Adapt<UpdateProductDto>();
     }
     public ProductDto DeleteProduct(int id)
     {
