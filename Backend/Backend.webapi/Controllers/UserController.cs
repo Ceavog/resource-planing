@@ -16,13 +16,6 @@ public class UserController : Controller
         _userService = userService;
     }
     
-    [HttpPost("RegisterUser1")]
-    [EnableCors("_myAllowSpecificOrigins")]
-    public IActionResult RegisterUser1(string test)
-    {
-        return Ok();
-    }
-    
     [HttpPost("RegisterUser")]
     [EnableCors("_myAllowSpecificOrigins")]
     public IActionResult RegisterUser(string login, string password)
