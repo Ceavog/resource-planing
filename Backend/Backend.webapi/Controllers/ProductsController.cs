@@ -19,7 +19,7 @@ public class ProductsController : Controller
     }
 
     [HttpGet("GetAllProductsByUserId")]
-    public ActionResult<IEnumerable<GetProductDto>> GetAllProtuctsByUserId(int userId)
+    public ActionResult<IEnumerable<GetProductDto>> GetAllProductsByUserId(int userId)
     {
         try
         {
