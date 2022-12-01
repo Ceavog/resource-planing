@@ -19,7 +19,7 @@ public class ProductsController : Controller
     }
 
     [HttpGet("GetAllProductsByUserId")]
-    public ActionResult<IEnumerable<ProductDto>> GetAllProtuctsByUserId(int userId)
+    public ActionResult<IEnumerable<GetProductDto>> GetAllProtuctsByUserId(int userId)
     {
         try
         {
@@ -32,7 +32,7 @@ public class ProductsController : Controller
     }
 
     [HttpGet("GetProductById")]
-    public ActionResult<ProductDto> GetProductById(int id)
+    public ActionResult<GetProductDto> GetProductById(int id)
     {
         try
         {
@@ -49,7 +49,7 @@ public class ProductsController : Controller
     }
 
     [HttpPost("AddProduct")]
-    public ActionResult<ProductDto> AddProduct(ProductDto productDto)
+    public ActionResult<AddProductDto> AddProduct(AddProductDto productDto)
     {
         try
         {
@@ -63,7 +63,7 @@ public class ProductsController : Controller
     }
 
     [HttpPut("UpdateProduct")]
-    public ActionResult<ProductDto> UpdateProduct(ProductDto productDto)
+    public ActionResult<UpdateProductDto> UpdateProduct(UpdateProductDto productDto)
     {
         try
         {

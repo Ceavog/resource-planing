@@ -15,23 +15,23 @@ public class ProductService : IProductService
         _productsRepository = productsRepository;
     }
 
-    public IEnumerable<ProductDto> GetAllProductsByUserId(int userId)
+    public IEnumerable<GetProductDto> GetAllProductsByUserId(int userId)
     {
-        return _productsRepository.GetAllProductsByUserId(userId).Adapt<IEnumerable<ProductDto>>();
+        return _productsRepository.GetAllProductsByUserId(userId).Adapt<IEnumerable<GetProductDto>>();
     }
 
-    public ProductDto GetProductById(int id)
+    public GetProductDto GetProductById(int id)
     {
-        return _productsRepository.Get(id)!.Adapt<ProductDto>();
+        return _productsRepository.Get(id)!.Adapt<GetProductDto>();
     }
 
-    public ProductDto AddProduct(ProductDto productDto)
+    public AddProductDto AddProduct(AddProductDto productDto)
     {
-        return _productsRepository.Add(productDto.Adapt<Products>()).Adapt<ProductDto>();
+        return _productsRepository.Add(productDto.Adapt<Products>()).Adapt<AddProductDto>();
     }
-    public ProductDto UpdateProduct(ProductDto productDto)
+    public UpdateProductDto UpdateProduct(UpdateProductDto productDto)
     {
-        return _productsRepository.Update(productDto.Adapt<Products>()).Adapt<ProductDto>();
+        return _productsRepository.Update(productDto.Adapt<Products>()).Adapt<UpdateProductDto>();
     }
     public ProductDto DeleteProduct(int id)
     {

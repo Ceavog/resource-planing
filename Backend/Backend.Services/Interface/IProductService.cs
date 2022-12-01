@@ -5,10 +5,10 @@ namespace Backend.Services.Interface;
 
 public interface IProductService
 {
-    IEnumerable<ProductDto> GetAllProductsByUserId(int id);
-    ProductDto GetProductById(int id);
-    ProductDto AddProduct(ProductDto productDto);
-    ProductDto UpdateProduct(ProductDto productDto);
+    IEnumerable<GetProductDto> GetAllProductsByUserId(int id);
+    GetProductDto GetProductById(int id);
+    AddProductDto AddProduct(AddProductDto productDto);
+    UpdateProductDto UpdateProduct(UpdateProductDto productDto);
     ProductDto DeleteProduct(int id);
 
 
