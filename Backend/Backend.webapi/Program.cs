@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Backend.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -34,6 +35,10 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
 
 
+//Serilog
+builder.Host
+    .UseSerilog((ctx, lc) => lc.WriteTo.Console());
+    
 var tokenValidationParameters = new TokenValidationParameters()
 {
     ValidateIssuer = true,
