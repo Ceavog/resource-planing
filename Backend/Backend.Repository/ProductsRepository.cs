@@ -23,6 +23,7 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
 
     public Products UpdateProduct(Products product)
     {
+        _applicationDbContext.ChangeTracker.Clear();
         //todo - custom exception
         var updatedProduct = _applicationDbContext.Products.Update(product).Entity;
         _applicationDbContext.Entry(product).Property(x => x.UserId).IsModified = false;
