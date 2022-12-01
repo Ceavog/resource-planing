@@ -13,11 +13,9 @@ namespace Backend.webapi;
 public class ProductsController : Controller
 {
     private readonly IProductService _productService;
-    private readonly Logger _logger;
     public ProductsController(IProductService productService)
     {
         _productService = productService;
-        _logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
     }
 
     [HttpGet("GetAllProductsByUserId")]
@@ -29,7 +27,6 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            _logger.Error(e.Message);
             return BadRequest();
         }
     }
@@ -47,7 +44,6 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            _logger.Error(e.Message);
             return BadRequest();
         }
     }
@@ -62,7 +58,6 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            _logger.Error(e.Message);
             return BadRequest();
         }
     }
@@ -77,7 +72,6 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            _logger.Error(e.Message);
             return BadRequest();
         }
     }
@@ -92,7 +86,6 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            _logger.Error(e.Message);
             return BadRequest();
         }
     }
