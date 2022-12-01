@@ -58,7 +58,7 @@ public class ProductsController : Controller
         try
         {
             var addedProduct = _productService.AddProduct(productDto);
-            return Created("/AddProductfdsafas",Json(addedProduct));
+            return Created("/AddProduct",Json(addedProduct));
         }
         catch (Exception e)
         {
