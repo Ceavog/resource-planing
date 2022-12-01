@@ -57,7 +57,8 @@ public class ProductsController : Controller
     {
         try
         {
-            return Ok(Json(_productService.AddProduct(productDto)));
+            var addedProduct = _productService.AddProduct(productDto);
+            return Created("/AddProductfdsafas",Json(addedProduct));
         }
         catch (Exception e)
         {
@@ -71,7 +72,8 @@ public class ProductsController : Controller
     {
         try
         {
-            return Ok(Json(_productService.UpdateProduct(productDto)));
+            var updatedProduct = _productService.UpdateProduct(productDto);
+            return Ok(Json(updatedProduct));
         }
         catch (Exception e)
         {
@@ -85,8 +87,8 @@ public class ProductsController : Controller
     {
         try
         {
-            
-            return Ok(Json(_productService.DeleteProduct(id)));
+            var deletedProduct = _productService.DeleteProduct(id);
+            return Ok(Json(deletedProduct));
         }
         catch (Exception e)
         {
