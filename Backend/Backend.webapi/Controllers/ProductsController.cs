@@ -1,7 +1,10 @@
+using System.Diagnostics;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.ProductDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using Serilog.Core;
 
 namespace Backend.webapi;
 
@@ -10,13 +13,14 @@ namespace Backend.webapi;
 public class ProductsController : Controller
 {
     private readonly IProductService _productService;
-
+    private readonly Logger _logger;
     public ProductsController(IProductService productService)
     {
         _productService = productService;
+        _logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
     }
 
-    [HttpGet("AllProductsByUserId")]
+    [HttpGet("GetAllProductsByUserId")]
     public ActionResult<IEnumerable<ProductDto>> GetAllByUserId(int userId)
     {
         try
@@ -25,20 +29,26 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            _logger.Error(e.Message);
+            return BadRequest();
         }
     }
 
     [HttpGet("GetProductId")]
-    public ActionResult<ProductDto> GetById(int id)
+    public ActionResult<ProductDto> GetProductById(int id)
     {
         try
         {
-            return Ok(Json(_productService.GetProductById(id)));
+            var product = _productService.GetProductById(id);
+            if (product is null)
+                return NotFound();
+
+            return Ok(Json(product));
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            _logger.Error(e.Message);
+            return BadRequest();
         }
     }
 
@@ -51,7 +61,8 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            _logger.Error(e.Message);
+            return BadRequest();
         }
     }
 
@@ -64,7 +75,8 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            _logger.Error(e.Message);
+            return BadRequest();
         }
     }
 
@@ -78,7 +90,8 @@ public class ProductsController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            _logger.Error(e.Message);
+            return BadRequest();
         }
     }
 
