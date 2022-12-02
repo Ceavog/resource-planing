@@ -37,7 +37,6 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
-
 //Serilog
 builder.Host
     .UseSerilog((ctx, lc) => lc.WriteTo.Console());
