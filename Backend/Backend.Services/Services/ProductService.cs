@@ -2,8 +2,6 @@ using Backend.DataAccessLibrary;
 using Backend.Repository.Interfaces;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.ProductDtos;
-using Backend.Shared.Exceptions.ProductExceptions;
-using Backend.Shared.Exceptions.UserExceptions;
 using Mapster;
 
 namespace Backend.Services.Services;
@@ -20,6 +18,7 @@ public class ProductService : IProductService
 
     public IEnumerable<GetProductDto> GetAllProductsByUserId(int userId)
     {
+        _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(userId); 
         return _productsRepository.GetAllProductsByUserId(userId).Adapt<IEnumerable<GetProductDto>>();
     }
 
@@ -30,26 +29,21 @@ public class ProductService : IProductService
 
     public AddProductDto AddProduct(AddProductDto productDto)
     {
-        if (_userRepository.CheckIfUserExists(productDto.UserId))
-            throw new UserWithGivenIdDoesNotExistsException(productDto.UserId);
-        if (_productsRepository.CheckIfProductWithGivenNameExists(productDto.Name, productDto.UserId))
-            throw new ProductWithThisNameAlreadyExistsForThisUserException(productDto.UserId, productDto.Name);
-        
+        _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(productDto.UserId);
+        _productsRepository.ThrowExceptionWhenProductWithGivenNameAndUserIdAlreadyExists(productDto.UserId, productDto.Name);
         
         return _productsRepository.Add(productDto.Adapt<Products>()).Adapt<AddProductDto>();
     }
     public UpdateProductDto UpdateProduct(UpdateProductDto productDto)
     {
-        if (_userRepository.CheckIfUserExists(productDto.UserId))
-            throw new UserWithGivenIdDoesNotExistsException(productDto.UserId);
-        if (_productsRepository.CheckIfProductWithGivenNameExists(productDto.Name, productDto.UserId))
-            throw new ProductWithThisNameAlreadyExistsForThisUserException(productDto.UserId, productDto.Name);
-        
+        _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(productDto.UserId); 
+        _productsRepository.ThrowExceptionWhenProductWithGivenNameAndUserIdAlreadyExists(productDto.UserId, productDto.Name);
         
         return _productsRepository.UpdateProduct(productDto.Adapt<Products>()).Adapt<UpdateProductDto>();
     }
     public ProductDto DeleteProduct(int id)
     {
+        _productsRepository.ThrowExceptionWhenProductWithGivenIdDoesNotExists(id);
         return _productsRepository.Delete(id).Adapt<ProductDto>();
     }
 }
