@@ -3,15 +3,15 @@ using Backend.DataAccessLibrary;
 using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
 
-namespace Backend.Repository;
+namespace Backend.Repository.Repositories;
 
 public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
 {
-    private readonly ApplicationException _applicationException;
-    public CategoryRepository(ApplicationDbContext applicationDbContext, ApplicationException applicationException) 
+    private readonly ApplicationDbContext _applicationDbContext;
+    public CategoryRepository(ApplicationDbContext applicationDbContext) 
         : base(applicationDbContext)
     {
-        _applicationException = applicationException;
+        _applicationDbContext = applicationDbContext;
     }
     
     
