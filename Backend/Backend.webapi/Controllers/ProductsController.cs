@@ -64,7 +64,7 @@ public class ProductsController : Controller
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {
-            return NotFound();
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {
@@ -79,6 +79,14 @@ public class ProductsController : Controller
         {
             var updatedProduct = _productService.UpdateProduct(productDto);
             return Ok(Json(updatedProduct));
+        }
+        catch (Exception e) when (e is ProductWithThisNameAlreadyExistsForThisUserException)
+        {
+            return Conflict();
+        }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {
