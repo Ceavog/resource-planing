@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.ProductDtos;
+using Backend.Shared.Exceptions.ProductExceptions;
+using Backend.Shared.Exceptions.UserExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -54,7 +56,15 @@ public class ProductsController : Controller
         try
         {
             var addedProduct = _productService.AddProduct(productDto);
-            return Created("/AddProduct",Json(addedProduct));
+            return Created("/AddProduct", Json(addedProduct));
+        }
+        catch (Exception e) when (e is ProductWithThisNameAlreadyExistsForThisUserException)
+        {
+            return Conflict();
+        }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound();
         }
         catch (Exception e)
         {
