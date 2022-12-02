@@ -23,4 +23,9 @@ public class UserRepository : GenericRepository<User>, IUserRepository
     {
         return _applicationDbContext.Users.Any(x => x.Login.Equals(login));
     }
+
+    public bool CheckIfUserExists(int id)
+    {
+        return _applicationDbContext.Users.Any(x => x.Id.Equals(id));
+    }
 }
