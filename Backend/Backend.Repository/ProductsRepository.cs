@@ -2,6 +2,8 @@ using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
 using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
+using Backend.Shared.Exceptions.ProductExceptions;
+using Backend.Shared.Exceptions.UserExceptions;
 
 namespace Backend.Repository;
 
@@ -24,10 +26,21 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
     public Products UpdateProduct(Products product)
     {
         _applicationDbContext.ChangeTracker.Clear();
-        //todo - custom exception
         var updatedProduct = _applicationDbContext.Products.Update(product).Entity;
         _applicationDbContext.Entry(product).Property(x => x.UserId).IsModified = false;
         _applicationDbContext.SaveChanges();
         return updatedProduct;
+    }
+
+    public bool CheckIfProductWithGivenNameExists(string name, int productId)
+    {
+        return _applicationDbContext.Products.Any(x => x.Name.Equals(name) && x.Id.Equals(productId));
+    }
+
+    public Products AddProduct(Products products)
+    {
+        var addedProduct =_applicationDbContext.Products.Add(products);
+        _applicationDbContext.SaveChanges();
+        return addedProduct.Entity;
     }
 }
