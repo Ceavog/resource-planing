@@ -1,6 +1,6 @@
 namespace Backend.DataAccessLibrary;
 
-public class CategoryPositions
+public class CategoryProducts
 {
     public int Id { get; set; }
     public int CategoryId { get; set; }
