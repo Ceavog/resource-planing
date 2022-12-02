@@ -1,13 +1,13 @@
 using System.Text;
 using Backend.DAL_EF;
-using Backend.Repository;
 using Backend.Repository.Interfaces;
-using Backend.Services.Interface;
-using Backend.Services.Services;
+using Backend.Repository.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Backend.Services;
+using Backend.Services.Interface;
+using Backend.Services.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
