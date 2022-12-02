@@ -2,6 +2,7 @@ using Backend.DAL_EF;
 using Backend.DataAccessLibrary;
 using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
+using Backend.Shared.Exceptions.UserExceptions;
 
 namespace Backend.Repository;
 
@@ -24,8 +25,9 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return _applicationDbContext.Users.Any(x => x.Login.Equals(login));
     }
 
-    public bool CheckIfUserExists(int id)
+    public void ThrowExceptionWhenUserWithGivenIdDoesNotExists(int userId)
     {
-        return _applicationDbContext.Users.Any(x => x.Id.Equals(id));
+        if (_applicationDbContext.Users.Any(x => x.Id.Equals(userId)))
+            throw new UserWithGivenIdDoesNotExistsException(userId);
     }
 }
