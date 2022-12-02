@@ -7,5 +7,6 @@ public interface IProductsRepository : IGenericRepository<Products>
 {
     IEnumerable<Products> GetAllProductsByUserId(int id);
     Products UpdateProduct(Products product);
-    bool CheckIfProductWithGivenNameExists(string name, int userId);
+    void ThrowExceptionWhenProductWithGivenNameAndUserIdAlreadyExists(int userId, string name);
+    void ThrowExceptionWhenProductWithGivenIdDoesNotExists(int productId);
 }

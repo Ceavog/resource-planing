@@ -31,10 +31,15 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
         _applicationDbContext.SaveChanges();
         return updatedProduct;
     }
-
-    public bool CheckIfProductWithGivenNameExists(string name, int productId)
+    public void ThrowExceptionWhenProductWithGivenNameAndUserIdAlreadyExists(int userId, string name)
     {
-        return _applicationDbContext.Products.Any(x => x.Name.Equals(name) && x.Id.Equals(productId));
+        if (_applicationDbContext.Products.Any(x => x.UserId.Equals(userId) && x.Name.Equals(name)))
+            throw new ProductWithThisNameAlreadyExistsForThisUserException(userId, name);
+    }
+    public void ThrowExceptionWhenProductWithGivenIdDoesNotExists(int productId)
+    {
+        if (!_applicationDbContext.Products.Any(x => x.Id.Equals(productId)))
+            throw new ProductWithGivenIdDoesNotExistsException(productId);
     }
 
     public Products AddProduct(Products products)
