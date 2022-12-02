@@ -27,12 +27,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
 //register services
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 
 //register repositories 
 builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 
 //Serilog
