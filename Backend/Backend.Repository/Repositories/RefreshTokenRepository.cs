@@ -3,7 +3,7 @@ using Backend.DataAccessLibrary;
 using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
 
-namespace Backend.Repository;
+namespace Backend.Repository.Repositories;
 
 public class RefreshTokenRepository : GenericRepository<RefreshToken>, IRefreshTokenRepository
 {

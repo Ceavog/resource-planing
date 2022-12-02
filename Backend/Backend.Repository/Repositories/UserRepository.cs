@@ -4,7 +4,7 @@ using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
 using Backend.Shared.Exceptions.UserExceptions;
 
-namespace Backend.Repository;
+namespace Backend.Repository.Repositories;
 
 public class UserRepository : GenericRepository<User>, IUserRepository
 {

@@ -3,9 +3,8 @@ using Backend.DataAccessLibrary;
 using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
 using Backend.Shared.Exceptions.ProductExceptions;
-using Backend.Shared.Exceptions.UserExceptions;
 
-namespace Backend.Repository;
+namespace Backend.Repository.Repositories;
 
 public class ProductsRepository : GenericRepository<Products>, IProductsRepository
 {
