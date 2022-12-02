@@ -7,4 +7,5 @@ public class GetProductDto
     public double Price { get; set; }
     public string Section { get; set; }
     public int UserId { get; set; }
+    public int CategoryId { get; set; }
 }
