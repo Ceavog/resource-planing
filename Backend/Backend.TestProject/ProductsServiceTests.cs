@@ -22,9 +22,9 @@ public class ProductsServiceTests
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _applicationDbContext = new ApplicationDbContext();
-        var productRepo = new ProductsRepository(_applicationDbContext);
-        _ProductService = new ProductService(productRepo);
+        // _applicationDbContext = new ApplicationDbContext();
+        // var productRepo = new ProductsRepository(_applicationDbContext);
+        // _ProductService = new ProductService(productRepo);
     }
 
     [Test]
