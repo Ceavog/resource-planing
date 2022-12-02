@@ -27,6 +27,10 @@ public class ProductsController : Controller
         {
             return Ok(Json(_productService.GetAllProductsByUserId(userId)));
         }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound();
+        }
         catch (Exception e)
         {
             return BadRequest();
