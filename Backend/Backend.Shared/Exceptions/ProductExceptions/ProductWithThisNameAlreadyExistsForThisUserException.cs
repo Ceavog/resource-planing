@@ -2,13 +2,13 @@ namespace Backend.Shared.Exceptions.ProductExceptions;
 
 public class ProductWithThisNameAlreadyExistsForThisUserException : Exception
 {
-    public string Login { get; }
+    public int Id { get; set; }
     public string ProductName { get; }
     
-    public ProductWithThisNameAlreadyExistsForThisUserException(string login, string productName) 
-        : base($"Product with name {productName} already exists for user with login {login}")
+    public ProductWithThisNameAlreadyExistsForThisUserException(int id, string productName) 
+        : base($"Product with name {productName} already exists for user with id {id}")
     {
-        Login = login;
+        Id = id;
         ProductName = productName;
     }
 }
