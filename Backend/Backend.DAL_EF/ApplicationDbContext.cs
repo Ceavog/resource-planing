@@ -40,8 +40,7 @@ public class ApplicationDbContext : DbContext
     public virtual DbSet<OrderPosition> OrderPositions { get; set; }
     public virtual DbSet<OrderType> OrderTypes { get; set; }
     public virtual DbSet<Category> Categories { get; set; }
-    public virtual DbSet<CategoryProducts> CategoryProducts { get; set; }
-
+ 
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 }

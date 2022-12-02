@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.DAL_EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221202143942_added user reference to category")]
-    partial class addeduserreferencetocategory
+    [Migration("20221202173922_added reference to category in product")]
+    partial class addedreferencetocategoryinproduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,30 +39,6 @@ namespace Backend.DAL_EF.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Backend.DataAccessLibrary.CategoryProducts", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CategoryProducts");
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Order", b =>
@@ -129,6 +105,9 @@ namespace Backend.DAL_EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -144,6 +123,8 @@ namespace Backend.DAL_EF.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -203,25 +184,6 @@ namespace Backend.DAL_EF.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Backend.DataAccessLibrary.CategoryProducts", b =>
-                {
-                    b.HasOne("Backend.DataAccessLibrary.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.DataAccessLibrary.Products", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("Backend.DataAccessLibrary.Order", b =>
                 {
                     b.HasOne("Backend.DataAccessLibrary.OrderType", "OrderType")
@@ -254,11 +216,19 @@ namespace Backend.DAL_EF.Migrations
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Products", b =>
                 {
+                    b.HasOne("Backend.DataAccessLibrary.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Backend.DataAccessLibrary.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });

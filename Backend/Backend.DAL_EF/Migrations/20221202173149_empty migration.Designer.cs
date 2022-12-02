@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.DAL_EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221202141722_changed table name")]
-    partial class changedtablename
+    [Migration("20221202173149_empty migration")]
+    partial class emptymigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,45 +20,6 @@ namespace Backend.DAL_EF.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("Backend.DataAccessLibrary.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Backend.DataAccessLibrary.CategoryProducts", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CategoryProducts");
-                });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Order", b =>
                 {
@@ -185,25 +146,6 @@ namespace Backend.DAL_EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Backend.DataAccessLibrary.CategoryProducts", b =>
-                {
-                    b.HasOne("Backend.DataAccessLibrary.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.DataAccessLibrary.Products", "Products")
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Order", b =>
