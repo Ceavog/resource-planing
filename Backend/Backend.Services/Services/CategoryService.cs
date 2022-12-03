@@ -2,6 +2,7 @@ using Backend.DataAccessLibrary;
 using Backend.Repository.Interfaces;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.CategoryDtos;
+using Backend.Shared.Dtos.ProductDtos;
 using Mapster;
 
 namespace Backend.Services.Services;
@@ -33,5 +34,11 @@ public class CategoryService : ICategoryService
         _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(updateCategoryDto.UserId);
         _categoryRepository.ThrowExceptionWhenCategoryWithGivenIdDoesNotExists(updateCategoryDto.Id);
         return _categoryRepository.UpdateCategory(updateCategoryDto.Adapt<Category>()).Adapt<UpdateCategoryDto>();
+    }
+
+    public CategoryDto DeleteCategory(int categoryId)
+    {
+        _categoryRepository.ThrowExceptionWhenCategoryWithGivenIdDoesNotExists(categoryId);
+        return _categoryRepository.Delete(categoryId).Adapt<CategoryDto>();
     }
 }

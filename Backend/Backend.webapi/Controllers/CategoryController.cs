@@ -73,4 +73,21 @@ public class CategoryController : Controller
         }
     }
 
+    [HttpDelete("DeleteCategoryById")]
+    public IActionResult DeleteCategory(int categoryId)
+    {
+        try
+        {
+            return Ok(_categoryService.DeleteCategory(categoryId));
+        }
+        catch (Exception e) when (e is CategoryWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
+
 }
