@@ -3,10 +3,12 @@ using Backend.Shared.Dtos.CategoryDtos;
 using Backend.Shared.Exceptions.CategoryExceptions;
 using Backend.Shared.Exceptions.UserExceptions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.webapi;
 
+[EnableCors("_myAllowSpecificOrigins")]
 [ApiController]
 //[Authorize]
 public class CategoryController : Controller

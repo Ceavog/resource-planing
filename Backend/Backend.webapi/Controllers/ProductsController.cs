@@ -4,12 +4,15 @@ using Backend.Shared.Dtos.ProductDtos;
 using Backend.Shared.Exceptions.ProductExceptions;
 using Backend.Shared.Exceptions.UserExceptions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Serilog.Core;
 
 namespace Backend.webapi;
 
+
+[EnableCors("_myAllowSpecificOrigins")]
 [ApiController]
 //[Authorize]
 public class ProductsController : Controller
