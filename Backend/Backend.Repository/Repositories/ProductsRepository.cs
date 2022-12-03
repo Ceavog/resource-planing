@@ -3,6 +3,7 @@ using Backend.DataAccessLibrary;
 using Backend.Repository.GenericRepositories;
 using Backend.Repository.Interfaces;
 using Backend.Shared.Exceptions.ProductExceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repository.Repositories;
 
@@ -16,10 +17,7 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
 
     public IEnumerable<Products> GetAllProductsByUserId(int id)
     {
-        if (_applicationDbContext.Users.Any(x => x.Id.Equals(id))) {
-            return _applicationDbContext.Products.Where(x => x.UserId.Equals(id));
-        }
-        throw new ArgumentException("User With This Id Does not exists");
+         return _applicationDbContext.Products.Include(x=>x.Category).Where(x => x.UserId.Equals(id));
     }
 
     public Products UpdateProduct(Products product)
