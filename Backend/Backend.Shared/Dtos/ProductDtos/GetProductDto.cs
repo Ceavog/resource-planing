@@ -1,3 +1,5 @@
+using Backend.Shared.Dtos.CategoryDtos;
+
 namespace Backend.Shared.Dtos.ProductDtos;
 
 public class GetProductDto
@@ -8,4 +10,5 @@ public class GetProductDto
     public string Section { get; set; }
     public int UserId { get; set; }
     public int CategoryId { get; set; }
+    public GetCategoryDto Category { get; set; }
 }
