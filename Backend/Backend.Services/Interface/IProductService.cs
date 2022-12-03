@@ -9,7 +9,7 @@ public interface IProductService
     GetProductDto GetProductById(int id);
     AddProductDto AddProduct(AddProductDto productDto);
     UpdateProductDto UpdateProduct(UpdateProductDto productDto);
-    ProductDto DeleteProduct(int id);
+    DeleteProductDto DeleteProduct(int id);
 
 
 

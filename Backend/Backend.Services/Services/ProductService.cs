@@ -24,6 +24,7 @@ public class ProductService : IProductService
 
     public GetProductDto GetProductById(int id)
     {
+        //throw exception when product does not exists
         return _productsRepository.Get(id)!.Adapt<GetProductDto>();
     }
 
@@ -41,9 +42,9 @@ public class ProductService : IProductService
         
         return _productsRepository.UpdateProduct(productDto.Adapt<Products>()).Adapt<UpdateProductDto>();
     }
-    public ProductDto DeleteProduct(int id)
+    public DeleteProductDto DeleteProduct(int id)
     {
         _productsRepository.ThrowExceptionWhenProductWithGivenIdDoesNotExists(id);
-        return _productsRepository.Delete(id).Adapt<ProductDto>();
+        return _productsRepository.Delete(id).Adapt<DeleteProductDto>();
     }
 }
