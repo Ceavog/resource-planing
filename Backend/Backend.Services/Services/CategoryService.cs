@@ -27,4 +27,11 @@ public class CategoryService : ICategoryService
         _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(userId);
         return _categoryRepository.GetAllCategoriesForUserId(userId).Adapt<IEnumerable<GetCategoryDto>>();
     }
+
+    public UpdateCategoryDto UpdateCategory(UpdateCategoryDto updateCategoryDto)
+    {
+        _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(updateCategoryDto.UserId);
+        _categoryRepository.ThrowExceptionWhenCategoryWithGivenIdDoesNotExists(updateCategoryDto.Id);
+        return _categoryRepository.UpdateCategory(updateCategoryDto.Adapt<Category>()).Adapt<UpdateCategoryDto>();
+    }
 }

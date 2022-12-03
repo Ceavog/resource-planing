@@ -1,5 +1,6 @@
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.CategoryDtos;
+using Backend.Shared.Exceptions.CategoryExceptions;
 using Backend.Shared.Exceptions.UserExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,27 @@ public class CategoryController : Controller
         try
         {
             return Ok(_categoryService.GetAllCategoriesForUserId(userId));
+        }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
+
+    [HttpPut("UpdateCategory")]
+    public IActionResult UpdateCategory(UpdateCategoryDto categoryDto)
+    {
+        try
+        {
+            return Ok(_categoryService.UpdateCategory(categoryDto));
+        }
+        catch (Exception e) when (e is CategoryWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {

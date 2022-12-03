@@ -6,4 +6,5 @@ public interface ICategoryService
 {
     AddCategoryDto AddCategory(AddCategoryDto addCategoryDto);
     IEnumerable<GetCategoryDto> GetAllCategoriesForUserId(int userId);
+    UpdateCategoryDto UpdateCategory(UpdateCategoryDto updateCategoryDto);
 }
