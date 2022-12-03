@@ -18,6 +18,7 @@ public class CategoryService : ICategoryService
 
     public AddCategoryDto AddCategory(AddCategoryDto addCategoryDto)
     {
+        _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(addCategoryDto.UserId);
         return _categoryRepository.Add(addCategoryDto.Adapt<Category>()).Adapt<AddCategoryDto>();
     }
 

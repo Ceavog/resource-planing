@@ -24,6 +24,10 @@ public class CategoryController : Controller
             var addedCategory = _categoryService.AddCategory(addCategoryDto);
             return Created("/AddCategory", addedCategory);
         }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -39,7 +43,7 @@ public class CategoryController : Controller
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {
-            return NotFound();
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {
