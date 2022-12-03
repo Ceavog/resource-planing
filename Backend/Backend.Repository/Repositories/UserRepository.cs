@@ -30,4 +30,5 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         if (!_applicationDbContext.Users.Any(x => x.Id.Equals(userId)))
             throw new UserWithGivenIdDoesNotExistsException(userId);
     }
+
 }

@@ -14,5 +14,9 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
         _applicationDbContext = applicationDbContext;
     }
     
+    public IEnumerable<Category> GetAllCategoriesForUserId(int userId)
+    {
+        return _applicationDbContext.Categories.Where(x => x.UserId.Equals(userId));
+    }
     
 }

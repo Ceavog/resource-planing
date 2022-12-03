@@ -1,5 +1,6 @@
 using Backend.Services.Interface;
 using Backend.Shared.Dtos.CategoryDtos;
+using Backend.Shared.Exceptions.UserExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,23 @@ public class CategoryController : Controller
         catch (Exception e)
         {
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("GetAllCategoriesForUserId")]
+    public ActionResult<IEnumerable<GetCategoryDto>> GetAllCategoriesForUserId(int userId)
+    {
+        try
+        {
+            return Ok(_categoryService.GetAllCategoriesForUserId(userId));
+        }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
         }
     }
 
