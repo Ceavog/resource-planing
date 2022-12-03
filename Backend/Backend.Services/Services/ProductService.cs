@@ -24,7 +24,7 @@ public class ProductService : IProductService
 
     public GetProductDto GetProductById(int id)
     {
-        //throw exception when product does not exists
+        _productsRepository.ThrowExceptionWhenProductWithGivenIdDoesNotExists(id);
         return _productsRepository.Get(id)!.Adapt<GetProductDto>();
     }
 
