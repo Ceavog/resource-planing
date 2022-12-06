@@ -20,6 +20,8 @@ public class CategoryService : ICategoryService
     public AddCategoryDto AddCategory(AddCategoryDto addCategoryDto)
     {
         _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(addCategoryDto.UserId);
+        _categoryRepository.ThrowExceptionWhenCategoryWithGivenNameAlreadyExistsForUserWithGivenId(addCategoryDto.Name, addCategoryDto.UserId);
+        
         return _categoryRepository.Add(addCategoryDto.Adapt<Category>()).Adapt<AddCategoryDto>();
     }
 
@@ -33,6 +35,8 @@ public class CategoryService : ICategoryService
     {
         _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(updateCategoryDto.UserId);
         _categoryRepository.ThrowExceptionWhenCategoryWithGivenIdDoesNotExists(updateCategoryDto.Id);
+        _categoryRepository.ThrowExceptionWhenCategoryWithGivenNameAlreadyExistsForUserWithGivenId(updateCategoryDto.Name,updateCategoryDto.UserId);
+        
         return _categoryRepository.UpdateCategory(updateCategoryDto.Adapt<Category>()).Adapt<UpdateCategoryDto>();
     }
 
