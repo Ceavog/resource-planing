@@ -31,6 +31,10 @@ public class CategoryController : Controller
         {
             return NotFound(e.Message);
         }
+        catch (Exception e) when (e is CategoryWithGivenNameAndUserWithThisIdAlreadyExistsException)
+        {
+            return Conflict(e.Message);
+        }
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -68,6 +72,10 @@ public class CategoryController : Controller
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {
             return NotFound(e.Message);
+        }
+        catch (Exception e) when (e is CategoryWithGivenNameAndUserWithThisIdAlreadyExistsException)
+        {
+            return Conflict(e.Message);
         }
         catch (Exception e)
         {
