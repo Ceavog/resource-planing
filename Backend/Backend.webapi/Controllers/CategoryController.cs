@@ -20,11 +20,11 @@ public class CategoryController : Controller
     }
 
     [HttpPost("AddCategory")]
-    public IActionResult AddCategory(AddCategoryDto addCategoryDto)
+    public IActionResult AddCategory(AddCategoryDto categoryDto)
     {
         try
         {
-            var addedCategory = _categoryService.AddCategory(addCategoryDto);
+            var addedCategory = _categoryService.AddCategory(categoryDto);
             return Created("/AddCategory", addedCategory);
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
@@ -42,11 +42,11 @@ public class CategoryController : Controller
     }
 
     [HttpGet("GetAllCategoriesForUserId")]
-    public ActionResult<IEnumerable<GetCategoryDto>> GetAllCategoriesForUserId(int userId)
+    public ActionResult<IEnumerable<GetCategoryDto>> GetAllCategoriesForUserId(int Id)
     {
         try
         {
-            return Ok(_categoryService.GetAllCategoriesForUserId(userId));
+            return Ok(_categoryService.GetAllCategoriesForUserId(Id));
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {
@@ -84,11 +84,11 @@ public class CategoryController : Controller
     }
 
     [HttpDelete("DeleteCategoryById")]
-    public IActionResult DeleteCategory(int categoryId)
+    public IActionResult DeleteCategory(int Id)
     {
         try
         {
-            return Ok(_categoryService.DeleteCategory(categoryId));
+            return Ok(_categoryService.DeleteCategory(Id));
         }
         catch (Exception e) when (e is CategoryWithGivenIdDoesNotExistsException)
         {

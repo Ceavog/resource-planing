@@ -24,11 +24,11 @@ public class ProductsController : Controller
     }
 
     [HttpGet("GetAllProductsByUserId")]
-    public ActionResult<IEnumerable<GetProductDto>> GetAllProductsByUserId(int userId)
+    public ActionResult<IEnumerable<GetProductDto>> GetAllProductsByUserId(int Id)
     {
         try
         {
-            return Ok(Json(_productService.GetAllProductsByUserId(userId)));
+            return Ok(Json(_productService.GetAllProductsByUserId(Id)));
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {
