@@ -33,4 +33,10 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
         _applicationDbContext.SaveChanges();
         return updatedCategory;
     }
+
+    public void ThrowExceptionWhenCategoryWithGivenNameAlreadyExistsForUserWithGivenId(string categoryName, int userId)
+    {
+        if (_applicationDbContext.Categories.Any(x => x.Name.Equals(categoryName) && x.UserId.Equals(userId)))
+            throw new CategoryWithGivenNameAndUserWithThisIdAlreadyExistsException(categoryName, userId);
+    }
 }
