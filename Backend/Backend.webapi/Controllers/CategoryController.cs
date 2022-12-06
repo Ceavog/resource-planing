@@ -84,11 +84,11 @@ public class CategoryController : Controller
     }
 
     [HttpDelete("DeleteCategoryById")]
-    public IActionResult DeleteCategory(int Id)
+    public IActionResult DeleteCategory(int id)
     {
         try
         {
-            return Ok(_categoryService.DeleteCategory(Id));
+            return Ok(_categoryService.DeleteCategory(id));
         }
         catch (Exception e) when (e is CategoryWithGivenIdDoesNotExistsException)
         {
