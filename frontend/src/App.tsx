@@ -1,4 +1,5 @@
-import AppBarNavi from "components/app-bar/app-bar";
+import { Container } from "@mui/material";
+import Navi from "components/navi";
 import Loading from "components/loadingProgress";
 import ModalBox from "components/modalBox";
 // import GuestRouter from "modules/guest/guest-router";
@@ -32,7 +33,7 @@ const App = () => {
 
   return (
     <Suspense>
-      <AppBarNavi />
+      <Navi />
       <Loading />
       {authorizedRoutes}
       <ModalBox />
