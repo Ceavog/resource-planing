@@ -42,11 +42,11 @@ public class CategoryController : Controller
     }
 
     [HttpGet("GetAllCategoriesForUserId")]
-    public ActionResult<IEnumerable<GetCategoryDto>> GetAllCategoriesForUserId(int Id)
+    public ActionResult<IEnumerable<GetCategoryDto>> GetAllCategoriesForUserId(int id)
     {
         try
         {
-            return Ok(_categoryService.GetAllCategoriesForUserId(Id));
+            return Ok(_categoryService.GetAllCategoriesForUserId(id));
         }
         catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
         {
@@ -100,4 +100,20 @@ public class CategoryController : Controller
         }
     }
 
+    [HttpGet("GetAllCategoriesWithProductsByUserId")]
+    public IActionResult GetAllCategoriesWithProductsByUserId(int id)
+    {
+        try
+        {
+            return Ok(_categoryService.GetCategoryWithProducts(id));
+        }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
 }
