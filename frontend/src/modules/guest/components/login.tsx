@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { useAuthContext } from "services/auth";
+// import { useAuthContext } from "services/auth";
 
 type FormData = {
   login: string;
@@ -17,13 +17,13 @@ type FormData = {
 
 const Login = () => {
   const methods = useForm<FormData>();
-  const auth = useAuthContext();
+  // const auth = useAuthContext();
 
   const onSubmitHandler: SubmitHandler<FormData> = (values: FormData) => {
     const { login, password } = values;
 
     if (login && password) {
-      auth?.login({ login, password });
+      // auth?.login({ login, password });
     }
   };
 

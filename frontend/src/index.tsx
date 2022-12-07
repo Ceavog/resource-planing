@@ -10,7 +10,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import theme from "config/theme";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "services/auth";
 import { ModalBoxProvider } from "components/modalBox/providers/modalBox";
 import { QueryClientProvider } from "react-query";
 import queryClient from "services/api/query-client";
@@ -21,16 +20,14 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <DisplayLoadingProvider>
-            <QueryClientProvider client={queryClient}>
-              <ModalBoxProvider>
-                <CssBaseline />
-                <App />
-              </ModalBoxProvider>
-            </QueryClientProvider>
-          </DisplayLoadingProvider>
-        </AuthProvider>
+        <DisplayLoadingProvider>
+          <QueryClientProvider client={queryClient}>
+            <ModalBoxProvider>
+              <CssBaseline />
+              <App />
+            </ModalBoxProvider>
+          </QueryClientProvider>
+        </DisplayLoadingProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
