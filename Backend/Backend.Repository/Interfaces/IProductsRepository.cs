@@ -9,4 +9,5 @@ public interface IProductsRepository : IGenericRepository<Products>
     Products UpdateProduct(Products product);
     void ThrowExceptionWhenProductWithGivenNameAndUserIdAlreadyExists(int userId, string name);
     void ThrowExceptionWhenProductWithGivenIdDoesNotExists(int productId);
+    IEnumerable<Products> GetAllProductsByCategoryId(int categoryId);
 }

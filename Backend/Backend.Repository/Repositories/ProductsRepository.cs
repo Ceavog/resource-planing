@@ -39,6 +39,11 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
             throw new ProductWithGivenIdDoesNotExistsException(productId);
     }
 
+    public IEnumerable<Products> GetAllProductsByCategoryId(int categoryId)
+    {
+        return _applicationDbContext.Products.Where(x => x.CategoryId.Equals(categoryId));
+    }
+
     public Products AddProduct(Products products)
     {
         var addedProduct =_applicationDbContext.Products.Add(products);
