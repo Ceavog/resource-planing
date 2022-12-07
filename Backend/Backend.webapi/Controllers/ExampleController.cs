@@ -14,6 +14,7 @@ public class ExampleController : Controller
     [EnableCors("_myAllowSpecificOrigins")]
     public IActionResult GetSampleString1()
     {
+        Response.Cookies.Append("X-Access-Token", "down", new CookieOptions() { HttpOnly = true });
         return Ok("example");
     }
 }
