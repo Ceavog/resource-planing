@@ -60,7 +60,7 @@ public class UserController : Controller
     }
 
     [HttpGet("Identity")]
-    //[Authorize]
+    [Authorize]
     public IActionResult GetIdentity()
     {
         try
