@@ -64,7 +64,14 @@ var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
 });
 var app = builder.Build();
 // Configure the HTTP request pipeline.
