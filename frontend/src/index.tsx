@@ -12,8 +12,8 @@ import theme from "config/theme";
 import { BrowserRouter } from "react-router-dom";
 import { ModalBoxProvider } from "components/modalBox/providers/modalBox";
 import { QueryClientProvider } from "react-query";
-import queryClient from "api/query-client";
 import { DisplayLoadingProvider } from "components/loadingProgress/providers/loading-provider";
+import { queryClient } from "api";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(

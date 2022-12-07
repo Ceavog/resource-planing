@@ -1,5 +1,5 @@
 import { CategoryType, ProductType } from "modules/settings/products/components/sortableItem";
-import API from "../api";
+import API from "..";
 
 export const getProducts = async (): Promise<ProductType[]> => {
   const { data } = await API.get("/GetAllProductsByUserId?id=1");
