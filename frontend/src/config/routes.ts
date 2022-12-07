@@ -20,10 +20,10 @@ const routes = {
       basePath: "/settings",
     },
   },
-  market: {
-    menu: "/market",
+  orders: {
+    menu: "/orders",
     meta: {
-      basePath: "/market",
+      basePath: "/orders",
     },
   },
 };
