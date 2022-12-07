@@ -38,7 +38,10 @@ public class UserController : Controller
     {
         try
         {
-            return Ok(_userService.LoginUser(new LoginUserDto{Login = login, Password = password}));
+            var token = _userService.LoginUser(new LoginUserDto { Login = login, Password = password });
+            Console.WriteLine(token.Token);
+            Response.Cookies.Append("X-Access-Token", token.Token, new CookieOptions() { HttpOnly = true });
+            return Ok();
         }
         catch (Exception e)
         {

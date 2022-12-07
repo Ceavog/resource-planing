@@ -17,4 +17,14 @@ public class ExampleController : Controller
         Response.Cookies.Append("X-Access-Token", "down", new CookieOptions() { HttpOnly = true });
         return Ok("example");
     }
+    
+    
+    [HttpGet("example2")]
+    [EnableCors("_myAllowSpecificOrigins")]
+    [Authorize]
+    public IActionResult GetSampleString2()
+    {
+        Response.Cookies.Append("X-Access-Token", "down", new CookieOptions() { HttpOnly = true });
+        return Ok("example");
+    }
 }
