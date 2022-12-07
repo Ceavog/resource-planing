@@ -6,7 +6,7 @@ import { ModalBoxContext } from "components/modalBox/providers/modalBox";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { addCategory } from "services/api/actions/settings.actions";
+import { addCategory } from "api/actions/settings.actions";
 
 type AddCategoryFormValues = {
   name: string;

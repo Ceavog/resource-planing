@@ -9,7 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { ProductType } from "../../sortableItem";
 import { useMutation } from "react-query";
-import { deleteProduct } from "services/api/actions/settings.actions";
+import { deleteProduct } from "api/actions/settings.actions";
 
 const PaperElement = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1, 1, 1, 4),

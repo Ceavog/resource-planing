@@ -9,7 +9,7 @@ import Container from "@mui/material/Container";
 import { backendEndpoints } from "config/routes";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { API } from "services/api";
+import { API } from "api";
 
 type FormData = {
   email: string;

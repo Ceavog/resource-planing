@@ -19,7 +19,7 @@ import { ModalBoxContext } from "components/modalBox/providers/modalBox";
 import Button from "components/button";
 import AddProductForm from "./components/forms/addProductForm";
 import { useQuery } from "react-query";
-import { getCategories, getProducts } from "services/api/actions/settings.actions";
+import { getCategories, getProducts } from "api/actions/settings.actions";
 import { groupBy } from "lodash";
 import { DisplayLoadingContext } from "components/loadingProgress/providers/loading-provider";
 

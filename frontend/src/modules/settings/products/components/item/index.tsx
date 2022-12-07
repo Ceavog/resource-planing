@@ -24,7 +24,7 @@ import { UniqueIdentifier } from "@dnd-kit/core";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { CategoryType } from "../sortableItem";
 import ProductItems from "../productItems";
-import { deleteCategory } from "services/api/actions/settings.actions";
+import { deleteCategory } from "api/actions/settings.actions";
 import { useMutation } from "react-query";
 
 const PaperElement = styled(Paper)(({ theme }) => ({

@@ -7,7 +7,7 @@ import { ModalBoxContext } from "components/modalBox/providers/modalBox";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
-import { addProduct, getCategories } from "services/api/actions/settings.actions";
+import { addProduct, getCategories } from "api/actions/settings.actions";
 
 // type AddProductFormType = {
 //   name: string;
