@@ -2,17 +2,17 @@ import { routes } from "config";
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 
-const RegisterView = lazy(() => import("./views/register"));
-const LoginView = lazy(() => import("./views/login"));
+const Register = lazy(() => import("./components/register"));
+const Login = lazy(() => import("./components/login"));
 
 const GuestRouter = [
   {
     path: routes.auth.register,
-    element: <RegisterView />,
+    element: <Register />,
   },
   {
     path: routes.auth.login,
-    element: <LoginView />,
+    element: <Login />,
   },
   { path: "*", element: <Navigate to={routes.auth.meta.basePath} replace /> },
 ];

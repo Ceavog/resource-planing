@@ -2,12 +2,10 @@ import { routes } from "config";
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 
-const SettingsView = lazy(() => import("./views/settings-view"));
-const SettingsProductsView = lazy(() => import("./views/settings-products-view"));
+const SettingsProducts = lazy(() => import("./products/settings-products"));
 
 const SettingsRouter = [
-  { path: routes.settings.configurations, element: <SettingsView /> },
-  { path: routes.settings.products, element: <SettingsProductsView /> },
+  { path: routes.settings.products, element: <SettingsProducts /> },
   { path: "*", element: <Navigate to={routes.settings.meta.basePath} replace /> },
 ];
 
