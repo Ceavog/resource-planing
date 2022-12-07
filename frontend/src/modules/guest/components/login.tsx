@@ -15,7 +15,7 @@ type FormData = {
   password: string;
 };
 
-const LoginView = () => {
+const Login = () => {
   const methods = useForm<FormData>();
   const auth = useAuthContext();
 
@@ -69,4 +69,4 @@ const LoginView = () => {
   );
 };
 
-export default LoginView;
+export default Login;

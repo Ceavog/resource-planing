@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
 import { backendEndpoints } from "config/routes";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
@@ -17,7 +16,7 @@ type FormData = {
   password: string;
 };
 
-const RegisterView = () => {
+const Register = () => {
   const methods = useForm<FormData>();
 
   const onSubmitHandler: SubmitHandler<FormData> = (values: FormData) => {
@@ -71,4 +70,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default Register;

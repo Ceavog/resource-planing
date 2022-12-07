@@ -1,13 +1,16 @@
 import AppBarNavi from "components/app-bar/app-bar";
-import GuestRouter from "modules/guest/guest-router";
+import Loading from "components/loadingProgress";
+import ModalBox from "components/modalBox";
+// import GuestRouter from "modules/guest/guest-router";
 import MarketRouter from "modules/market/market-router";
 import SettingsRouter from "modules/settings/settings-router";
 import { Suspense, useEffect } from "react";
 import { useRoutes } from "react-router-dom";
+
 import { useAuthContext } from "services/auth";
 
 const App = () => {
-  const guestRoutes = useRoutes(GuestRouter);
+  // const guestRoutes = useRoutes(GuestRouter);
   const authorizedRoutes = useRoutes([...MarketRouter, ...SettingsRouter]);
   const auth = useAuthContext();
 
@@ -19,18 +22,20 @@ const App = () => {
     }
   }, [auth]);
 
-  if (!auth?.isInitialized) {
-    return <div>Loading...</div>;
-  }
+  // if (!auth?.isInitialized) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!auth?.isAuthenticated) {
-    return <Suspense>{guestRoutes}</Suspense>;
-  }
+  // if (!auth?.isAuthenticated) {
+  //   return <Suspense>{guestRoutes}</Suspense>;
+  // }
 
   return (
     <Suspense>
       <AppBarNavi />
+      <Loading />
       {authorizedRoutes}
+      <ModalBox />
     </Suspense>
   );
 };
