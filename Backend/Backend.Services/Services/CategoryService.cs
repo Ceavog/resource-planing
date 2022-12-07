@@ -4,6 +4,7 @@ using Backend.Services.Interface;
 using Backend.Shared.Dtos.CategoryDtos;
 using Backend.Shared.Dtos.ProductDtos;
 using Mapster;
+using GetCategoryWithProductsDto = Backend.Shared.Dtos.ProductCategoryDtos.GetCategoryWithProductsDto;
 
 namespace Backend.Services.Services;
 
@@ -11,10 +12,12 @@ public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IUserRepository _userRepository;
-    public CategoryService(ICategoryRepository categoryRepository, IUserRepository userRepository)
+    private readonly IProductsRepository _productsRepository;
+    public CategoryService(ICategoryRepository categoryRepository, IUserRepository userRepository, IProductsRepository productsRepository)
     {
         _categoryRepository = categoryRepository;
         _userRepository = userRepository;
+        _productsRepository = productsRepository;
     }
 
     public AddCategoryDto AddCategory(AddCategoryDto addCategoryDto)
@@ -44,5 +47,23 @@ public class CategoryService : ICategoryService
     {
         _categoryRepository.ThrowExceptionWhenCategoryWithGivenIdDoesNotExists(categoryId);
         return _categoryRepository.Delete(categoryId).Adapt<CategoryDto>();
+    }
+
+    public IEnumerable<GetCategoryWithProductsDto> GetCategoryWithProducts(int userId)
+    {
+        _userRepository.ThrowExceptionWhenUserWithGivenIdDoesNotExists(userId);
+        var categoriesWithProducts = new List<GetCategoryWithProductsDto>();
+        var categories = _categoryRepository.GetAllCategoriesForUserId(userId);
+        foreach (var category in categories)
+        {
+            var categoryWithProduct = new GetCategoryWithProductsDto
+            {
+                Category = category.Adapt<CategoryDto>(),
+                Products = _productsRepository.GetAllProductsByCategoryId(category.Id).Adapt<IEnumerable<ProductDto>>()
+            };
+            categoriesWithProducts.Add(categoryWithProduct);
+        }
+
+        return categoriesWithProducts;
     }
 }
