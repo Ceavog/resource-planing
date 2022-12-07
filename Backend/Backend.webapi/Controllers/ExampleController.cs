@@ -24,7 +24,6 @@ public class ExampleController : Controller
     [Authorize]
     public IActionResult GetSampleString2()
     {
-        Response.Cookies.Append("X-Access-Token", "down", new CookieOptions() { HttpOnly = true });
         return Ok("example");
     }
 }
