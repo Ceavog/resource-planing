@@ -2,8 +2,8 @@ import { CategoryType, ProductType } from "modules/settings/products/components/
 import API from "..";
 
 export const getProducts = async (): Promise<ProductType[]> => {
-  const { data } = await API.get("/GetAllProductsByUserId?id=1");
-  return data.value;
+  const response = await API.get("/GetAllProductsByUserId?id=1");
+  return response.data.value;
 };
 
 type AddProductVars = {

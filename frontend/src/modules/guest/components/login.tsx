@@ -8,23 +8,75 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-// import { useAuthContext } from "services/auth";
+import { object, string, TypeOf } from "zod";
+import { useNavigate, useLocation } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "react-query";
+import { useStateContext } from "api/providers/api-provider";
+import { useEffect } from "react";
+import { getMeFn, loginUserFn } from "api";
 
-type FormData = {
-  login: string;
-  password: string;
-};
+const loginSchema = object({
+  login: string().min(1, "Login is required"),
+  password: string(),
+  // .min(1, "Password is required")
+  // .min(8, "Password must be more than 8 characters")
+  // .max(32, "Password must be less than 32 characters"),
+});
+
+export type LoginInput = TypeOf<typeof loginSchema>;
 
 const Login = () => {
-  const methods = useForm<FormData>();
-  // const auth = useAuthContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const onSubmitHandler: SubmitHandler<FormData> = (values: FormData) => {
-    const { login, password } = values;
+  const from = ((location.state as any)?.from.pathname as string) || "/";
 
-    if (login && password) {
-      // auth?.login({ login, password });
+  const methods = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const stateContext = useStateContext();
+
+  const query = useQuery(["authUser"], getMeFn, {
+    enabled: false,
+    select: (data) => data.data.user,
+    retry: 1,
+    onSuccess: (data) => {
+      stateContext.dispatch({ type: "SET_USER", payload: data });
+    },
+  });
+
+  const { mutate: loginUser, isLoading } = useMutation((userData: LoginInput) => loginUserFn(userData), {
+    onSuccess: () => {
+      query.refetch();
+      alert("You successfully logged in");
+      navigate(from);
+    },
+    onError: (error: any) => {
+      if (Array.isArray((error as any).response.data.error)) {
+        (error as any).response.data.error.forEach((el: any) => alert(el.message));
+      } else {
+        alert((error as any).response.data.message);
+      }
+    },
+  });
+
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = methods;
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful]);
+
+  const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
+    loginUser(values);
   };
 
   return (
@@ -44,7 +96,7 @@ const Login = () => {
           Sign In
         </Typography>
         <FormProvider {...methods}>
-          <Box sx={{ mt: 1 }} component="form" noValidate autoComplete="off" onSubmit={methods.handleSubmit(onSubmitHandler)}>
+          <Box sx={{ mt: 1 }} component="form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmitHandler)}>
             <FormInput label="Email Address" type="email" name="login" focused required fullWidth margin="normal" />
             <FormInput type="password" label="Password" name="password" required focused fullWidth margin="normal" />
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
