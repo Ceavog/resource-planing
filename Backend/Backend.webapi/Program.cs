@@ -56,7 +56,6 @@ builder.Services.AddSingleton(tokenValidationParameters);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = tokenValidationParameters;
 
         options.Events = new JwtBearerEvents
         {
@@ -68,8 +67,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 }
 
                 return Task.CompletedTask;
-            }
+            },
         };
+
+        options.TokenValidationParameters = tokenValidationParameters;
+
     });
 
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

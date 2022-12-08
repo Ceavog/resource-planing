@@ -141,7 +141,7 @@ public class UserService : IUserService
             issuer,
             issuer,
             claims,
-            expires: DateTime.Now.AddSeconds(30),
+            expires: DateTime.Now.AddMinutes(-59),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
