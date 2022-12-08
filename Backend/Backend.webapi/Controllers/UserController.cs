@@ -33,14 +33,14 @@ public class UserController : Controller
 
     }
 
-    [HttpGet("LoginUser")]
+    [HttpPost("LoginUser")]
     public IActionResult Login(string login, string password)
     {
         try
         {
-            var token = _userService.LoginUser(new LoginUserDto { Login = login, Password = password });
-            Console.WriteLine(token.Token);
-            Response.Cookies.Append("X-Access-Token", token.Token, new CookieOptions() { HttpOnly = true });
+            var authenticatedUserResponse = _userService.LoginUser(new LoginUserDto { Login = login, Password = password });
+            Response.Cookies.Append("X-Access-Token", authenticatedUserResponse.Token, new CookieOptions() { HttpOnly = true });
+            Response.Cookies.Append("X-Refresh-Token", authenticatedUserResponse.RefreshToken, new CookieOptions() {HttpOnly = true});
             return Ok();
         }
         catch (Exception e)
