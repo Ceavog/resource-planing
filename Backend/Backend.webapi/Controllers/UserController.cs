@@ -50,11 +50,21 @@ public class UserController : Controller
     }
 
     [HttpGet("RefreshToken")]
-    public IActionResult RefreshToken(string expiredToken, string refreshToken)
+    public IActionResult RefreshToken()
     {
         try
         {
-            return Ok(_userService.RefreshToken(refreshToken, expiredToken));
+            Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken);
+            Request.Cookies.TryGetValue("X-Access-Token", out var accessToken);
+
+            if (accessToken is null && refreshToken is null)
+                return BadRequest();
+            var authenticatedUserResponse = _userService.RefreshToken(refreshToken, accessToken);
+            
+            Response.Cookies.Append("X-Access-Token", authenticatedUserResponse.Token, new CookieOptions() { HttpOnly = true });
+            Response.Cookies.Append("X-Refresh-Token", authenticatedUserResponse.RefreshToken, new CookieOptions() {HttpOnly = true});
+
+            return Ok(refreshToken);
         }
         catch (Exception e)
         {
