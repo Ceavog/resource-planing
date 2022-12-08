@@ -64,7 +64,7 @@ public class UserController : Controller
             Response.Cookies.Append("X-Access-Token", authenticatedUserResponse.Token, new CookieOptions() { HttpOnly = true });
             Response.Cookies.Append("X-Refresh-Token", authenticatedUserResponse.RefreshToken, new CookieOptions() {HttpOnly = true});
 
-            return Ok(refreshToken);
+            return Ok();
         }
         catch (Exception e)
         {
