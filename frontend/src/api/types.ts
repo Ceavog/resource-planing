@@ -1,7 +1,8 @@
 export interface IUser {
-  id: string;
-  name: string;
-  email: string;
+  id: number;
+  login: string;
+  // name: string;
+  // email: string;
   role: string;
 }
 
@@ -16,10 +17,8 @@ export interface ILoginResponse {
 }
 
 export interface IUserResponse {
-  status: string;
-  data: {
-    user: IUser;
-  };
+  status: number;
+  data: IUser;
 }
 
 export interface ILoginVars {

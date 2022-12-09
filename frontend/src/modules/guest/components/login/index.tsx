@@ -40,7 +40,6 @@ const Login = () => {
 
   const query = useQuery(["authUser"], requestIndentity, {
     enabled: false,
-    select: (data) => data.data.user,
     retry: 1,
     onSuccess: (data) => {
       userContext?.dispatch({ type: "SET_USER", payload: data });

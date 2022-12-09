@@ -15,7 +15,6 @@ const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
 
   const query = useQuery(["authUser"], () => requestIndentity(), {
     enabled: !!cookies.logged_in,
-    select: (data) => data.data.user,
     onSuccess: (data) => {
       userContext?.dispatch({ type: "SET_USER", payload: data });
     },

@@ -2,7 +2,7 @@ import axios from "axios";
 import { config } from "config";
 import { backendEndpoints } from "config/routes";
 import { QueryClient } from "react-query";
-import { GenericResponse, ILoginResponse, ILoginVars, IUserResponse } from "./types";
+import { GenericResponse, ILoginResponse, ILoginVars, IUser, IUserResponse } from "./types";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,12 +52,14 @@ export const requestRegister = async (user: ILoginVars) => {
 };
 
 export const requestLogin = async (user: ILoginVars) => {
-  const response = await API.post<ILoginResponse>(backendEndpoints.login, user);
+  const response = await API.post<ILoginResponse>(
+    backendEndpoints.login.replace(":login", user.login).replace(":password", user.password),
+  );
   return response.data;
 };
 
-export const requestIndentity = async () => {
-  const response = await API.get<IUserResponse>(backendEndpoints.identity);
+export const requestIndentity = async (): Promise<IUser> => {
+  const response = await API.get(backendEndpoints.identity);
   return response.data;
 };
 

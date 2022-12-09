@@ -16,7 +16,6 @@ const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
     data: user,
   } = useQuery(["authUser"], requestIndentity, {
     retry: 1,
-    select: (data) => data.data.user,
     onSuccess: (data) => {
       userContext?.dispatch({ type: "SET_USER", payload: data });
     },
