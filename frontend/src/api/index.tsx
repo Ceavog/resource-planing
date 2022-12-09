@@ -35,7 +35,8 @@ API.interceptors.response.use(
     originalConfig!.headers = { ...originalConfig!.headers };
 
     const errMessage = error.response.statusText as string;
-    if (errMessage.includes("Unauthorized")) {
+    if (errMessage.includes("Unauthorized") && !originalConfig._retry) {
+      originalConfig._retry = true;
       await refreshAccessTokenFn();
       return API(originalConfig);
     }

@@ -16,9 +16,9 @@ const initialState: State = {
   authUser: null,
 };
 
-type StateContextProviderProps = { children: React.ReactNode };
+type UserProviderProps = { children: React.ReactNode };
 
-const StateContext = React.createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
+const UserContext = React.createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
 
 const stateReducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -34,20 +34,12 @@ const stateReducer = (state: State, action: Action) => {
   }
 };
 
-const StateContextProvider = ({ children }: StateContextProviderProps) => {
+const UserProvider = ({ children }: UserProviderProps) => {
   const [state, dispatch] = React.useReducer(stateReducer, initialState);
   const value = { state, dispatch };
-  return <StateContext.Provider value={value}>{children}</StateContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-const useStateContext = () => {
-  const context = React.useContext(StateContext);
+const useUser = () => React.useContext(UserContext);
 
-  if (context) {
-    return context;
-  }
-
-  throw new Error(`useStateContext must be used within a StateContextProvider`);
-};
-
-export { StateContextProvider, useStateContext };
+export { UserProvider, useUser };

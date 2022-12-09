@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import API from "api";
 import Button from "components/button";
-import { useEffect } from "react";
 
 const Example = () => {
   const login = async () => {

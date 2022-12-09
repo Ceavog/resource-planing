@@ -1,6 +1,6 @@
 import { requestIndentity } from "api";
-import { useStateContext } from "api/providers/api-provider";
-import LoadingPlaceholder from "components/placeholders/loading-placeholder";
+import { useUser } from "api/providers/user-provider";
+import FullScreenLoader from "components/placeholders/fullScreenLoader";
 import { useCookies } from "react-cookie";
 import { useQuery } from "react-query";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
@@ -8,7 +8,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
   const [cookies] = useCookies(["logged_in"]);
   const location = useLocation();
-  const stateContext = useStateContext();
+  const userContext = useUser();
 
   const {
     isLoading,
@@ -18,14 +18,12 @@ const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
     retry: 1,
     select: (data) => data.data.user,
     onSuccess: (data) => {
-      stateContext.dispatch({ type: "SET_USER", payload: data });
+      userContext?.dispatch({ type: "SET_USER", payload: data });
     },
   });
 
-  const loading = isLoading || isFetching;
-
-  if (loading) {
-    return <LoadingPlaceholder />;
+  if (isLoading || isFetching) {
+    return <FullScreenLoader />;
   }
 
   return (cookies.logged_in || user) && allowedRoles.includes(user?.role as string) ? (
