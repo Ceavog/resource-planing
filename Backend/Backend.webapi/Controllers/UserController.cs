@@ -41,6 +41,8 @@ public class UserController : Controller
             var authenticatedUserResponse = _userService.LoginUser(new LoginUserDto { Login = login, Password = password });
             Response.Cookies.Append("X-Access-Token", authenticatedUserResponse.Token, new CookieOptions() { HttpOnly = true });
             Response.Cookies.Append("X-Refresh-Token", authenticatedUserResponse.RefreshToken, new CookieOptions() {HttpOnly = true});
+            Response.Cookies.Append("logged_in", "true", new CookieOptions());
+
             return Ok();
         }
         catch (Exception e)
@@ -79,7 +81,10 @@ public class UserController : Controller
         try
         {
             Request.Cookies.TryGetValue("X-Access-Token", out var accessToken);
-            return Ok(_userService.GetAllDataAboutUser(accessToken));
+            //todo - do it like a man
+            var user = _userService.GetAllDataAboutUser(accessToken);
+            user.Role = "auth";
+            return Ok(user);
         }
         catch (Exception e)
         {
