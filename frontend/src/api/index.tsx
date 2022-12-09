@@ -31,6 +31,7 @@ API.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log(error);
     const originalRequest = error.config;
     const errMessage = error.response.data.message as string;
     if (errMessage.includes("not logged in") && !originalRequest._retry) {

@@ -14,23 +14,30 @@ interface TabPanelProps {
   value: number;
 }
 
+type ProductRowProps = {
+  product: any;
+};
+
+const productsList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
+      sx={{ flex: 1 }}
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -85,108 +92,71 @@ const Order = () => {
   //   return <></>;
   // };
 
-  // const MenuProduct = (props: any) => {
-  //   return <></>;
-  // };
+  const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
+    return (
+      <Item
+        key={product}
+        onClick={() =>
+          actionModalBox(
+            true,
+            <div>
+              <Button variant="contained">Dodaj do zamówienia</Button>
+            </div>,
+            `Produkt ${product}`,
+          )
+        }
+      >
+        <Box sx={{ mr: 4 }}>
+          <Typography gutterBottom color="grey.900" fontWeight="500">
+            Produkt {product}
+          </Typography>
+          <Typography gutterBottom variant="body2">
+            Cheese, pepperoni, mushrooms
+          </Typography>
+          <Typography color="grey.900">24zł</Typography>
+        </Box>
+        <Icon
+          className="addIcon"
+          sx={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            borderRadius: "0 10px 0 10px",
+            width: 32,
+            height: 32,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <AddIcon />
+        </Icon>
+      </Item>
+    );
+  };
 
   return (
     <Box
       sx={{
         maxWidth: 1280,
         mx: "auto",
-        my: 16,
+        my: 8,
         borderRadius: "8px",
         boxShadow: "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
       }}
     >
-      {/* <Grid container>
-        <Grid item xs={3} sx={{ borderRight: "1px solid #e5e7eb" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", py: 1 }}>
-            {categories?.map((item) => {
-              return (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    pl: 4,
-                    pr: 2,
-                    my: 1,
-
-                    cursor: "pointer",
-                  }}
-                  key={item.id}
-                >
-                  <Typography>{item.name}</Typography>
-                  <Icon>
-                    <ArrowRightIcon color="action" />
-                  </Icon>
-                </Box>
-              );
-            })}
-          </Box>
-        </Grid>
-        <Grid item xs={9} sx={{ p: 2 }}>
-          <Typography variant="h6" component="p" sx={{ mb: 5 }}>
-            Nazwa kategorii
-          </Typography>
-          <Stack spacing={2}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => {
-              return (
-                <Item
-                  onClick={() =>
-                    actionModalBox(
-                      true,
-                      <div>
-                        <Button variant="contained">Dodaj do zamówienia</Button>
-                      </div>,
-                      `Produkt ${item}`,
-                    )
-                  }
-                >
-                  <Box sx={{ mr: 4 }}>
-                    <Typography gutterBottom color="grey.900" fontWeight="500">
-                      Produkt {item}
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      It is a long established fact that a reader will be distracted by the readable content of a page when
-                      looking at its layout.
-                    </Typography>
-                    <Typography color="grey.900">24zł</Typography>
-                  </Box>
-                  <Icon
-                    className="addIcon"
-                    sx={{
-                      position: "absolute",
-                      right: 0,
-                      top: 0,
-                      borderRadius: "0 10px 0 10px",
-                      width: 32,
-                      height: 32,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <AddIcon />
-                  </Icon>
-                </Item>
-              );
-            })}
-          </Stack>
-        </Grid>
-      </Grid> */}
       <Box sx={{ flexGrow: 1, display: "flex" }}>
         <Tabs
           orientation="vertical"
           variant="scrollable"
           value={value}
           onChange={handleChange}
-          sx={{ borderRight: 1, borderColor: "divider" }}
+          sx={{ borderRight: 1, borderColor: "divider", flex: "240px 0" }}
         >
           {categories?.map((category, index) => (
             <Tab
               key={index}
-              sx={{ textTransform: "none", justifyContent: "flex-start" }}
+              sx={{ textTransform: "none", justifyContent: "space-between" }}
               icon={<ArrowRightIcon color="action" />}
               iconPosition="end"
               label={category.name}
@@ -201,49 +171,9 @@ const Order = () => {
                 {category.name}
               </Typography>
               <Stack spacing={2}>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((product) => {
-                  return (
-                    <Item
-                      key={product}
-                      onClick={() =>
-                        actionModalBox(
-                          true,
-                          <div>
-                            <Button variant="contained">Dodaj do zamówienia</Button>
-                          </div>,
-                          `Produkt ${product}`,
-                        )
-                      }
-                    >
-                      <Box sx={{ mr: 4 }}>
-                        <Typography gutterBottom color="grey.900" fontWeight="500">
-                          Produkt {product}
-                        </Typography>
-                        <Typography gutterBottom variant="body2">
-                          It is a long established fact that a reader will be distracted by the readable content of a page when
-                          looking at its layout.
-                        </Typography>
-                        <Typography color="grey.900">24zł</Typography>
-                      </Box>
-                      <Icon
-                        className="addIcon"
-                        sx={{
-                          position: "absolute",
-                          right: 0,
-                          top: 0,
-                          borderRadius: "0 10px 0 10px",
-                          width: 32,
-                          height: 32,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <AddIcon />
-                      </Icon>
-                    </Item>
-                  );
-                })}
+                {productsList.map((product) => (
+                  <ProductRow product={product} key={product} />
+                ))}
               </Stack>
             </Box>
           </TabPanel>
