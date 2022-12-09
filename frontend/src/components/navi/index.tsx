@@ -12,6 +12,9 @@ function Navi() {
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "space-between" }}>
             <Box>
+              {/* <Button sx={{ my: 2, color: "white" }} component={Link} to="/example">
+                Example
+              </Button> */}
               <Button sx={{ my: 2, color: "white" }} component={Link} to="/order">
                 Zamów
               </Button>

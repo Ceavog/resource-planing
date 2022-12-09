@@ -18,23 +18,23 @@ import AuthMiddleware from "middleware/authMiddleware";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <StateContextProvider>
-            <DisplayLoadingProvider>
-              <ModalBoxProvider>
-                <AuthMiddleware>
-                  <App />
-                </AuthMiddleware>
-              </ModalBoxProvider>
-            </DisplayLoadingProvider>
-          </StateContextProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <StateContextProvider>
+          <DisplayLoadingProvider>
+            <ModalBoxProvider>
+              <AuthMiddleware>
+                <App />
+              </AuthMiddleware>
+            </ModalBoxProvider>
+          </DisplayLoadingProvider>
+        </StateContextProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  </QueryClientProvider>,
+  // </React.StrictMode>,
 );
 
 reportWebVitals();

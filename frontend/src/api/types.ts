@@ -1,12 +1,8 @@
 export interface IUser {
+  id: string;
   name: string;
   email: string;
   role: string;
-  _id: string;
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
 }
 
 export interface GenericResponse {
@@ -16,7 +12,7 @@ export interface GenericResponse {
 
 export interface ILoginResponse {
   status: string;
-  access_token: string;
+  accessToken: string;
 }
 
 export interface IUserResponse {
@@ -26,4 +22,7 @@ export interface IUserResponse {
   };
 }
 
-//not sure
+export interface ILoginVars {
+  login: string;
+  password: string;
+}

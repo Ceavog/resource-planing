@@ -1,4 +1,4 @@
-import { getMeFn } from "api";
+import { requestIndentity } from "api";
 import { useStateContext } from "api/providers/api-provider";
 import LoadingPlaceholder from "components/placeholders/loading-placeholder";
 import { useCookies } from "react-cookie";
@@ -14,7 +14,7 @@ const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
     isLoading,
     isFetching,
     data: user,
-  } = useQuery(["authUser"], getMeFn, {
+  } = useQuery(["authUser"], requestIndentity, {
     retry: 1,
     select: (data) => data.data.user,
     onSuccess: (data) => {

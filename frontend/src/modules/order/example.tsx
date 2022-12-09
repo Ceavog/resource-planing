@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import API from "api";
 import Button from "components/button";
+import { useEffect } from "react";
 
 const Example = () => {
   const login = async () => {
@@ -15,6 +16,10 @@ const Example = () => {
     const response2 = await API.get("/RefreshToken");
     console.log(response2);
   };
+
+  // useEffect(() => {
+  //   example();
+  // }, []);
 
   return (
     <Box>
