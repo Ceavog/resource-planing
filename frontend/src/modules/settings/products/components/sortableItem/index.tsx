@@ -8,9 +8,13 @@ export type ProductType = {
   categoryId: number;
   id: number;
   name: string;
+  price: number;
 };
 
-export type CategoryType = ProductType & {
+export type CategoryType = {
+  categoryId: number;
+  id: number;
+  name: string;
   positions: ProductType[];
 };
 
