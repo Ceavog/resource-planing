@@ -90,15 +90,11 @@ public class UserService : IUserService
 
     public AuthenticatedUserResposeDto RefreshToken(string refreshToken, string accessToken)
     {
-        //validate accessToken
         var tokenHandler = new JwtSecurityTokenHandler();
-        var principal = tokenHandler.ValidateToken(accessToken, _tokenValidationParameters, out var securityToken);
-        var jwtSecurityToken = securityToken as JwtSecurityToken;
-        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-            throw new SecurityTokenException("Invalid token");
-        var userLogin = principal.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
-        // var user = _applicationDbContext.Users.FirstOrDefault(x=>x.Login.Equals(userLogin));
-        var user = _userRepository.GetUserByLogin(userLogin);
+        var token = tokenHandler.ReadJwtToken(accessToken);
+        var user_login = token.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
+        
+        var user = _userRepository.GetUserByLogin(user_login);
         if (_refreshTokenRepository.CheckIfUserWithGivenRefreshTokenExists(user.Id, refreshToken))
         {
             return new AuthenticatedUserResposeDto
@@ -141,7 +137,7 @@ public class UserService : IUserService
             issuer,
             issuer,
             claims,
-            expires: DateTime.Now.AddMinutes(-59),
+            expires: DateTime.Now.AddMinutes(1),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
