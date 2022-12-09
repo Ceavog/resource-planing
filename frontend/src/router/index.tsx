@@ -1,7 +1,7 @@
 import FullScreenLoader from "components/placeholders/fullScreenLoader";
 import Example from "modules/example";
 import Order from "modules/order";
-import SettingsProducts from "modules/settings/products/settings-products";
+import SettingsProducts from "modules/settings/products";
 import { Suspense, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import Layout from "../components/layout";
