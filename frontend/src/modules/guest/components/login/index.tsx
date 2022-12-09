@@ -46,10 +46,15 @@ const Login = () => {
     },
   });
 
+  useEffect(() => {
+    if (userContext?.state.authUser) {
+      navigate("/order");
+    }
+  }, []);
+
   const { mutate: loginUser, isLoading } = useMutation((userData: LoginInput) => requestLogin(userData), {
     onSuccess: () => {
       query.refetch();
-      alert("You successfully logged in");
       navigate(from);
     },
     onError: (error: any) => {
