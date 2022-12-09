@@ -78,8 +78,8 @@ public class UserController : Controller
     {
         try
         {
-            var jwtToken = Request.Headers["Authorization"].ToString();
-            return Ok(_userService.GetAllDataAboutUser(jwtToken));
+            Request.Cookies.TryGetValue("X-Access-Token", out var accessToken);
+            return Ok(_userService.GetAllDataAboutUser(accessToken));
         }
         catch (Exception e)
         {
