@@ -1,10 +1,9 @@
 import { Box, Container, Typography } from "@mui/material";
-import { useStateContext } from "api/providers/api-provider";
+import { useUser } from "api/providers/user-provider";
 
 const Profile = () => {
-  const stateContext = useStateContext();
-
-  const user = stateContext.state.authUser;
+  const userContext = useUser();
+  const user = userContext?.state.authUser;
 
   return (
     <Container

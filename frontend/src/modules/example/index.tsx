@@ -16,6 +16,10 @@ const Example = () => {
     console.log(response2);
   };
 
+  // useEffect(() => {
+  //   example();
+  // }, []);
+
   return (
     <Box>
       <Button

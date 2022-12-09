@@ -1,16 +1,14 @@
-import LoadingPlaceholder from "components/placeholders/loading-placeholder";
-import RequireUser from "components/requireUser.tsx";
+import FullScreenLoader from "components/placeholders/fullScreenLoader";
+import Example from "modules/example";
 import Order from "modules/order";
-import Example from "modules/order/example";
-import SettingsProducts from "modules/settings/products/settings-products";
-import Profile from "modules/settings/profile";
+import SettingsProducts from "modules/settings/products";
 import { Suspense, lazy } from "react";
-import type { RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 import Layout from "../components/layout";
 
 const Loadable = (Component: React.ComponentType<any>) => (props: JSX.IntrinsicAttributes) =>
   (
-    <Suspense fallback={<LoadingPlaceholder />}>
+    <Suspense fallback={<FullScreenLoader />}>
       <Component {...props} />
     </Suspense>
   );
@@ -38,6 +36,10 @@ const normalRoutes: RouteObject = {
   element: <Layout />,
   children: [
     {
+      path: "*",
+      element: <Navigate to="/" replace />,
+    },
+    {
       index: true,
       element: <Example />,
     },
@@ -49,16 +51,16 @@ const normalRoutes: RouteObject = {
       path: "order",
       element: <Order />,
     },
-    {
-      path: "profile",
-      element: <RequireUser allowedRoles={["user", "admin"]} />,
-      children: [
-        {
-          path: "",
-          element: <Profile />,
-        },
-      ],
-    },
+    // {
+    //   path: "profile",
+    //   element: <RequireUser allowedRoles={["user", "admin"]} />,
+    //   children: [
+    //     {
+    //       path: "",
+    //       element: <Profile />,
+    //     },
+    //   ],
+    // },
     {
       path: "unauthorized",
       element: <UnauthorizePage />,

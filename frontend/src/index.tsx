@@ -13,28 +13,28 @@ import { ModalBoxProvider } from "components/modalBox/providers/modalBox";
 import { QueryClientProvider } from "react-query";
 import { DisplayLoadingProvider } from "components/loadingProgress/providers/loading-provider";
 import { queryClient } from "api";
-import { StateContextProvider } from "api/providers/api-provider";
+import { UserProvider } from "api/providers/user-provider";
 import AuthMiddleware from "middleware/authMiddleware";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <StateContextProvider>
-            <DisplayLoadingProvider>
-              <ModalBoxProvider>
-                <AuthMiddleware>
-                  <App />
-                </AuthMiddleware>
-              </ModalBoxProvider>
-            </DisplayLoadingProvider>
-          </StateContextProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <UserProvider>
+          <DisplayLoadingProvider>
+            <ModalBoxProvider>
+              <AuthMiddleware>
+                <App />
+              </AuthMiddleware>
+            </ModalBoxProvider>
+          </DisplayLoadingProvider>
+        </UserProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  </QueryClientProvider>,
+  // </React.StrictMode>,
 );
 
 reportWebVitals();

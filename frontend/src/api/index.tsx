@@ -2,7 +2,7 @@ import axios from "axios";
 import { config } from "config";
 import { backendEndpoints } from "config/routes";
 import { QueryClient } from "react-query";
-import { GenericResponse, ILoginResponse, IUserResponse } from "./types";
+import { GenericResponse, ILoginResponse, ILoginVars, IUserResponse } from "./types";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,30 +31,32 @@ API.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const originalRequest = error.config;
-    const errMessage = error.response.data.message as string;
-    if (errMessage.includes("not logged in") && !originalRequest._retry) {
-      originalRequest._retry = true;
+    const originalConfig = error.config;
+    originalConfig!.headers = { ...originalConfig!.headers };
+
+    const errMessage = error.response.statusText as string;
+    if (errMessage.includes("Unauthorized") && !originalConfig._retry) {
+      originalConfig._retry = true;
       await refreshAccessTokenFn();
-      return API(originalRequest);
+      return API(originalConfig);
     }
     return Promise.reject(error);
   },
 );
 
-export const signUpUserFn = async (user: { login: string; password: string }) => {
+export const requestRegister = async (user: ILoginVars) => {
   const response = await API.post<GenericResponse>(
     backendEndpoints.registerUser.replace(":login", user.login).replace(":password", user.password),
   );
   return response.data;
 };
 
-export const loginUserFn = async (user: { login: string; password: string }) => {
+export const requestLogin = async (user: ILoginVars) => {
   const response = await API.post<ILoginResponse>(backendEndpoints.login, user);
   return response.data;
 };
 
-export const getMeFn = async () => {
+export const requestIndentity = async () => {
   const response = await API.get<IUserResponse>(backendEndpoints.identity);
   return response.data;
 };

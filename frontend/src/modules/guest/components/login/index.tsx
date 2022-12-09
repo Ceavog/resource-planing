@@ -12,9 +12,9 @@ import { object, string, TypeOf } from "zod";
 import { useNavigate, useLocation } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "react-query";
-import { useStateContext } from "api/providers/api-provider";
+import { useUser } from "api/providers/user-provider";
 import { useEffect } from "react";
-import { getMeFn, loginUserFn } from "api";
+import { requestIndentity, requestLogin } from "api";
 
 const loginSchema = object({
   login: string().min(1, "Login is required"),
@@ -36,18 +36,18 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const stateContext = useStateContext();
+  const userContext = useUser();
 
-  const query = useQuery(["authUser"], getMeFn, {
+  const query = useQuery(["authUser"], requestIndentity, {
     enabled: false,
     select: (data) => data.data.user,
     retry: 1,
     onSuccess: (data) => {
-      stateContext.dispatch({ type: "SET_USER", payload: data });
+      userContext?.dispatch({ type: "SET_USER", payload: data });
     },
   });
 
-  const { mutate: loginUser, isLoading } = useMutation((userData: LoginInput) => loginUserFn(userData), {
+  const { mutate: loginUser, isLoading } = useMutation((userData: LoginInput) => requestLogin(userData), {
     onSuccess: () => {
       query.refetch();
       alert("You successfully logged in");

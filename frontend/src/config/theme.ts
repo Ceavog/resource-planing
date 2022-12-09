@@ -1,5 +1,10 @@
 import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
+import { SxProps, Theme } from "@mui/material/styles";
+
+export interface ISx {
+  [key: string]: SxProps<Theme>;
+}
 
 const theme = createTheme({
   palette: {
