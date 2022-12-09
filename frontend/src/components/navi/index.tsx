@@ -18,10 +18,10 @@ function Navi() {
               <Button sx={{ my: 2, color: "white" }} component={Link} to="/order">
                 Zamów
               </Button>
-              <Button sx={{ my: 2, color: "white" }} component={Link} to="/login">
+              <Button sx={{ my: 2, color: "white" }} component={Link} to="/register">
                 Rejestracja
               </Button>
-              <Button sx={{ my: 2, color: "white" }} component={Link} to="/register">
+              <Button sx={{ my: 2, color: "white" }} component={Link} to="/login">
                 Logowanie
               </Button>
             </Box>
