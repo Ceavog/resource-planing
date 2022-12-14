@@ -25,10 +25,13 @@ public class UserRepository : GenericRepository<User>, IUserRepository
         return _applicationDbContext.Users.Any(x => x.Login.Equals(login));
     }
 
-    public void ThrowExceptionWhenUserWithGivenIdDoesNotExists(int userId)
+    /// <summary>
+    /// returns true if user exists otherwise returns false
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public bool CheckIfUserWithGivenIdExists(int userId)
     {
-        if (!_applicationDbContext.Users.Any(x => x.Id.Equals(userId)))
-            throw new UserWithGivenIdDoesNotExistsException(userId);
+        return _applicationDbContext.Users.Any(x => x.Id.Equals(userId));
     }
-
 }

@@ -28,17 +28,26 @@ public class ProductsRepository : GenericRepository<Products>, IProductsReposito
         _applicationDbContext.SaveChanges();
         return updatedProduct;
     }
-    public void ThrowExceptionWhenProductWithGivenNameAndUserIdAlreadyExists(int userId, string name)
+    /// <summary>
+    /// returns true if product with given name exists for user with given id otherwise false
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="productName"></param>
+    /// <returns></returns>
+    public bool CheckIfProductWithGivenNameAndUserIdAlreadyExists(int userId, string productName)
     {
-        if (_applicationDbContext.Products.Any(x => x.UserId.Equals(userId) && x.Name.Equals(name)))
-            throw new ProductWithThisNameAlreadyExistsForThisUserException(userId, name);
-    }
-    public void ThrowExceptionWhenProductWithGivenIdDoesNotExists(int productId)
-    {
-        if (!_applicationDbContext.Products.Any(x => x.Id.Equals(productId)))
-            throw new ProductWithGivenIdDoesNotExistsException(productId);
+        return _applicationDbContext.Products.Any(x => x.UserId.Equals(userId) && x.Name.Equals(productName));
     }
 
+    /// <summary>
+    /// returns true if product exists otherwise returns false
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    public bool CheckIfProductWithGivenIdExists(int productId)
+    {
+        return _applicationDbContext.Products.Any(x => x.Id.Equals(productId));
+    }
     public IEnumerable<Products> GetAllProductsByCategoryId(int categoryId)
     {
         return _applicationDbContext.Products.Where(x => x.CategoryId.Equals(categoryId));

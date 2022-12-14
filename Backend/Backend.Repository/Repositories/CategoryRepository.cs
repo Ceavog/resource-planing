@@ -20,10 +20,14 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
         return _applicationDbContext.Categories.Where(x => x.UserId.Equals(userId));
     }
 
-    public void ThrowExceptionWhenCategoryWithGivenIdDoesNotExists(int categoryId)
+    /// <summary>
+    /// returns true if category exists
+    /// </summary>
+    /// <param name="categoryId"></param>
+    /// <returns></returns>
+    public bool CheckIfCategoryWithGivenIdExists(int categoryId)
     {
-        if (!_applicationDbContext.Categories.Any(x => x.Id.Equals(categoryId)))
-            throw new CategoryWithGivenIdDoesNotExistsException(categoryId);
+        return _applicationDbContext.Categories.Any(x => x.Id.Equals(categoryId));
     }
 
     public Category UpdateCategory(Category category)
@@ -33,10 +37,15 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
         _applicationDbContext.SaveChanges();
         return updatedCategory;
     }
-
-    public void ThrowExceptionWhenCategoryWithGivenNameAlreadyExistsForUserWithGivenId(string categoryName, int userId)
+ 
+    /// <summary>
+    /// returns true if category exists otherwise false
+    /// </summary>
+    /// <param name="categoryName"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public bool CheckIfCategoryWithGivenNameAlreadyExistsForUserWithGivenId(string categoryName, int userId)
     {
-        if (_applicationDbContext.Categories.Any(x => x.Name.Equals(categoryName) && x.UserId.Equals(userId)))
-            throw new CategoryWithGivenNameAndUserWithThisIdAlreadyExistsException(categoryName, userId);
+        return _applicationDbContext.Categories.Any(x => x.Name.Equals(categoryName) && x.UserId.Equals(userId));
     }
 }
