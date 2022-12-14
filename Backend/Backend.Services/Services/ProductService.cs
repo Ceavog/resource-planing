@@ -39,7 +39,7 @@ public class ProductService : IProductService
     {
         if (!_userRepository.CheckIfUserWithGivenIdExists(productDto.UserId))
             throw new UserWithGivenIdDoesNotExistsException(productDto.UserId);
-        if (!_productsRepository.CheckIfProductWithGivenNameAndUserIdAlreadyExists(productDto.UserId, productDto.Name))
+        if (_productsRepository.CheckIfProductWithGivenNameAndUserIdAlreadyExists(productDto.UserId, productDto.Name))
             throw new ProductWithThisNameAlreadyExistsForThisUserException(productDto.UserId, productDto.Name);
         
         return _productsRepository.Add(productDto.Adapt<Products>()).Adapt<AddProductDto>();
@@ -48,8 +48,10 @@ public class ProductService : IProductService
     {
         if (!_userRepository.CheckIfUserWithGivenIdExists(productDto.UserId))
             throw new UserWithGivenIdDoesNotExistsException(productDto.UserId);
-        if (!_productsRepository.CheckIfProductWithGivenNameAndUserIdAlreadyExists(productDto.UserId, productDto.Name))
+        if (_productsRepository.CheckIfProductWithGivenNameAndUserIdAlreadyExists(productDto.UserId, productDto.Name))
             throw new ProductWithThisNameAlreadyExistsForThisUserException(productDto.UserId, productDto.Name);
+        if (!_productsRepository.CheckIfProductWithGivenIdExists(productDto.Id))
+            throw new ProductWithGivenIdDoesNotExistsException(productDto.Id);
         
         return _productsRepository.UpdateProduct(productDto.Adapt<Products>()).Adapt<UpdateProductDto>();
     }

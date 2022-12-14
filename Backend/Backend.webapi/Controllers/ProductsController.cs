@@ -45,11 +45,11 @@ public class ProductsController : Controller
     {
         try
         {
-            var product = _productService.GetProductById(id);
-            if (product is null)
-                return NotFound();
-
-            return Ok(Json(product));
+            return Ok(Json(_productService.GetProductById(id)));
+        }
+        catch (Exception e) when (e is ProductWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {
@@ -95,6 +95,10 @@ public class ProductsController : Controller
         {
             return NotFound(e.Message);
         }
+        catch (Exception e) when (e is ProductWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
             return BadRequest();
@@ -106,8 +110,15 @@ public class ProductsController : Controller
     {
         try
         {
-            var deletedProduct = _productService.DeleteProduct(id);
-            return Ok(Json(deletedProduct));
+            return Ok(Json(_productService.DeleteProduct(id)));
+        }
+        catch (Exception e) when (e is UserWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e) when (e is ProductWithGivenIdDoesNotExistsException)
+        {
+            return NotFound(e.Message);
         }
         catch (Exception e)
         {

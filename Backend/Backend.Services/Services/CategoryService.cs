@@ -26,7 +26,7 @@ public class CategoryService : ICategoryService
     {
         if (!_userRepository.CheckIfUserWithGivenIdExists(addCategoryDto.UserId))
             throw new UserWithGivenIdDoesNotExistsException(addCategoryDto.UserId);
-        if (!_categoryRepository.CheckIfCategoryWithGivenNameAlreadyExistsForUserWithGivenId(addCategoryDto.Name,
+        if (_categoryRepository.CheckIfCategoryWithGivenNameAlreadyExistsForUserWithGivenId(addCategoryDto.Name,
                 addCategoryDto.UserId))
             throw new CategoryWithGivenNameAndUserWithThisIdAlreadyExistsException(addCategoryDto.Name,
                 addCategoryDto.UserId);
@@ -50,7 +50,7 @@ public class CategoryService : ICategoryService
         if (!_categoryRepository.CheckIfCategoryWithGivenIdExists(updateCategoryDto.Id))
             throw new CategoryWithGivenIdDoesNotExistsException(updateCategoryDto.Id);
         
-        if (!_categoryRepository.CheckIfCategoryWithGivenNameAlreadyExistsForUserWithGivenId(updateCategoryDto.Name,
+        if (_categoryRepository.CheckIfCategoryWithGivenNameAlreadyExistsForUserWithGivenId(updateCategoryDto.Name,
                 updateCategoryDto.UserId))
             throw new CategoryWithGivenNameAndUserWithThisIdAlreadyExistsException(updateCategoryDto.Name,
                 updateCategoryDto.UserId);

@@ -4,7 +4,7 @@ public class ProductWithGivenIdDoesNotExistsException : Exception
 {
     public int Id { get; }
     public ProductWithGivenIdDoesNotExistsException(int id)
-        : base($"user with given id {id} does not exists")
+        : base($"Product with given id {id} does not exists")
     {
         Id = id;
     }
