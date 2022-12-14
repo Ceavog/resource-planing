@@ -4,6 +4,6 @@ namespace Backend.Shared.Dtos.UserDtos;
 
 public class AuthenticatedUserResposeDto
 {
-    public string Token { get; set; }
+    public string AccessToken { get; set; }
     public string RefreshToken { get; set; }
 }
