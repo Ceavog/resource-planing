@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import API from "api";
+import { useUser } from "api/providers/user-provider";
 import Button from "components/button";
 
 const Example = () => {

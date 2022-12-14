@@ -10,6 +10,9 @@ import { backendEndpoints } from "config/routes";
 import FormInput from "components/forms/text-control/text-control";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import API from "api";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "api/providers/user-provider";
+import { useEffect } from "react";
 
 type FormData = {
   email: string;
@@ -17,21 +20,25 @@ type FormData = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
   const methods = useForm<FormData>();
+  const userContext = useUser();
 
   const onSubmitHandler: SubmitHandler<FormData> = (values: FormData) => {
     const { email, password } = values;
 
     if (email && password) {
-      API.post(backendEndpoints.registerUser.replace(":login", email).replace(":password", password))
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      API.post(backendEndpoints.registerUser.replace(":login", email).replace(":password", password)).then((res) => {
+        navigate("/login");
+      });
     }
   };
+
+  useEffect(() => {
+    if (userContext?.state.authUser) {
+      navigate("/order");
+    }
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">

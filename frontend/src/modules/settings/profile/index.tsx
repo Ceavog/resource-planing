@@ -6,17 +6,10 @@ const Profile = () => {
   const user = userContext?.state.authUser;
 
   return (
-    <Container
-      maxWidth={false}
-      sx={{
-        backgroundColor: "#2363eb",
-        minHeight: "100vh",
-      }}
-    >
+    <Container>
       <Box
         maxWidth="lg"
         sx={{
-          backgroundColor: "#ece9e9",
           maxHeight: "20rem",
           display: "flex",
           flexDirection: "column",
@@ -33,10 +26,10 @@ const Profile = () => {
             <strong>Id:</strong> {user?.id}
           </Typography>
           <Typography gutterBottom>
-            <strong>Full Name:</strong> {user?.name}
+            <strong>Full Name:</strong> {"Nie ma na razie"}
           </Typography>
           <Typography gutterBottom>
-            <strong>Email Address:</strong> {user?.email}
+            <strong>Email Address:</strong> {user?.login}
           </Typography>
           <Typography gutterBottom>
             <strong>Role:</strong> {user?.role}

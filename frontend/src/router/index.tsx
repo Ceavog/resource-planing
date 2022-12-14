@@ -1,7 +1,9 @@
 import FullScreenLoader from "components/placeholders/fullScreenLoader";
+import RequireUser from "components/requireUser.tsx";
 import Example from "modules/example";
 import Order from "modules/order";
 import SettingsProducts from "modules/settings/products";
+import Profile from "modules/settings/profile";
 import { Suspense, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import Layout from "../components/layout";
@@ -35,10 +37,10 @@ const normalRoutes: RouteObject = {
   path: "*",
   element: <Layout />,
   children: [
-    {
-      path: "*",
-      element: <Navigate to="/" replace />,
-    },
+    // {
+    //   path: "*",
+    //   element: <Navigate to="/" replace />,
+    // },
     {
       index: true,
       element: <Example />,
@@ -51,16 +53,16 @@ const normalRoutes: RouteObject = {
       path: "order",
       element: <Order />,
     },
-    // {
-    //   path: "profile",
-    //   element: <RequireUser allowedRoles={["user", "admin"]} />,
-    //   children: [
-    //     {
-    //       path: "",
-    //       element: <Profile />,
-    //     },
-    //   ],
-    // },
+    {
+      path: "profile",
+      element: <RequireUser allowedRoles={["auth"]} />,
+      children: [
+        {
+          path: "",
+          element: <Profile />,
+        },
+      ],
+    },
     {
       path: "unauthorized",
       element: <UnauthorizePage />,
