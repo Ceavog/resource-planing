@@ -36,7 +36,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Order", b =>
@@ -55,7 +55,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasIndex("OrderTypeId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.OrderPosition", b =>
@@ -79,7 +79,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("OrderPositions");
+                    b.ToTable("OrderPositions", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.OrderType", b =>
@@ -94,7 +94,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderTypes");
+                    b.ToTable("OrderTypes", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Products", b =>
@@ -126,7 +126,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.RefreshToken", b =>
@@ -149,7 +149,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.User", b =>
@@ -168,7 +168,7 @@ namespace Backend.DAL_EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Backend.DataAccessLibrary.Category", b =>
