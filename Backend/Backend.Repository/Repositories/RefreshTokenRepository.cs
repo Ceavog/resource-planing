@@ -18,13 +18,16 @@ public class RefreshTokenRepository : GenericRepository<RefreshToken>, IRefreshT
        return _applicationDbContext.RefreshTokens.FirstOrDefault(x => x.UserId.Equals(id));
     }
 
-    public bool CheckIfUserWithGivenRefreshTokenExists(int userId, string refreshToken)
+    public bool CheckIfUserHasValidRefreshToken(int userId, string refreshToken)
     {
-
         return _applicationDbContext.RefreshTokens.Any(
             x => x.UserId.Equals(userId) 
                  && x.Token.Equals(refreshToken) 
                  && x.ExpirationTime > DateTime.Now);
     }
 
+    public bool CheckIfUserHasValidRefreshToken(int userId)
+    {
+        return _applicationDbContext.RefreshTokens.Any(x => x.UserId.Equals(userId) && x.ExpirationTime > DateTime.Now);
+    }
 }

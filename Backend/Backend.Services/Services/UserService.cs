@@ -10,6 +10,7 @@ using Backend.Repository.Interfaces;
 using Backend.Services.Interface;
 using Backend.Shared.Dtos;
 using Backend.Shared.Dtos.UserDtos;
+using Backend.Shared.Exceptions.UserExceptions;
 using Mapster;
 using Microsoft.IdentityModel.Tokens;
 
@@ -37,7 +38,7 @@ public class UserService : IUserService
     {
         if (_userRepository.CheckIfLoginExists(login))
         {
-            throw new ArgumentException("This login already exists");
+            throw new UserLoginAlreadyExistsException(login);
         }   
         var user = new User()
         {
@@ -49,8 +50,6 @@ public class UserService : IUserService
 
         var refreshToken = GenerateRefreshToken(addedUser.Id);
         _refreshTokenRepository.Add(refreshToken);
-        // _applicationDbContext.RefreshTokens.Add(refreshToken);
-        // _applicationDbContext.SaveChanges();
     }
 
     
@@ -61,57 +60,55 @@ public class UserService : IUserService
     /// <returns></returns>
     public AuthenticatedUserResposeDto LoginUser(LoginUserDto user)
     {
-        var authenticatedUser = _userRepository.GetUserByLogin(user.Login);
-        if (authenticatedUser == null)
+        if (!_userRepository.CheckIfLoginExists(user.Login))
         {
-            throw new ArgumentException("Login does not exists");
+            throw new UserLoginDoesNotExistsException(user.Login);
         }
+        var authenticatedUser = _userRepository.GetUserByLogin(user.Login);
+        
 
         if (!BCrypt.Net.BCrypt.Verify(user.Password, authenticatedUser.Password))
         {
-            throw new ArgumentException();
+            throw new UserPasswordDoesNotMachException();
 
         }
 
-        // var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(x =>
-        //     x.UserId.Equals(authenticatedUser.Id) && x.ExpirationTime > DateTime.Now);
-        var refreshToken = _refreshTokenRepository.GetRefreshTokenByUserId(authenticatedUser.Id);
-        if (refreshToken == null)
+        var refreshToken = new RefreshToken();
+        if (_refreshTokenRepository.CheckIfUserHasValidRefreshToken(authenticatedUser.Id))
         {
             refreshToken = GenerateRefreshToken(authenticatedUser.Id);
             _refreshTokenRepository.Add(refreshToken);
         }
 
-        var token = GenerateJsonWebToken(user);
-        return new AuthenticatedUserResposeDto { RefreshToken = refreshToken.Token, Token = token };
+        var accessToken = GenerateAccessToken(user);
+        return new AuthenticatedUserResposeDto { RefreshToken = refreshToken.Token, AccessToken = accessToken };
     }
 
     public AuthenticatedUserResposeDto RefreshToken(string refreshToken, string accessToken)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.ReadJwtToken(accessToken);
-        var user_login = token.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
+        var userLogin = token.Claims.FirstOrDefault(x => x.Type.Equals("userLogin"))!.Value;
         
-        var user = _userRepository.GetUserByLogin(user_login);
-        if (_refreshTokenRepository.CheckIfUserWithGivenRefreshTokenExists(user.Id, refreshToken))
+        var user = _userRepository.GetUserByLogin(userLogin);
+        if (_refreshTokenRepository.CheckIfUserHasValidRefreshToken(user.Id, refreshToken))
         {
             return new AuthenticatedUserResposeDto
             {
                 RefreshToken = refreshToken,
-                Token = GenerateJsonWebToken(user.Adapt<LoginUserDto>())
+                AccessToken = GenerateAccessToken(user.Adapt<LoginUserDto>())
             };
         }
         else
         {
-            return null;
+            throw new UserDoesNotHaveValidRefreshTokenException(user.Id);
         }
     }
 
     public UserDto GetAllDataAboutUser(string token)
     {
-        var jwt = token.Replace("bearer ", "");
         var handler = new JwtSecurityTokenHandler();
-        var parsedToken = handler.ReadJwtToken(jwt);
+        var parsedToken = handler.ReadJwtToken(token);
         var userLogin = parsedToken.Claims.FirstOrDefault(x => x.Type.Equals("userLogin")).Value;
         return _userRepository.GetUserByLogin(userLogin).Adapt<UserDto>();
     }
@@ -119,7 +116,7 @@ public class UserService : IUserService
 
     #region Private functions
    
-    private string GenerateJsonWebToken(LoginUserDto userDto)
+    private string GenerateAccessToken(LoginUserDto userDto)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
