@@ -18,7 +18,14 @@ public static class InMemoryDbSeed
             Login = "login1",
             Password = BCrypt.Net.BCrypt.HashPassword("password")
         });
-
+    
+        dbContext.Users.Add(new User
+        {
+            Id = 2,
+            Login = "1234",
+            Password = BCrypt.Net.BCrypt.HashPassword("1234")
+        });
+        
         dbContext.Categories.Add(new Category()
         {
             Id = 1,
@@ -34,6 +41,13 @@ public static class InMemoryDbSeed
             Name = "product1",
             Price = 100.0,
             Section = "section1",
+        });
+
+        dbContext.RefreshTokens.Add(new RefreshToken()
+        {
+            ExpirationTime = DateTime.Now.AddDays(-10),
+            Token = "DxfAmLujQwIj2zARTc5pNNLWFH8IRTyGz0zQAE9UoFM%3D",
+            UserId = 2,
         });
         dbContext.SaveChanges();
 
