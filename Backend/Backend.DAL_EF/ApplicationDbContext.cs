@@ -8,28 +8,10 @@ namespace Backend.DAL_EF;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext()
-    {
-        
-    }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options)
     {
         
-    }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        try
-        {
-            var connectionString = "Server=db; Port=3306; Database=pieczywoDB; Uid=root;";
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-        }
-        catch (Exception e)
-        {
-            var connectionString = "Server=localhost; Port=3306; Database=pieczywoDB; Uid=root;";
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-        }
-
     }
 //    public DbSet<Client> Clients { get; set; }
 //    public DbSet<Delivery> Deliveries { get; set; }
